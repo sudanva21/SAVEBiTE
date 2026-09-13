@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node scripts/run-phase2-tests.mjs",
-    "postinstall": "node node_modules/.bin/prisma generate"
+    "postinstall": "node ./node_modules/prisma/dist/prisma.js generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.2",
