@@ -1,0 +1,444 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contextBanner {
+  background: var(--sb-white);
+  border: 2.5px solid var(--sb-black);
+  border-radius: 1.75em;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 4px 4px 0px var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.contextLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contextIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 1.1em;
+  border: 2px solid var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sb-pale-yellow);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.statCard {
+  background: var(--sb-white);
+  border: 2px solid var(--sb-black);
+  border-radius: 1.5em;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 4px 4px 0px var(--sb-black);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.statTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statIconBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 0.85em;
+  border: 1.5px solid var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sb-cream);
+}
+
+.statValue {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--sb-black);
+  margin-top: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mainCard {
+  background: var(--sb-white);
+  border: 2.5px solid var(--sb-black);
+  border-radius: 2em;
+  padding: 2rem;
+  box-shadow: 6px 6px 0px var(--sb-black);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #eee;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.rosterTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.75rem;
+}
+
+.thCell {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+  border-bottom: 2px solid var(--sb-black);
+}
+
+.memberRow {
+  background: var(--sb-cream);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.memberRow:hover {
+  transform: translateY(-2px);
+}
+
+.tdCell {
+  padding: 1.1rem 1rem;
+  vertical-align: middle;
+  border-top: 2px solid var(--sb-black);
+  border-bottom: 2px solid var(--sb-black);
+}
+
+.tdCell:first-child {
+  border-left: 2px solid var(--sb-black);
+  border-top-left-radius: 1.2em;
+  border-bottom-left-radius: 1.2em;
+}
+
+.tdCell:last-child {
+  border-right: 2px solid var(--sb-black);
+  border-top-right-radius: 1.2em;
+  border-bottom-right-radius: 1.2em;
+}
+
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--sb-black);
+  background: var(--sb-bright-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--sb-black);
+  flex-shrink: 0;
+}
+
+.userName {
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: var(--sb-black);
+}
+
+.userEmail {
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 0.1rem;
+}
+
+.roleSelectWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.roleSelect {
+  background: var(--sb-white);
+  border: 1.5px solid var(--sb-black);
+  border-radius: 0.85em;
+  padding: 0.4rem 0.65rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--sb-black);
+  cursor: pointer;
+  outline: none;
+}
+
+.roleBadgeStatic {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 1em;
+  border: 1.5px solid var(--sb-black);
+  background: var(--sb-pale-yellow);
+  color: var(--sb-black);
+  text-transform: uppercase;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1em;
+  border: 1.5px solid var(--sb-black);
+  text-transform: uppercase;
+}
+
+.statusActive {
+  background: #cbf3f0;
+  color: #065f46;
+}
+
+.statusInvited {
+  background: var(--sb-pale-yellow);
+  color: #854d0e;
+}
+
+.statusSuspended {
+  background: #fecdd3;
+  color: #9f1239;
+}
+
+.statusRemoved {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+.actionButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.iconActionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 0.65em;
+  border: 1.5px solid var(--sb-black);
+  background: var(--sb-white);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--sb-black);
+}
+
+.iconActionBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0px var(--sb-black);
+}
+
+.iconActionBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.iconActionBtnDanger:hover:not(:disabled) {
+  background: var(--sb-bright-pink);
+  color: var(--sb-white);
+}
+
+/* Individual Mode Notice Card */
+.individualNoticeCard {
+  background: var(--sb-pale-yellow);
+  border: 2.5px solid var(--sb-black);
+  border-radius: 2em;
+  padding: 2.5rem;
+  box-shadow: 6px 6px 0px var(--sb-black);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 680px;
+  margin: 1rem auto;
+}
+
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 23, 23, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.modalCard {
+  background: var(--sb-white);
+  border: 2.5px solid var(--sb-black);
+  border-radius: 2em;
+  padding: 2.25rem;
+  box-shadow: 8px 8px 0px var(--sb-black);
+  max-width: 580px;
+  width: 100%;
+  animation: modalPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalCloseBtn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 800;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sb-cream);
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.formLabel {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--sb-black);
+}
+
+.formInput, .formSelect {
+  background: var(--sb-cream);
+  border: 2px solid var(--sb-black);
+  border-radius: 1em;
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.formInput:focus, .formSelect:focus {
+  background: var(--sb-white);
+  box-shadow: 3px 3px 0px var(--sb-black);
+}
+
+.roleDescBox {
+  font-size: 0.82rem;
+  background: var(--sb-pale-yellow);
+  border: 1.5px solid var(--sb-black);
+  border-radius: 0.85em;
+  padding: 0.75rem 1rem;
+  color: #333;
+  line-height: 1.45;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .mainCard {
+    padding: 1.25rem;
+  }
+  .contextBanner {
+    padding: 1rem;
+  }
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .headerActions {
+    width: 100%;
+  }
+  .headerActions > * {
+    width: 100%;
+    justify-content: center;
+  }
+}

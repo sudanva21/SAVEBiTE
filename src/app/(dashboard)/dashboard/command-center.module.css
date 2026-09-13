@@ -1,0 +1,582 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* Identity Card */
+.identityCard {
+  background: #ffffff;
+  border: 2px solid var(--sb-border, #121212);
+  border-radius: 1.25rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.identityLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.identityIconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px solid var(--sb-border, #121212);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+.identityTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.identityTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--sb-black, #121212);
+}
+
+.roleTag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: #fdf2f8;
+  color: #9d174d;
+  border: 1.5px solid #f472b6;
+  border-radius: 9999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.identityMeta {
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.identityActions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.topBadgeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.liveClock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sb-black, #121212);
+}
+
+.pulseDot {
+  color: #059669;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.pageTitle {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--sb-black, #121212);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0.25rem 0;
+}
+
+.pageSubtitle {
+  font-size: 0.95rem;
+  color: #555555;
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.45;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* 4 Metrics Grid */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metricCard {
+  border-radius: 1.25rem;
+  border: 2px solid var(--sb-border, #121212);
+  padding: 1.35rem 1.5rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease;
+  min-height: 160px;
+}
+
+.metricCard:hover {
+  transform: translateY(-2px);
+}
+
+.cardCyan {
+  background: #f0fdfa;
+}
+
+.cardPink {
+  background: #fff1f2;
+}
+
+.cardYellow {
+  background: #fefce8;
+}
+
+.cardGreen {
+  background: #f0fdf4;
+}
+
+.metricTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.metricIconBox {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1.5px solid var(--sb-border, #121212);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sb-black, #121212);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+.cardTag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1.5px solid var(--sb-border, #121212);
+  color: var(--sb-black, #121212);
+}
+
+.metricValue {
+  font-size: 1.95rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--sb-black, #121212);
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+
+.metricLabel {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--sb-black, #121212);
+  margin-bottom: 0.5rem;
+}
+
+.metricTrend {
+  font-size: 0.78rem;
+  color: #666;
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-top: 0.5rem;
+  margin-top: auto;
+}
+
+/* Main Command Grid */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feedCard, .twinCard {
+  background: #ffffff;
+  border: 2px solid var(--sb-border, #121212);
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1.5px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.cardHeaderPre {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #888;
+  margin-bottom: 0.2rem;
+}
+
+.cardHeading {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--sb-black, #121212);
+  margin: 0;
+}
+
+.cardSubtext {
+  font-size: 0.82rem;
+  color: #666;
+  margin: 0.25rem 0 0 0;
+}
+
+/* Batch List */
+.batchList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.batchItem {
+  background: #fafaf9;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1rem 1.15rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s ease;
+}
+
+.batchItem:hover {
+  background: #f4f4f2;
+  border-color: var(--sb-border, #121212);
+}
+
+.batchMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.batchTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.batchId {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: var(--sb-black, #121212);
+  color: #ffffff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.batchName {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--sb-black, #121212);
+  margin: 0;
+}
+
+.batchMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  color: #666;
+  flex-wrap: wrap;
+}
+
+.metaDivider {
+  color: #bbb;
+}
+
+.metaSensor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 700;
+  color: var(--sb-black, #121212);
+}
+
+.batchActionCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.statusBadge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  text-transform: uppercase;
+}
+
+.statusBadge.is--green {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+.statusBadge.is--cyan {
+  background: #ecfeff;
+  color: #0e7490;
+  border-color: #a5f3fc;
+}
+
+.statusBadge.is--pink {
+  background: #fdf2f8;
+  color: #9d174d;
+  border-color: #fbcfe8;
+}
+
+.matchPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #333;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.cardFooterActions {
+  display: flex;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #e5e7eb;
+}
+
+/* Digital Twin Simulator Column */
+.twinIconBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #fdf2f8;
+  border: 1.5px solid var(--sb-border, #121212);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #db2777;
+}
+
+.simulatorControls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.simLabel {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #666;
+  letter-spacing: 0.05em;
+}
+
+.simPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.simPill {
+  background: #f7f7f5;
+  border: 1.5px solid #d4d4d0;
+  border-radius: 9999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.simPillActive {
+  background: var(--sb-black, #121212);
+  border-color: var(--sb-black, #121212);
+  color: #ffffff;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+.scenarioResult {
+  background: #fffbeb;
+  border: 1.5px solid #fde68a;
+  border-radius: 1rem;
+  padding: 1rem 1.15rem;
+}
+
+.scenarioHead {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  color: #92400e;
+  margin-bottom: 0.35rem;
+}
+
+.scenarioDesc {
+  font-size: 0.82rem;
+  color: #78350f;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.copilotBox {
+  background: #fafaf9;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1rem 1.15rem;
+}
+
+.copilotHead {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #475569;
+  margin-bottom: 0.35rem;
+}
+
+.copilotText {
+  font-size: 0.82rem;
+  color: #334155;
+  font-style: italic;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Bottom Intelligence Ribbon */
+.intelligenceRibbon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .intelligenceRibbon {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ribbonItem {
+  background: #ffffff;
+  border: 2px solid var(--sb-border, #121212);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ribbonIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  border: 1.5px solid var(--sb-border, #121212);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sb-black, #121212);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+.ribbonTitle {
+  font-size: 0.98rem;
+  font-weight: 900;
+  color: var(--sb-black, #121212);
+}
+
+.ribbonDesc {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.2rem 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.ribbonLink {
+  margin-top: auto;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--sb-black, #121212);
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+}

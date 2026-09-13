@@ -1,0 +1,231 @@
+.section {
+  padding: 6em 0;
+  background-color: var(--sb-cream);
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.pillScroller {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  overflow-x: auto;
+  padding-bottom: 1.5em;
+  margin-bottom: 3em;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pillScroller::-webkit-scrollbar {
+  height: 6px;
+}
+
+.pillScroller::-webkit-scrollbar-thumb {
+  background: var(--sb-sand);
+  border-radius: 9999px;
+}
+
+.stepPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.6em 1.25em;
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 9999px;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: var(--sb-black);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s var(--ease-soft-overshoot);
+  box-shadow: var(--shadow-sm);
+}
+
+.stepPill:hover {
+  transform: translateY(-2px);
+  border-color: var(--sb-black);
+}
+
+.activePill {
+  background-color: var(--sb-black);
+  color: var(--sb-white);
+  border-color: var(--sb-black);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: var(--shadow-md);
+}
+
+.pillIndex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.25);
+  font-size: 0.8em;
+  font-weight: 800;
+}
+
+.activePill .pillIndex {
+  background-color: var(--sb-yellow);
+  color: var(--sb-black);
+}
+
+.deckWrap {
+  margin-bottom: 4em;
+}
+
+.featuredCard {
+  border-radius: 2em;
+  border: 2.5px solid var(--sb-border);
+  padding: 3.5em;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  position: relative;
+  transition: all 0.4s var(--ease-elastic-out);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hugeNumber {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--sb-black);
+}
+
+.cardBody {
+  max-width: 800px;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--sb-black);
+  margin-bottom: 0.5em;
+  line-height: 1.15;
+}
+
+.cardDesc {
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+  color: rgba(23, 23, 23, 0.85);
+  font-weight: 500;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1.5px dashed rgba(23, 23, 23, 0.2);
+  padding-top: 1.5em;
+}
+
+.actionPrompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: 800;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.starGlyph {
+  color: var(--sb-wine);
+  font-size: 1.2em;
+}
+
+.cardsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5em;
+  margin-top: 2em;
+}
+
+.miniCard {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  padding: 1.75em;
+  border: 2px solid var(--sb-border);
+  border-radius: 1.5em;
+  transition: all 0.3s var(--ease-soft-overshoot);
+}
+
+.miniCard:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.miniHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.miniNum {
+  font-family: var(--font-heading);
+  font-size: 1.3em;
+  font-weight: 900;
+}
+
+.miniTitle {
+  font-family: var(--font-heading);
+  font-size: 1.2em;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.5em;
+}
+
+.miniDesc {
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: rgba(23, 23, 23, 0.8);
+}
+
+.miniFooter {
+  margin-top: 1.25em;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+@media (max-width: 991px) {
+  .cardsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cardsRow {
+    grid-template-columns: 1fr;
+  }
+  .featuredCard {
+    padding: 2em 1.5em;
+  }
+}

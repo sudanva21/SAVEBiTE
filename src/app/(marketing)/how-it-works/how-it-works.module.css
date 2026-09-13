@@ -1,0 +1,140 @@
+.page {
+  background-color: var(--sb-cream);
+  min-height: 100vh;
+}
+
+.hero {
+  padding: 8em 0 4em 0;
+  text-align: center;
+  position: relative;
+}
+
+.heroContent {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.heroDesc {
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 1.6;
+  color: rgba(23, 23, 23, 0.85);
+  margin-top: 1.25em;
+  font-weight: 500;
+}
+
+.actorsSection {
+  padding: 6em 0 8em 0;
+  background-color: var(--sb-sand);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.actorsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2em;
+  margin-bottom: 4em;
+}
+
+.actorCard {
+  border-radius: 2em;
+  border: 2.5px solid var(--sb-border);
+  padding: 2.5em 2em;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.35s var(--ease-soft-overshoot);
+}
+
+.actorCard:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+.actorHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  align-items: flex-start;
+  margin-bottom: 1em;
+}
+
+.actorTitle {
+  font-family: var(--font-heading);
+  font-size: 1.4em;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--sb-black);
+}
+
+.actorDesc {
+  font-size: 0.95em;
+  line-height: 1.55;
+  color: rgba(23, 23, 23, 0.85);
+  margin-bottom: 1.75em;
+}
+
+.perksList {
+  border-top: 1.5px dashed rgba(23, 23, 23, 0.25);
+  padding-top: 1.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+.perkItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.88em;
+  font-weight: 700;
+  color: var(--sb-black);
+}
+
+.perkDot {
+  color: var(--sb-wine);
+}
+
+.ctaBox {
+  background-color: var(--sb-white);
+  border: 2.5px solid var(--sb-border);
+  border-radius: 2em;
+  padding: 3em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-xl);
+}
+
+.ctaContent {
+  max-width: 600px;
+}
+
+.ctaSub {
+  font-size: 1.05em;
+  color: rgba(23, 23, 23, 0.8);
+  margin-top: 0.5em;
+}
+
+@media (max-width: 991px) {
+  .actorsGrid {
+    grid-template-columns: 1fr;
+  }
+  .ctaBox {
+    flex-direction: column;
+    gap: 1.5em;
+    text-align: center;
+  }
+}

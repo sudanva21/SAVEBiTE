@@ -1,0 +1,148 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5em;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+}
+
+.card {
+  background-color: var(--sb-white);
+  border: 2.5px solid var(--sb-border);
+  border-radius: 2em;
+  padding: 2.25em;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.fullCard {
+  grid-column: span 2;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.iconBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--sb-cream);
+  border: 1.5px solid var(--sb-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sb-black);
+}
+
+.cardDesc {
+  font-size: 0.9em;
+  line-height: 1.55;
+  color: rgba(23, 23, 23, 0.8);
+}
+
+.keyBox {
+  background-color: var(--sb-cream);
+  border: 2px solid var(--sb-border);
+  border-radius: 1em;
+  padding: 0.75em 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5em;
+}
+
+.keyCode {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9em;
+  font-weight: 700;
+  color: var(--sb-black);
+}
+
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 9999px;
+  padding: 0.35em 0.75em;
+  font-size: 0.8em;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copyBtn:hover {
+  background-color: var(--sb-sand);
+}
+
+.sensorList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85em;
+  margin-top: 0.5em;
+}
+
+.sensorItem {
+  background-color: var(--sb-cream);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 1em;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sensorSub {
+  display: block;
+  font-size: 0.78em;
+  color: rgba(23, 23, 23, 0.7);
+  margin-top: 0.2em;
+}
+
+.esgContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2em;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 991px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .fullCard {
+    grid-column: span 1;
+  }
+  .esgContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,391 @@
+/* ==============================================
+   SaveByte — Platform Admin System Styles
+   ============================================== */
+
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f5f0;
+  color: var(--sb-black);
+}
+
+.sidebar {
+  width: 280px;
+  background: var(--sb-black);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 3px solid var(--sb-black);
+  padding: 1.5rem 1rem;
+  flex-shrink: 0;
+}
+
+.sidebarHeader {
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.brandBadge {
+  margin-top: 0.5rem;
+}
+
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 1em;
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  border: 1.5px solid transparent;
+}
+
+.navLink:hover {
+  background: #222;
+  color: #fff;
+}
+
+.navLinkActive {
+  background: var(--sb-white);
+  color: var(--sb-black);
+  border-color: var(--sb-black);
+  box-shadow: 3px 3px 0px var(--sb-yellow);
+}
+
+.navLinkActive:hover {
+  background: var(--sb-white);
+  color: var(--sb-black);
+}
+
+.sidebarFooter {
+  padding-top: 1.5rem;
+  border-top: 1px solid #333;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topBar {
+  background: #fff;
+  border-bottom: 2.5px solid var(--sb-black);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topBarTitle {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.pageBody {
+  padding: 2rem;
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Stats Cards Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: #fff;
+  border: 2.5px solid var(--sb-black);
+  border-radius: 1.5em;
+  padding: 1.5rem;
+  box-shadow: 4px 4px 0px var(--sb-black);
+  transition: transform 0.2s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px var(--sb-black);
+}
+
+.statCardYellow { background: #fffbe6; }
+.statCardCyan { background: #e8f9ff; }
+.statCardLime { background: #f0fbe8; }
+.statCardPink { background: #fff0f5; }
+.statCardOrange { background: #fff4e6; }
+
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--sb-black);
+  line-height: 1;
+}
+
+.statSubtext {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+/* Data Tables */
+.tableCard {
+  background: #fff;
+  border: 2.5px solid var(--sb-black);
+  border-radius: 1.5em;
+  padding: 1.5rem;
+  box-shadow: 6px 6px 0px var(--sb-black);
+  margin-bottom: 2rem;
+}
+
+.tableHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tableTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: 0.4rem 0.85rem;
+  border-radius: 2em;
+  border: 1.5px solid var(--sb-black);
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterBtn:hover {
+  background: #eee;
+}
+
+.filterBtnActive {
+  background: var(--sb-black);
+  color: #fff;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.dataTable th {
+  padding: 0.85rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+  border-bottom: 2px solid var(--sb-black);
+  background: #faf8f5;
+}
+
+.dataTable td {
+  padding: 1rem;
+  border-bottom: 1.5px solid #eee;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.dataTable tr:hover td {
+  background: #fdfbf7;
+}
+
+/* Review Dossier Styles */
+.dossierGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.dossierMain {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dossierSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dossierCard {
+  background: #fff;
+  border: 2.5px solid var(--sb-black);
+  border-radius: 1.5em;
+  padding: 1.75rem;
+  box-shadow: 4px 4px 0px var(--sb-black);
+}
+
+.dossierCardTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px dashed #ddd;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kvGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.kvFull {
+  grid-column: 1 / -1;
+}
+
+.kvLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.kvValue {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--sb-black);
+}
+
+.actionBox {
+  background: #fdfaf6;
+  border: 2.5px solid var(--sb-black);
+  border-radius: 1.5em;
+  padding: 1.5rem;
+  box-shadow: 6px 6px 0px var(--sb-black);
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.modalCard {
+  background: #fff;
+  border: 3px solid var(--sb-black);
+  border-radius: 2em;
+  padding: 2rem;
+  max-width: 540px;
+  width: 100%;
+  box-shadow: 10px 10px 0px var(--sb-black);
+}
+
+.modalTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.modalDesc {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1.25rem;
+}
+
+.modalTextarea {
+  width: 100%;
+  padding: 0.85rem;
+  border: 2px solid var(--sb-black);
+  border-radius: 1em;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  font-family: inherit;
+  min-height: 100px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .adminLayout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid var(--sb-black);
+  }
+  .dossierGrid {
+    grid-template-columns: 1fr;
+  }
+}

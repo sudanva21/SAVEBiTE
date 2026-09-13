@@ -1,0 +1,247 @@
+.heroSection {
+  background-color: var(--sb-pale-yellow);
+  border-bottom: 3px solid var(--sb-black);
+  padding: 8.5em 0 5em;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5em;
+  align-items: center;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25em;
+}
+
+.topBadgeRow {
+  margin-bottom: -0.25em;
+}
+
+.handwrittenWrap {
+  margin: -0.25em 0 0.5em;
+}
+
+.heroParagraph {
+  font-size: 1.35em;
+  line-height: 140%;
+  color: var(--sb-black);
+  max-width: 48ch;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: 0.5em;
+  flex-wrap: wrap;
+}
+
+.metricPillsRow {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: 1.5em;
+}
+
+.metricPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: var(--sb-white);
+  padding: 0.5em 1.25em;
+  border-radius: 2em;
+  border: 2px solid var(--sb-black);
+  box-shadow: 0 3px 0 var(--sb-black);
+}
+
+.metricDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--sb-green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.metricVal {
+  font-size: 1.15em;
+  font-weight: 800;
+  color: var(--sb-black);
+}
+
+.metricLabel {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* Staggered visual cards column */
+.heroVisual {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.cardStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25em;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.stackCard {
+  border-radius: 2em;
+  border: 2.5px solid var(--sb-black);
+  padding: 1.75em;
+  box-shadow: 0 8px 0 var(--sb-black);
+  transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s;
+}
+
+.stackCard:hover {
+  transform: translateY(-6px) scale(1.02) !important;
+  box-shadow: 0 14px 0 var(--sb-black);
+}
+
+.card1 {
+  background-color: var(--sb-pale-blue);
+  transform: rotate(-3deg);
+}
+
+.card2 {
+  background-color: var(--sb-soft-pink);
+  transform: rotate(2.5deg);
+  margin-top: -1em;
+}
+
+.card3 {
+  background-color: var(--sb-white);
+  transform: rotate(-1.5deg);
+  margin-top: -1em;
+}
+
+.cardHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75em;
+}
+
+.freshnessScore {
+  font-size: 0.85em;
+  font-weight: 800;
+  background-color: var(--sb-white);
+  padding: 0.25em 0.75em;
+  border-radius: 2em;
+  border: 1.5px solid var(--sb-black);
+}
+
+.etaText {
+  font-size: 0.9em;
+  font-weight: 800;
+  color: var(--sb-black);
+}
+
+.cardTitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.35em;
+  font-weight: 800;
+  line-height: 110%;
+  color: var(--sb-black);
+  margin-bottom: 0.35em;
+}
+
+.cardDetail {
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1em;
+}
+
+.sensorRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex-wrap: wrap;
+}
+
+.sensorTag {
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-black);
+  border-radius: 2em;
+  padding: 0.25em 0.75em;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.statusLiveTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background-color: var(--sb-black);
+  color: var(--sb-white);
+  border-radius: 2em;
+  padding: 0.25em 0.75em;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.livePip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--sb-green);
+}
+
+.dispatchPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--sb-black);
+  color: var(--sb-white);
+  padding: 0.6em 1.2em;
+  border-radius: 2em;
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.arrowIcon {
+  font-size: 1.2em;
+}
+
+.impactContent {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.leafIcon {
+  font-size: 2em;
+}
+
+.impactSub {
+  font-size: 0.85em;
+  color: #555;
+}
+
+@media screen and (max-width: 991px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+  .heroSection {
+    padding: 7em 0 4em;
+  }
+}

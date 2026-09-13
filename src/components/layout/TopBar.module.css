@@ -1,0 +1,109 @@
+.topbar {
+  height: var(--fl-topbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--fl-space-6);
+  background: var(--fl-bg-secondary);
+  border-bottom: 1px solid var(--fl-border);
+  position: sticky;
+  top: 0;
+  z-index: var(--fl-z-sticky);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--fl-space-4);
+}
+
+.mobileMenuBtn {
+  display: none;
+  padding: var(--fl-space-2);
+  color: var(--fl-text-secondary);
+  border-radius: var(--fl-radius-md);
+}
+
+.mobileMenuBtn:hover {
+  background: var(--fl-accent-subtle);
+  color: var(--fl-accent);
+}
+
+.searchWrapper {
+  position: relative;
+  width: 280px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--fl-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fl-text-muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--fl-space-2) var(--fl-space-4) var(--fl-space-2) var(--fl-space-10);
+  font-size: var(--fl-text-sm);
+  color: var(--fl-text-primary);
+  background: var(--fl-bg-tertiary);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius-lg);
+  transition: all var(--fl-transition-fast);
+}
+
+.searchInput::placeholder {
+  color: var(--fl-text-muted);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--fl-accent);
+  box-shadow: 0 0 0 3px var(--fl-accent-muted);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--fl-space-4);
+}
+
+.iconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--fl-radius-lg);
+  color: var(--fl-text-secondary);
+  transition: all var(--fl-transition-fast);
+}
+
+.iconBtn:hover {
+  background: var(--fl-accent-subtle);
+  color: var(--fl-accent);
+}
+
+.notifDot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--fl-danger);
+  border-radius: 50%;
+  border: 2px solid var(--fl-bg-secondary);
+}
+
+@media (max-width: 768px) {
+  .mobileMenuBtn {
+    display: block;
+  }
+
+  .searchWrapper {
+    width: 160px;
+  }
+}

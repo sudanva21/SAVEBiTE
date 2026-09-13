@@ -1,0 +1,235 @@
+.page {
+  min-height: 100vh;
+  background-color: var(--sb-yellow);
+  background-image: radial-gradient(var(--sb-black) 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--sb-white);
+  border: 2.5px solid var(--sb-black);
+  border-radius: 2em;
+  padding: 2.5rem;
+  box-shadow: 8px 8px 0px var(--sb-black);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px dashed #ddd;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--sb-black);
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0 0.25rem 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.statusHero {
+  padding: 1.5rem;
+  border: 2.5px solid var(--sb-black);
+  border-radius: 1.5em;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.statusHeroPending {
+  background: var(--sb-yellow);
+}
+
+.statusHeroReview {
+  background: var(--sb-cyan);
+}
+
+.statusHeroApproved {
+  background: var(--sb-lime);
+}
+
+.statusHeroRejected {
+  background: var(--sb-bright-pink);
+  color: #fff;
+}
+
+.statusHeroChanges {
+  background: var(--sb-orange);
+  color: #fff;
+}
+
+.statusIconBox {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--sb-black);
+  background: #fff;
+  color: var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statusInfo h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.statusInfo p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.feedbackBox {
+  background: #fff8f0;
+  border: 2px solid var(--sb-orange);
+  border-radius: 1.25em;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.feedbackTitle {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--sb-black);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feedbackContent {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e0c8b0;
+  border-radius: 0.75em;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.detailItem {
+  background: #fdfaf6;
+  border: 2px solid var(--sb-black);
+  border-radius: 1em;
+  padding: 1rem;
+}
+
+.detailLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.detailValue {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sb-black);
+}
+
+.resubmitSection {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed #ddd;
+}
+
+.resubmitTitle {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--sb-black);
+  margin-bottom: 1rem;
+}
+
+.resubmitGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fieldLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sb-black);
+  text-transform: uppercase;
+}
+
+.fieldInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--sb-black);
+  border-radius: 1em;
+  font-size: 0.95rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.fieldInput:focus {
+  outline: none;
+  background: #fdfae6;
+  box-shadow: 2px 2px 0px var(--sb-black);
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .detailsGrid,
+  .resubmitGrid {
+    grid-template-columns: 1fr;
+  }
+  .actionsRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

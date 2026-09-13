@@ -1,0 +1,582 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ==============================================
+// SaveByte — Phase 2 Identity & Organization Schema
+//
+// Core Identity Principle:
+//   User (Clerk Auth) → Membership → Organization
+//
+// A single human User can hold multiple roles across
+// multiple Organizations. Personal User profiles contain
+// zero operational coordinates; geographic coordinates
+// attach strictly to Facilities under an Organization.
+// ==============================================
+
+/// Base user profile linked to Clerk authentication identity.
+model User {
+  id          String   @id @default(cuid())
+  clerkUserId String   @unique
+  displayName String?
+  email       String?
+  avatarUrl   String?
+  phone       String?
+  role        String?  @default("INDIVIDUAL_USER")
+  isOnboarded Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships                     Membership[]
+  applicationsSubmitted           OrganizationApplication[] @relation("ApplicationApplicant")
+  applicationsReviewed            OrganizationApplication[] @relation("ApplicationReviewer")
+  auditLogs                       AuditLog[]
+  foodRequests                    FoodRequest[]
+  recoveryOrdersReceived          RecoveryTransaction[]     @relation("RecoveryRecipientUser")
+  recoveryOrdersSponsored         RecoveryTransaction[]     @relation("RecoverySponsorUser")
+  matchRecommendationsAsRecipient MatchRecommendation[]     @relation("RecipientUserMatches")
+  drivenRoutes                    DeliveryRoute[]           @relation("DriverUserRoutes")
+
+  @@index([clerkUserId])
+  @@map("users")
+}
+
+/// An operational entity participating in SaveByte.
+/// (e.g. Restaurant, Hotel, Kitchen, NGO, Food Bank, Logistics, Recovery Partner)
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  type        String // DONOR, RESTAURANT, HOTEL, INSTITUTIONAL_KITCHEN, FOOD_PROCESSING_UNIT, NGO, FOOD_BANK, SHELTER, COMMUNITY_KITCHEN, SECONDARY_BUYER, INDUSTRIAL_RECOVERY_PARTNER, LOGISTICS_PARTNER, PLATFORM
+  description String?
+  email       String?
+  phone       String?
+  website     String?
+  logoUrl     String?
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships  Membership[]
+  facilities   Facility[]
+  applications OrganizationApplication[]
+
+  // Phase 3 Operational Ecosystem Relations
+  foodItems               FoodItem[]
+  foodBatches             FoodBatch[]
+  inventoryTransactions   InventoryTransaction[]
+  surplusListings         SurplusListing[]       @relation("DonorOrganizationSurplus")
+  foodRequests            FoodRequest[]          @relation("RequesterOrganizationRequests")
+  donorRecoveryOrders     RecoveryTransaction[]  @relation("DonorOrganizationOrders")
+  recipientRecoveryOrders RecoveryTransaction[]  @relation("RecipientOrganizationOrders")
+  donorMatches            MatchRecommendation[]  @relation("DonorOrganizationMatches")
+  recipientMatches        MatchRecommendation[]  @relation("RecipientOrganizationMatches")
+  vehicles                Vehicle[]
+  logisticsRoutes         DeliveryRoute[]        @relation("LogisticsOrganizationRoutes")
+  aiInsights              AIInsight[]
+
+  @@index([type])
+  @@index([slug])
+  @@map("organizations")
+}
+
+/// Physical operational location / facility under an Organization.
+/// Holds operational coordinates (lat/long) and address details.
+model Facility {
+  id              String   @id @default(cuid())
+  organizationId  String
+  name            String
+  type            String // KITCHEN, WAREHOUSE, COLD_STORAGE, PROCESSING_PLANT, DISTRIBUTION_CENTER, COMMUNITY_KITCHEN, RECOVERY_FACILITY, LOGISTICS_HUB, PRIMARY_LOCATION
+  address         String
+  city            String?
+  state           String?
+  postalCode      String?
+  country         String?  @default("India")
+  latitude        Float?
+  longitude       Float?
+  operatingStatus String   @default("ACTIVE") // ACTIVE, INACTIVE, MAINTENANCE
+  isPrimary       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Phase 3 Relations
+  foodBatches           FoodBatch[]
+  inventoryTransactions InventoryTransaction[]
+  surplusListings       SurplusListing[]
+  recoveryOrders        RecoveryTransaction[]
+
+  @@index([organizationId])
+  @@index([city, state])
+  @@map("facilities")
+}
+
+/// Relationship between a User and an Organization with role and lifecycle status.
+model Membership {
+  id             String   @id @default(cuid())
+  userId         String
+  organizationId String? // null for personal/individual user mode
+  role           String // ORGANIZATION_OWNER, ORGANIZATION_ADMIN, DONOR_MANAGER, KITCHEN_MANAGER, PROCESSING_MANAGER, NGO_COORDINATOR, FOOD_BANK_COORDINATOR, SHELTER_COORDINATOR, COMMUNITY_KITCHEN_MANAGER, BUYER, INDUSTRIAL_RECOVERY_MANAGER, LOGISTICS_MANAGER, INDIVIDUAL_USER, PLATFORM_ADMIN
+  status         String   @default("ACTIVE") // INVITED, ACTIVE, SUSPENDED, REMOVED
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([userId])
+  @@index([organizationId])
+  @@index([status])
+  @@map("memberships")
+}
+
+/// Organization Application for Industry and NGO onboarding before approval.
+model OrganizationApplication {
+  id          String @id @default(cuid())
+  applicantId String
+  type        String // INDUSTRY, NGO
+  status      String @default("PENDING") // PENDING, UNDER_REVIEW, APPROVED, REJECTED, CHANGES_REQUESTED
+
+  // Organization Details
+  orgName            String
+  orgType            String
+  industryCategory   String?
+  registrationNumber String?
+  website            String?
+  description        String?
+
+  // Primary / Authorized Contact
+  contactName        String
+  contactDesignation String?
+  contactEmail       String
+  contactPhone       String?
+
+  // Primary Facility Information
+  facilityName String?
+  facilityType String?
+  address      String?
+  city         String?
+  state        String?
+  postalCode   String?
+  country      String? @default("India")
+  latitude     Float?
+  longitude    Float?
+
+  // Operational Capabilities
+  serviceArea             String?
+  beneficiariesServed     Int?
+  mealsPerDay             Int?
+  dailyFoodProduction     String?
+  dailyFoodConsumption    String?
+  typicalSurplus          String?
+  foodCategories          String?
+  operatingHours          String?
+  wasteHandlingMethod     String?
+  existingDonationProcess String?
+  coldStorageAvailable    Boolean @default(false)
+  iotSensorsAvailable     Boolean @default(false)
+  storageAvailable        Boolean @default(false)
+  pickupDeliveryWindows   String?
+
+  // Review & Decision Metadata
+  reviewerId     String?
+  reviewFeedback String?
+  reviewedAt     DateTime?
+  approvedOrgId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  applicant            User          @relation("ApplicationApplicant", fields: [applicantId], references: [id], onDelete: Cascade)
+  reviewer             User?         @relation("ApplicationReviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+  approvedOrganization Organization? @relation(fields: [approvedOrgId], references: [id], onDelete: SetNull)
+
+  @@index([applicantId])
+  @@index([status])
+  @@index([type])
+  @@index([registrationNumber])
+  @@index([contactEmail])
+  @@map("organization_applications")
+}
+
+/// Append-Only Audit Log for security and governance.
+model AuditLog {
+  id            String   @id @default(cuid())
+  actorId       String?
+  action        String // e.g. application.submitted, application.approved, etc.
+  entity        String // OrganizationApplication, Organization, Membership
+  entityId      String
+  previousState Json?
+  newState      Json?
+  reason        String?
+  context       Json?
+  createdAt     DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([actorId])
+  @@index([action])
+  @@index([entity, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ==============================================
+// Phase 3: Core Food Recovery Ecosystem Models
+// ==============================================
+
+/// Reusable Food Catalog Item owned by a producing Organization.
+model FoodItem {
+  id                 String   @id @default(cuid())
+  organizationId     String
+  name               String
+  category           String // PREPARED_MEALS, GRAINS_RICE, VEGETABLES, FRUITS, BAKERY, DAIRY, PACKAGED_FOOD, BEVERAGES, OTHER
+  description        String?
+  unit               String // kg, g, portions, meals, packets, liters
+  storageRequirement String? // AMBIENT, REFRIGERATED, FROZEN, WARM
+  dietaryFlags       String? // VEG, NON_VEG, VEGAN, HALAL, JAIN, GLUTEN_FREE
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  organization          Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  batches               FoodBatch[]
+  inventoryTransactions InventoryTransaction[]
+  surplusListings       SurplusListing[]
+  recoveryOrders        RecoveryTransaction[]
+
+  @@index([organizationId])
+  @@index([category])
+  @@map("food_items")
+}
+
+/// A specific production batch of a FoodItem at a Facility.
+model FoodBatch {
+  id               String   @id @default(cuid())
+  organizationId   String
+  facilityId       String
+  foodItemId       String
+  batchNumber      String
+  initialQuantity  Float
+  currentQuantity  Float // available in operational stock
+  unit             String
+  preparedAt       DateTime
+  expiresAt        DateTime
+  storageCondition String // ROOM_TEMP, COLD_STORAGE, FROZEN, HEATED
+  qualityStatus    String   @default("SUITABLE_FOR_HUMAN_RECOVERY") // SUITABLE_FOR_HUMAN_RECOVERY, REVIEW_REQUIRED, NOT_SUITABLE_FOR_HUMAN_RECOVERY
+  status           String   @default("ACTIVE") // ACTIVE, SURPLUS_POSTED, DEPLETED, EXPIRED, DISPOSED
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization          Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  facility              Facility               @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  foodItem              FoodItem               @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  inventoryTransactions InventoryTransaction[]
+  surplusListings       SurplusListing[]
+  recoveryOrders        RecoveryTransaction[]
+
+  @@index([organizationId])
+  @@index([facilityId])
+  @@index([foodItemId])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("food_batches")
+}
+
+/// Traceable append-style inventory ledger transaction.
+model InventoryTransaction {
+  id             String   @id @default(cuid())
+  organizationId String
+  facilityId     String
+  batchId        String
+  foodItemId     String
+  type           String // PRODUCED, SURPLUS_ALLOCATED, CONSUMED, WASTED, RESERVED, RECOVERED, ADJUSTED
+  quantity       Float // amount changed
+  unit           String
+  referenceType  String? // SURPLUS_POSTING, RECOVERY_ORDER, MANUAL_ADJUSTMENT, WASTE_DISPOSAL
+  referenceId    String?
+  actorId        String?
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  facility     Facility     @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  batch        FoodBatch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  foodItem     FoodItem     @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([batchId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("inventory_transactions")
+}
+
+/// Surplus food posted by a donor organization facility for recovery.
+model SurplusListing {
+  id                    String   @id @default(cuid())
+  donorOrganizationId   String
+  facilityId            String
+  foodItemId            String
+  batchId               String
+  title                 String
+  description           String?
+  totalQuantity         Float
+  allocatedQuantity     Float    @default(0)
+  availableQuantity     Float
+  unit                  String
+  status                String   @default("PUBLISHED") // DRAFT, PUBLISHED, RESERVED, PICKUP_ASSIGNED, COLLECTED, DELIVERED, RECOVERED, CANCELLED, EXPIRED, WASTED
+  qualityStatus         String   @default("SUITABLE_FOR_HUMAN_RECOVERY") // SUITABLE_FOR_HUMAN_RECOVERY, REVIEW_REQUIRED, NOT_SUITABLE_FOR_HUMAN_RECOVERY
+  eligibleRecipientType String   @default("ALL") // ALL, NGO_ONLY, INDIVIDUAL_ONLY
+  availableFrom         DateTime @default(now())
+  availableUntil        DateTime
+  pickupAddress         String
+  pickupCity            String?
+  pickupLatitude        Float?
+  pickupLongitude       Float?
+  pickupWindow          String? // e.g. "14:00 - 18:00"
+  storageCondition      String   @default("AMBIENT")
+  isFreeDonation        Boolean  @default(true)
+  pricePerUnit          Float?   @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  donorOrganization Organization          @relation("DonorOrganizationSurplus", fields: [donorOrganizationId], references: [id], onDelete: Cascade)
+  facility          Facility              @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  foodItem          FoodItem              @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  batch             FoodBatch             @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  requests          FoodRequest[]
+  recoveryOrders    RecoveryTransaction[]
+  matches           MatchRecommendation[]
+
+  @@index([donorOrganizationId])
+  @@index([facilityId])
+  @@index([status])
+  @@index([availableUntil])
+  @@index([eligibleRecipientType])
+  @@map("surplus_listings")
+}
+
+/// Request for food from an NGO or individual community member.
+model FoodRequest {
+  id                      String    @id @default(cuid())
+  requesterUserId         String
+  requesterOrganizationId String? // null if submitted as individual
+  surplusListingId        String? // linked surplus if direct claim
+  foodCategory            String // PREPARED_MEALS, GRAINS_RICE, etc.
+  requestedQuantity       Float
+  unit                    String
+  status                  String    @default("PENDING") // PENDING, ACCEPTED, REJECTED, CANCELLED, FULFILLED
+  intendedUse             String?
+  beneficiaryCount        Int?
+  urgency                 String    @default("STANDARD") // STANDARD, HIGH, CRITICAL
+  requiredByDate          DateTime?
+  deliveryLocation        String?
+  notes                   String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  requesterUser         User                  @relation(fields: [requesterUserId], references: [id], onDelete: Cascade)
+  requesterOrganization Organization?         @relation("RequesterOrganizationRequests", fields: [requesterOrganizationId], references: [id], onDelete: SetNull)
+  surplusListing        SurplusListing?       @relation(fields: [surplusListingId], references: [id], onDelete: SetNull)
+  recoveryOrders        RecoveryTransaction[]
+  matches               MatchRecommendation[]
+
+  @@index([requesterUserId])
+  @@index([requesterOrganizationId])
+  @@index([surplusListingId])
+  @@index([status])
+  @@map("food_requests")
+}
+
+/// Central recovery / fulfillment transaction connecting Donor, Recipient, Food, and Handover lifecycle.
+model RecoveryTransaction {
+  id                      String    @id @default(cuid())
+  donorOrganizationId     String
+  facilityId              String
+  surplusListingId        String
+  foodItemId              String
+  batchId                 String
+  foodRequestId           String?
+  recipientUserId         String
+  recipientOrganizationId String? // null for individual consumers
+  orderType               String // NGO_CLAIM, BUY_FOR_ME, SPONSORED_MEAL
+  quantity                Float
+  unit                    String
+  sponsorUserId           String?
+  sponsorNotes            String?
+  status                  String    @default("RESERVED") // RESERVED, READY_FOR_PICKUP, PICKUP_ASSIGNED, COLLECTED, DELIVERED, COMPLETED, CANCELLED
+  pickupAddress           String
+  pickupWindow            String?
+  pickupLatitude          Float?
+  pickupLongitude         Float?
+  verificationPin         String // 6-character secure handover verification code
+  scheduledPickupTime     DateTime?
+  collectedAt             DateTime?
+  deliveredAt             DateTime?
+  completedAt             DateTime?
+  notes                   String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  donorOrganization     Organization   @relation("DonorOrganizationOrders", fields: [donorOrganizationId], references: [id], onDelete: Cascade)
+  facility              Facility       @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  surplusListing        SurplusListing @relation(fields: [surplusListingId], references: [id], onDelete: Cascade)
+  foodItem              FoodItem       @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  batch                 FoodBatch      @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  foodRequest           FoodRequest?   @relation(fields: [foodRequestId], references: [id], onDelete: SetNull)
+  recipientUser         User           @relation("RecoveryRecipientUser", fields: [recipientUserId], references: [id], onDelete: Cascade)
+  recipientOrganization Organization?  @relation("RecipientOrganizationOrders", fields: [recipientOrganizationId], references: [id], onDelete: SetNull)
+  sponsorUser           User?          @relation("RecoverySponsorUser", fields: [sponsorUserId], references: [id], onDelete: SetNull)
+  deliveryRoute         DeliveryRoute?
+
+  @@index([donorOrganizationId])
+  @@index([recipientUserId])
+  @@index([recipientOrganizationId])
+  @@index([surplusListingId])
+  @@index([status])
+  @@map("recovery_transactions")
+}
+
+// ==============================================
+// Phase 4: Matching Engine & Route Logistics Models
+// ==============================================
+
+/// Explainable matching recommendation between surplus food and eligible recipients / requests.
+model MatchRecommendation {
+  id                      String    @id @default(cuid())
+  surplusListingId        String
+  foodRequestId           String?
+  donorOrganizationId     String
+  recipientOrganizationId String?
+  recipientUserId         String?
+  score                   Int // 0 to 100
+  ranking                 Int       @default(1)
+  matchingReasons         String // Semicolon/bullet explainable reasons
+  breakdown               String? // JSON string of component scores
+  distanceKm              Float?
+  estimatedTravelMinutes  Int?
+  eligibility             String    @default("ELIGIBLE") // ELIGIBLE, INELIGIBLE
+  ineligibilityReason     String?
+  status                  String    @default("SUGGESTED") // SUGGESTED, SHORTLISTED, ACCEPTED, REJECTED, EXPIRED
+  acceptedAt              DateTime?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  surplusListing        SurplusListing @relation(fields: [surplusListingId], references: [id], onDelete: Cascade)
+  foodRequest           FoodRequest?   @relation(fields: [foodRequestId], references: [id], onDelete: SetNull)
+  donorOrganization     Organization   @relation("DonorOrganizationMatches", fields: [donorOrganizationId], references: [id], onDelete: Cascade)
+  recipientOrganization Organization?  @relation("RecipientOrganizationMatches", fields: [recipientOrganizationId], references: [id], onDelete: SetNull)
+  recipientUser         User?          @relation("RecipientUserMatches", fields: [recipientUserId], references: [id], onDelete: SetNull)
+
+  @@index([surplusListingId])
+  @@index([donorOrganizationId])
+  @@index([recipientOrganizationId])
+  @@index([status])
+  @@index([score])
+  @@map("match_recommendations")
+}
+
+/// Logistics fleet vehicle for surplus pickup and delivery.
+model Vehicle {
+  id                     String   @id @default(cuid())
+  organizationId         String
+  vehicleNumber          String
+  vehicleType            String // VAN, MINI_TRUCK, ELECTRIC_VAN, MOTORCYCLE, AUTO_RICKSHAW
+  capacity               Float // in kg
+  unit                   String   @default("kg")
+  refrigerationSupported Boolean  @default(false)
+  currentStatus          String   @default("AVAILABLE") // AVAILABLE, IN_TRANSIT, MAINTENANCE, INACTIVE
+  isActive               Boolean  @default(true)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  deliveryRoutes DeliveryRoute[]
+
+  @@index([organizationId])
+  @@index([vehicleNumber])
+  @@index([currentStatus])
+  @@map("vehicles")
+}
+
+/// Delivery route / pickup assignment linking recovery to physical transport.
+model DeliveryRoute {
+  id                       String    @id @default(cuid())
+  recoveryTransactionId    String    @unique
+  logisticsOrganizationId  String?
+  vehicleId                String?
+  driverUserId             String?
+  driverName               String?
+  driverPhone              String?
+  pickupLocation           String
+  pickupLatitude           Float?
+  pickupLongitude          Float?
+  destinationLocation      String
+  destinationLatitude      Float?
+  destinationLongitude     Float?
+  pickupWindow             String?
+  deliveryWindow           String?
+  distanceKm               Float     @default(0)
+  estimatedDurationMinutes Int       @default(0)
+  status                   String    @default("PLANNED") // PLANNED, ASSIGNED, EN_ROUTE_TO_PICKUP, AT_PICKUP, COLLECTED, EN_ROUTE_TO_DESTINATION, DELIVERED, CANCELLED
+  verificationPin          String?
+  startedAt                DateTime?
+  arrivedPickupAt          DateTime?
+  collectedAt              DateTime?
+  deliveredAt              DateTime?
+  notes                    String?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  recoveryTransaction   RecoveryTransaction @relation(fields: [recoveryTransactionId], references: [id], onDelete: Cascade)
+  logisticsOrganization Organization?       @relation("LogisticsOrganizationRoutes", fields: [logisticsOrganizationId], references: [id], onDelete: SetNull)
+  vehicle               Vehicle?            @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+  driver                User?               @relation("DriverUserRoutes", fields: [driverUserId], references: [id], onDelete: SetNull)
+
+  @@index([recoveryTransactionId])
+  @@index([logisticsOrganizationId])
+  @@index([vehicleId])
+  @@index([status])
+  @@map("delivery_routes")
+}
+
+// ==============================================
+// Phase 5: AI Intelligence, Audit & Prediction Models
+// ==============================================
+
+/// Cached intelligence insights, predictions, audits, and recommendations.
+model AIInsight {
+  id             String    @id @default(cuid())
+  organizationId String
+  facilityId     String?
+  type           String // DEMAND_FORECAST, SURPLUS_PREDICTION, EXPIRY_INTELLIGENCE, WASTE_ANALYSIS, PRODUCTION_RECOMMENDATION, AUDIT_REPORT
+  periodStart    DateTime?
+  periodEnd      DateTime?
+  inputHash      String // SHA-256 fingerprint of input data for cache invalidation
+  result         String // Serialized JSON result validated by Zod
+  confidence     Int // 0 - 100 confidence score
+  provider       String // openai, deterministic_baseline
+  model          String? // e.g. gpt-4o-mini, heuristic-v1
+  generatedAt    DateTime  @default(now())
+  expiresAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([facilityId])
+  @@index([type])
+  @@index([inputHash])
+  @@map("ai_insights")
+}

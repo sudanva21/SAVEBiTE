@@ -1,0 +1,328 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.liveTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.greenCheck {
+  color: #059669;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--sb-black, #121212);
+  letter-spacing: -0.03em;
+  margin: 0.25rem 0;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.timeRangePicker {
+  display: flex;
+  background: #f1f1ee;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--sb-border, #121212);
+}
+
+.timeBtn {
+  background: transparent;
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.timeBtnActive {
+  background: var(--sb-black, #121212);
+  color: #fff;
+  box-shadow: var(--shadow-sm, 2px 2px 0px rgba(0,0,0,0.9));
+}
+
+/* 4 Hero ESG Cards */
+.esgGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .esgGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .esgGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.esgCard {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  border: 2px solid var(--sb-border, #121212);
+  padding: 1.5rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease;
+}
+
+.esgCard:hover {
+  transform: translateY(-2px);
+}
+
+.esgGreen {
+  background: #f0fdf4;
+}
+
+.esgCyan {
+  background: #ecfeff;
+}
+
+.esgPink {
+  background: #fdf2f8;
+}
+
+.esgYellow {
+  background: #fefce8;
+}
+
+.esgHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.esgIconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff;
+  border: 2px solid var(--sb-border, #121212);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sb-black, #121212);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+}
+
+.esgBadge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1.5px solid var(--sb-border, #121212);
+  color: var(--sb-black, #121212);
+}
+
+.esgValue {
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--sb-black, #121212);
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.esgLabel {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--sb-black, #121212);
+  margin-bottom: 0.5rem;
+}
+
+.esgSubtext {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.35;
+  margin-top: auto;
+}
+
+/* Split Grid */
+.splitGrid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .splitGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contentCard {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  border: 2px solid var(--sb-border, #121212);
+  padding: 1.75rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid #eee;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--sb-black, #121212);
+  margin: 0;
+}
+
+.cardSubtitle {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0.25rem 0 0 0;
+}
+
+/* Table */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.dataTable th {
+  padding: 0.75rem 0.85rem;
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #444;
+  border-bottom: 2px solid var(--sb-border, #121212);
+}
+
+.dataTable td {
+  padding: 0.85rem;
+  border-bottom: 1px solid #f0f0f0;
+  color: #222;
+}
+
+.progressBarBg {
+  flex: 1;
+  min-width: 80px;
+  height: 8px;
+  background: #f1f1ee;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #059669;
+  border-radius: 9999px;
+}
+
+/* Governance */
+.governanceMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.govRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.govLabel {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--sb-black, #121212);
+}
+
+.govDesc {
+  font-size: 0.78rem;
+  color: #666;
+  margin: 0.15rem 0 0 0;
+  line-height: 1.3;
+}
+
+.govValueHighlight {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #a7f3d0;
+  white-space: nowrap;
+}
+
+.auditDossierBox {
+  margin-top: auto;
+  background: #fafaf9;
+  border-radius: 1rem;
+  border: 1.5px solid var(--sb-border, #121212);
+  padding: 1.25rem;
+}

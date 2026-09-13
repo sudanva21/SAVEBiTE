@@ -1,0 +1,347 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--sb-cream);
+}
+
+.sidebar {
+  width: 280px;
+  background-color: var(--sb-sand);
+  border-right: 2.5px solid var(--sb-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  transition: transform 0.3s var(--ease-soft-overshoot);
+}
+
+.sidebarHeader {
+  padding: 1.5em 1.5em 1.25em 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--sb-border);
+}
+
+.brandLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+}
+
+.brandStar {
+  font-size: 1.4em;
+  color: var(--sb-wine);
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 1.35em;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--sb-black);
+}
+
+.closeMobileBtn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.25em;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.orgPillWrap {
+  padding: 1em 1.5em 0.5em 1.5em;
+}
+
+.orgPill {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 9999px;
+  padding: 0.4em 0.85em;
+  font-size: 0.82em;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.orgDot {
+  color: var(--sb-green);
+  font-size: 0.8em;
+}
+
+.orgName {
+  flex: 1;
+  color: var(--sb-black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orgRole {
+  background-color: var(--sb-yellow);
+  color: var(--sb-black);
+  padding: 0.15em 0.5em;
+  border-radius: 9999px;
+  font-size: 0.75em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sidebarNav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1em 1.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  scrollbar-width: thin;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.groupTitle {
+  font-size: 0.72em;
+  font-weight: 800;
+  color: rgba(23, 23, 23, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-left: 0.75em;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0.6em 0.85em;
+  border-radius: 9999px;
+  text-decoration: none;
+  color: var(--sb-black);
+  font-weight: 700;
+  font-size: 0.88em;
+  transition: all 0.2s var(--ease-soft-overshoot);
+  border: 1.5px solid transparent;
+}
+
+.navItem:hover {
+  background-color: var(--sb-white);
+  border-color: var(--sb-border);
+  transform: translateX(3px);
+}
+
+.navItemActive {
+  background-color: var(--sb-black);
+  color: var(--sb-white);
+  border-color: var(--sb-black);
+  box-shadow: var(--shadow-sm);
+}
+
+.navItemActive:hover {
+  background-color: var(--sb-black);
+  color: var(--sb-white);
+  border-color: var(--sb-black);
+  transform: none;
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+}
+
+.navLabel {
+  flex: 1;
+}
+
+.soonPill {
+  font-size: 0.68em;
+  font-weight: 800;
+  padding: 0.15em 0.5em;
+  border-radius: 9999px;
+  background-color: rgba(23, 23, 23, 0.1);
+  color: var(--sb-black);
+}
+
+.navItemActive .soonPill {
+  background-color: var(--sb-yellow);
+  color: var(--sb-black);
+}
+
+.sidebarFooter {
+  padding: 1em 1.25em 1.25em 1.25em;
+  border-top: 2px solid var(--sb-border);
+}
+
+.userProfilePill {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 1.25em;
+  padding: 0.6em 0.85em;
+  box-shadow: var(--shadow-sm);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 0.85em;
+  font-weight: 800;
+  color: var(--sb-black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmail {
+  font-size: 0.72em;
+  color: rgba(23, 23, 23, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mainWrapper {
+  flex: 1;
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  height: 68px;
+  background-color: var(--sb-cream);
+  border-bottom: 2px solid var(--sb-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2em;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.25em;
+}
+
+.menuTrigger {
+  display: none;
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 8px;
+  padding: 0.4em 0.75em;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.crumbRoot {
+  color: var(--sb-black);
+  text-decoration: none;
+}
+
+.crumbSep {
+  color: rgba(23, 23, 23, 0.4);
+}
+
+.crumbCurrent {
+  color: var(--sb-wine);
+  text-transform: capitalize;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.telemetryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: var(--sb-white);
+  border: 1.5px solid var(--sb-border);
+  border-radius: 9999px;
+  padding: 0.35em 0.85em;
+  font-size: 0.8em;
+  font-weight: 800;
+  color: var(--sb-black);
+  box-shadow: var(--shadow-sm);
+}
+
+.livePulse {
+  color: var(--sb-green);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.content {
+  flex: 1;
+  padding: 2.5em 2em 4em 2em;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebarOpen {
+    transform: translateX(0);
+    box-shadow: var(--shadow-2xl);
+  }
+  .closeMobileBtn {
+    display: block;
+  }
+  .mainWrapper {
+    margin-left: 0;
+  }
+  .menuTrigger {
+    display: block;
+  }
+  .topbar {
+    padding: 0 1.25em;
+  }
+  .content {
+    padding: 1.5em 1.25em;
+  }
+  .telemetryBadge {
+    display: none;
+  }
+}

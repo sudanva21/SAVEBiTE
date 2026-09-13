@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodLoop Ecosystem Stakeholder Portals & Multi-Role Experience Directions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: '#FAF9F6',
+            surface: '#FFFFFF',
+            hairline: '#E7E9E5',
+            'hairline-dark': '#D8DDD4',
+            primary: {
+              DEFAULT: '#F97316',
+              50: '#FFF7ED',
+              100: '#FFEDD5',
+              200: '#FED7AA',
+              500: '#F97316',
+              600: '#EA580C',
+              700: '#C2410C'
+            },
+            lime: {
+              accent: '#B7F34A',
+              subtle: '#EBFDD0',
+              glow: '#9FE624'
+            },
+            charcoal: {
+              900: '#0F172A',
+              800: '#1E293B',
+              700: '#334155',
+              500: '#64748B',
+              400: '#94A3B8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 22;
+      vertical-align: middle;
+    }
+    .badge-pulse {
+      box-shadow: 0 0 0 0 rgba(183, 243, 74, 0.7);
+      animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(183, 243, 74, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 8px rgba(183, 243, 74, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(183, 243, 74, 0);
+      }
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F1F3EF;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-charcoal-800 font-sans antialiased min-h-screen flex flex-col selection:bg-primary-100 selection:text-primary-700">
+
+  <!-- Top Enterprise Shell Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-hairline px-6 py-3">
+    <div class="max-w-[1720px] mx-auto flex items-center justify-between gap-6">
+      
+      <!-- Brand & Title Group -->
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white font-black text-lg shadow-sm">
+            <span class="material-symbols-outlined !text-[22px]">all_inclusive</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-charcoal-900 tracking-tight text-lg">FoodLoop</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold tracking-wide bg-charcoal-900 text-white uppercase">Ecosystem OS</span>
+            </div>
+            <p class="text-xs text-charcoal-500 font-medium">Multi-Stakeholder Architecture & Experience Matrix</p>
+          </div>
+        </div>
+
+        <div class="hidden xl:flex items-center gap-2 pl-4 border-l border-hairline text-xs text-charcoal-500">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-lime-subtle text-charcoal-800 font-medium">
+            <span class="w-2 h-2 rounded-full bg-lime-glow badge-pulse"></span>
+            6 Unified Role Engines Online
+          </span>
+          <span class="text-hairline-dark">|</span>
+          <span class="font-mono text-[11px] text-charcoal-700">Active Sync: 1,420 kg/hr Routed</span>
+        </div>
+      </div>
+
+      <!-- Quick Context Info & Global Controls -->
+      <div class="flex items-center gap-3">
+        <!-- View Toggle Buttons -->
+        <div class="flex items-center bg-gray-100 p-1 rounded-lg border border-hairline text-xs font-medium">
+          <button id="view-matrix-btn" onclick="setViewMode('matrix')" class="px-3 py-1.5 rounded-md bg-white text-charcoal-900 shadow-sm font-semibold flex items-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined !text-[16px] text-primary">dashboard_customize</span>
+            Comprehensive Matrix (All 6)
+          </button>
+          <button id="view-focus-btn" onclick="setViewMode('focus')" class="px-3 py-1.5 rounded-md text-charcoal-500 hover:text-charcoal-800 flex items-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined !text-[16px]">visibility</span>
+            Focused Single Portal View
+          </button>
+        </div>
+
+        <div class="h-6 w-[1px] bg-hairline"></div>
+
+        <!-- Global Action -->
+        <button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-charcoal-900 text-white text-xs font-semibold hover:bg-charcoal-800 transition-colors shadow-sm">
+          <span class="material-symbols-outlined !text-[17px] text-lime-accent">tune</span>
+          Role Permissions & SSO
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section & Persona Switcher -->
+  <section class="border-b border-hairline bg-white px-6 pt-8 pb-6">
+    <div class="max-w-[1720px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold tracking-wide uppercase mb-2">
+            <span class="material-symbols-outlined !text-[16px]">hub</span>
+            Decentralized Food Lifecycle Infrastructure
+          </div>
+          <h1 class="text-3xl font-extrabold text-charcoal-900 tracking-tight font-sans">
+            FoodLoop Ecosystem Stakeholder Portals
+          </h1>
+          <p class="text-sm text-charcoal-500 max-w-3xl mt-1.5 font-normal">
+            Adaptive role-tailored operations and interfaces across the circular food supply network. Each portal provides specialized workflows, telemetry feeds, and real-time algorithmic clearing engines.
+          </p>
+        </div>
+
+        <!-- Global Quick Stats -->
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2.5 rounded-xl bg-canvas border border-hairline text-right">
+            <div class="text-[11px] font-mono text-charcoal-400 uppercase tracking-wider">Network SLA Guarantee</div>
+            <div class="text-sm font-extrabold text-charcoal-900 flex items-center justify-end gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              99.98% Cold-Chain Integrity
+            </div>
+          </div>
+          <div class="px-4 py-2.5 rounded-xl bg-canvas border border-hairline text-right">
+            <div class="text-[11px] font-mono text-charcoal-400 uppercase tracking-wider">Algorithmic Match Latency</div>
+            <div class="text-sm font-extrabold text-primary font-mono">&lt; 340ms</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona Switcher Pill Bar (Segmented Control) -->
+      <div class="bg-canvas p-1.5 rounded-2xl border border-hairline flex items-center gap-1.5 overflow-x-auto custom-scrollbar">
+        <span class="text-xs font-bold text-charcoal-400 px-3 uppercase tracking-wider font-mono shrink-0 flex items-center gap-1">
+          <span class="material-symbols-outlined !text-[16px]">switch_account</span> Switch Persona:
+        </span>
+
+        <!-- Tab 1: Food Donor -->
+        <button onclick="selectPersona(1)" id="tab-1" class="persona-tab active-tab shrink-0 px-4 py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center gap-2.5 bg-white text-charcoal-900 shadow-sm border border-hairline">
+          <span class="w-6 h-6 rounded-lg bg-orange-100 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined !text-[16px]">storefront</span>
+          </span>
+          <span>Food Donor</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-primary-100 text-primary-700">12 Live</span>
+        </button>
+
+        <!-- Tab 2: Individual User -->
+        <button onclick="selectPersona(2)" id="tab-2" class="persona-tab shrink-0 px-4 py-2.5 rounded-xl font-medium text-xs text-charcoal-500 hover:text-charcoal-900 hover:bg-white/60 transition-all flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <span class="material-symbols-outlined !text-[16px]">person</span>
+          </span>
+          <span>Individual User</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-mono text-charcoal-400 bg-gray-200">B2C</span>
+        </button>
+
+        <!-- Tab 3: NGO & Community Kitchen -->
+        <button onclick="selectPersona(3)" id="tab-3" class="persona-tab shrink-0 px-4 py-2.5 rounded-xl font-medium text-xs text-charcoal-500 hover:text-charcoal-900 hover:bg-white/60 transition-all flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+            <span class="material-symbols-outlined !text-[16px]">volunteer_activism</span>
+          </span>
+          <span>NGO & Community Kitchen</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-800">4 Urgent</span>
+        </button>
+
+        <!-- Tab 4: Industrial Recovery -->
+        <button onclick="selectPersona(4)" id="tab-4" class="persona-tab shrink-0 px-4 py-2.5 rounded-xl font-medium text-xs text-charcoal-500 hover:text-charcoal-900 hover:bg-white/60 transition-all flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
+            <span class="material-symbols-outlined !text-[16px]">recycling</span>
+          </span>
+          <span>Industrial Recovery</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-mono text-charcoal-400 bg-gray-200">Biogas</span>
+        </button>
+
+        <!-- Tab 5: Logistics Partner -->
+        <button onclick="selectPersona(5)" id="tab-5" class="persona-tab shrink-0 px-4 py-2.5 rounded-xl font-medium text-xs text-charcoal-500 hover:text-charcoal-900 hover:bg-white/60 transition-all flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
+            <span class="material-symbols-outlined !text-[16px]">local_shipping</span>
+          </span>
+          <span>Logistics Partner</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-lime-accent text-charcoal-900">8 Reefers</span>
+        </button>
+
+        <!-- Tab 6: Food Processing Unit -->
+        <button onclick="selectPersona(6)" id="tab-6" class="persona-tab shrink-0 px-4 py-2.5 rounded-xl font-medium text-xs text-charcoal-500 hover:text-charcoal-900 hover:bg-white/60 transition-all flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center">
+            <span class="material-symbols-outlined !text-[16px]">precision_manufacturing</span>
+          </span>
+          <span>Food Processing Unit</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-mono text-charcoal-400 bg-gray-200">Grade B</span>
+        </button>
+
+        <div class="ml-auto pl-3 flex items-center gap-2 shrink-0">
+          <button onclick="showAllRoles()" class="text-xs font-semibold text-primary hover:text-primary-700 flex items-center gap-1">
+            <span class="material-symbols-outlined !text-[15px]">view_agenda</span> Show All Grid
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Canvas -->
+  <main class="flex-1 max-w-[1720px] w-full mx-auto px-6 py-8">
+    
+    <!-- Grid Showcase of All 6 Role Portals -->
+    <div id="portals-grid" class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+
+      <!-- ==========================================
+           ROLE 1: FOOD DONOR WORKSPACE EXPERIENCE
+           ========================================== -->
+      <div id="role-panel-1" class="role-card bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden flex flex-col transition-all hover:border-hairline-dark">
+        <!-- Panel Header -->
+        <div class="p-5 border-b border-hairline bg-gradient-to-r from-orange-50/60 to-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined">storefront</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-orange-100 text-primary-700">Role Portal 01</span>
+                <span class="text-xs font-mono text-charcoal-400">Enterprise Verified</span>
+              </div>
+              <h2 class="text-lg font-bold text-charcoal-900 leading-tight">Food Donor Workspace Experience</h2>
+              <p class="text-xs text-charcoal-500">Commercial Kitchens, Grand Hotels, Supermarket Chains, Corporate Dining</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 3 Safe Bays Synced
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel Body -->
+        <div class="p-6 space-y-6 flex-1 bg-white">
+
+          <!-- Real-Time Matching & Dispatch Countdown Banner -->
+          <div class="p-4 rounded-xl bg-orange-50/70 border border-orange-200/80 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined !text-[18px]">bolt</span>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold uppercase tracking-wider text-primary-700 font-mono">Algorithmic Fast-Match</span>
+                  <span class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-lime-accent text-charcoal-900 font-mono">98% Match Score</span>
+                </div>
+                <div class="text-sm font-semibold text-charcoal-900">
+                  Matched with <span class="text-primary font-bold">Central Food Bank</span> (Reefer Truck FL-04 En Route)
+                </div>
+                <div class="text-xs text-charcoal-500 mt-0.5">
+                  180kg prepared entrées diverted • Preserves $1,420 meal value • Scope 3 carbon credit claimed
+                </div>
+              </div>
+            </div>
+
+            <!-- Scheduled Window Countdown -->
+            <div class="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-orange-200 shadow-2xs shrink-0">
+              <div>
+                <div class="text-[10px] font-mono text-charcoal-400 uppercase">Pickup Window</div>
+                <div class="text-sm font-mono font-bold text-charcoal-900">14:15 - 14:35</div>
+              </div>
+              <div class="h-6 w-[1px] bg-hairline"></div>
+              <div class="text-right">
+                <div class="text-[10px] font-mono text-primary uppercase">ETA Countdown</div>
+                <div class="text-sm font-mono font-black text-primary animate-pulse">00:18:42</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Split: Live Surplus Inventory Table + Create Listing Modal Widget -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            
+            <!-- Live Surplus Inventory Table (7 cols) -->
+            <div class="lg:col-span-7 flex flex-col">
+              <div class="flex items-center justify-between mb-2.5">
+                <h3 class="text-xs font-bold text-charcoal-800 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                  <span class="material-symbols-outlined !text-[16px] text-primary">inventory_2</span>
+                  Active Surplus Batches
+                </h3>
+                <span class="text-[11px] font-mono text-charcoal-500">4 Active Batches</span>
+              </div>
+
+              <div class="border border-hairline rounded-xl overflow-hidden bg-white">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-gray-50 border-b border-hairline text-charcoal-400 font-mono text-[10px] uppercase">
+                    <tr>
+                      <th class="px-3 py-2 font-medium">Batch / Item</th>
+                      <th class="px-2 py-2 font-medium">Volume</th>
+                      <th class="px-2 py-2 font-medium">Temp Regimen</th>
+                      <th class="px-2 py-2 font-medium">Shelf Expiry</th>
+                      <th class="px-3 py-2 font-medium text-right">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-hairline">
+                    <tr class="hover:bg-orange-50/30 transition-colors">
+                      <td class="px-3 py-2.5">
+                        <div class="font-bold text-charcoal-900">#8928 Roast Chicken & Rice</div>
+                        <div class="text-[10px] text-charcoal-500 font-mono">Kitchen Bay 3 • Banquet Surplus</div>
+                      </td>
+                      <td class="px-2 py-2.5 font-mono font-semibold">120 kg</td>
+                      <td class="px-2 py-2.5">
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-100">
+                          <span class="material-symbols-outlined !text-[12px]">ac_unit</span> Chilled 3.2°C
+                        </span>
+                      </td>
+                      <td class="px-2 py-2.5 font-mono text-primary font-semibold">02h 45m</td>
+                      <td class="px-3 py-2.5 text-right">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 font-mono">Dispatched</span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-orange-50/30 transition-colors">
+                      <td class="px-3 py-2.5">
+                        <div class="font-bold text-charcoal-900">#8929 Artisanal Sourdough & Pastry</div>
+                        <div class="text-[10px] text-charcoal-500 font-mono">Bakery Counter • Morning Bake</div>
+                      </td>
+                      <td class="px-2 py-2.5 font-mono font-semibold">45 kg</td>
+                      <td class="px-2 py-2.5">
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-amber-50 text-amber-700 border border-amber-100">
+                          <span class="material-symbols-outlined !text-[12px]">air</span> Ambient 18°C
+                        </span>
+                      </td>
+                      <td class="px-2 py-2.5 font-mono text-emerald-600 font-semibold">05h 10m</td>
+                      <td class="px-3 py-2.5 text-right">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-lime-subtle text-charcoal-900 font-mono">Matched 99%</span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-orange-50/30 transition-colors">
+                      <td class="px-3 py-2.5">
+                        <div class="font-bold text-charcoal-900">#8931 Pre-Cut Organic Melon & Berries</div>
+                        <div class="text-[10px] text-charcoal-500 font-mono">Prep Cold Store 02</div>
+                      </td>
+                      <td class="px-2 py-2.5 font-mono font-semibold">85 kg</td>
+                      <td class="px-2 py-2.5">
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-blue-50 text-blue-700 border border-blue-100">
+                          <span class="material-symbols-outlined !text-[12px]">ac_unit</span> Chilled 2.4°C
+                        </span>
+                      </td>
+                      <td class="px-2 py-2.5 font-mono text-red-600 font-semibold">01h 15m</td>
+                      <td class="px-3 py-2.5 text-right">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700 font-mono">Urgent Alert</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Create Surplus Listing Card / Mini-Form (5 cols) -->
+            <div class="lg:col-span-5 bg-canvas rounded-xl p-4 border border-hairline flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold text-charcoal-900 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-primary">add_circle</span>
+                    Create Surplus Listing
+                  </h4>
+                  <span class="text-[10px] font-mono text-primary font-bold">AI Auto-Tag</span>
+                </div>
+
+                <div class="space-y-3">
+                  <div>
+                    <label class="block text-[10px] font-mono uppercase text-charcoal-500 mb-1">Item Title & Category</label>
+                    <input type="text" value="Prepared Entrees: Braised Beef & Vegetables" class="w-full text-xs font-medium px-2.5 py-1.5 rounded-lg border border-hairline bg-white focus:outline-none focus:border-primary">
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2">
+                    <div>
+                      <label class="block text-[10px] font-mono uppercase text-charcoal-500 mb-1">Temperature Class</label>
+                      <select class="w-full text-xs font-medium px-2.5 py-1.5 rounded-lg border border-hairline bg-white text-charcoal-800">
+                        <option>❄️ Chilled (0°C to 4°C)</option>
+                        <option>🧊 Frozen (-18°C)</option>
+                        <option>🌡️ Cooked Hot (>60°C)</option>
+                        <option>📦 Dry / Ambient</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-mono uppercase text-charcoal-500 mb-1">Portion Estimate</label>
+                      <input type="text" value="160 Meals (65 kg)" class="w-full text-xs font-medium px-2.5 py-1.5 rounded-lg border border-hairline bg-white">
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-[10px] font-mono uppercase text-charcoal-500 mb-1">Critical Safe Consumption Window</label>
+                    <div class="grid grid-cols-3 gap-1.5">
+                      <button class="py-1 px-2 rounded text-[11px] font-mono bg-white border border-primary text-primary font-bold">In 3h</button>
+                      <button class="py-1 px-2 rounded text-[11px] font-mono bg-white border border-hairline text-charcoal-600 hover:border-gray-300">In 6h</button>
+                      <button class="py-1 px-2 rounded text-[11px] font-mono bg-white border border-hairline text-charcoal-600 hover:border-gray-300">Tomorrow AM</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-hairline flex items-center justify-between">
+                <span class="text-[11px] text-charcoal-500 font-mono">Instant ESG Ledger Entry</span>
+                <button class="px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-600 text-white text-xs font-bold transition-colors flex items-center gap-1.5 shadow-sm">
+                  <span class="material-symbols-outlined !text-[16px]">radar</span>
+                  Publish & Auto-Match
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Footer Metric Stripe -->
+        <div class="px-6 py-2.5 bg-gray-50 border-t border-hairline flex items-center justify-between text-xs text-charcoal-500 font-mono">
+          <span>Donor Facility ID: <strong class="text-charcoal-800">Apex Grand Hotel #401</strong></span>
+          <span class="text-emerald-700 font-semibold">Total Recovered: 14,820 kg (Scope 3: 38.4 MT CO2e avoided)</span>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           ROLE 2: INDIVIDUAL USER PORTAL
+           ========================================== -->
+      <div id="role-panel-2" class="role-card bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden flex flex-col transition-all hover:border-hairline-dark">
+        <!-- Panel Header -->
+        <div class="p-5 border-b border-hairline bg-gradient-to-r from-emerald-50/60 to-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined">person</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-100 text-emerald-800">Role Portal 02</span>
+                <span class="text-xs font-mono text-charcoal-400">Community Access</span>
+              </div>
+              <h2 class="text-lg font-bold text-charcoal-900 leading-tight">Individual User Portal</h2>
+              <p class="text-xs text-charcoal-500">Community Members, Students, Budget Diners, Dignified Beneficiaries</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-lime-subtle text-charcoal-900 border border-lime-200">
+              📍 0.8 km Radius Active
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel Body -->
+        <div class="p-6 space-y-6 flex-1 bg-white">
+          
+          <!-- Top Row: Available Food Nearby Grid (3 Micro-Cards) -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-xs font-bold text-charcoal-800 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span class="material-symbols-outlined !text-[16px] text-emerald-600">near_me</span>
+                Available Fresh Surplus Nearby
+              </h3>
+              <span class="text-[11px] font-mono text-emerald-700 font-semibold">14 listings within 1.5 km</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              
+              <!-- Item 1: Buy for Me Discount Surplus -->
+              <div class="p-3.5 rounded-xl border border-hairline bg-canvas hover:bg-white hover:border-emerald-300 transition-all flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between gap-1 mb-1.5">
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">Surplus Bag</span>
+                    <span class="text-xs font-extrabold text-charcoal-900 font-mono">$3.50 <span class="line-through text-charcoal-400 text-[10px]">$14.00</span></span>
+                  </div>
+                  <h4 class="font-bold text-xs text-charcoal-900 leading-tight">Artisan Boulangerie Surplus Pack</h4>
+                  <p class="text-[11px] text-charcoal-500 mt-0.5">3 butter croissants + sourdough loaf</p>
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-hairline flex items-center justify-between text-[11px]">
+                  <span class="text-charcoal-500 font-mono">0.4 km • Pickup by 18:30</span>
+                  <button class="px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] transition-colors">
+                    Reserve
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 2: Free Prepared Food Bag (Community Sponsor) -->
+              <div class="p-3.5 rounded-xl border border-hairline bg-canvas hover:bg-white hover:border-emerald-300 transition-all flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between gap-1 mb-1.5">
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-lime-subtle text-charcoal-900">100% Free / Sponsored</span>
+                    <span class="text-xs font-extrabold text-emerald-700 font-mono">$0.00</span>
+                  </div>
+                  <h4 class="font-bold text-xs text-charcoal-900 leading-tight">Harvest Kitchen Stew & Grain Bowl</h4>
+                  <p class="text-[11px] text-charcoal-500 mt-0.5">Nutritious vegan warm meal with roasted root veg</p>
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-hairline flex items-center justify-between text-[11px]">
+                  <span class="text-charcoal-500 font-mono">0.9 km • No ID Required</span>
+                  <button class="px-2.5 py-1 rounded-md bg-charcoal-900 hover:bg-charcoal-800 text-white font-bold text-[10px] transition-colors">
+                    Claim Meal
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 3: Fresh Produce Box -->
+              <div class="p-3.5 rounded-xl border border-hairline bg-canvas hover:bg-white hover:border-emerald-300 transition-all flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between gap-1 mb-1.5">
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-100 text-blue-800">Fresh Produce</span>
+                    <span class="text-xs font-extrabold text-charcoal-900 font-mono">$4.00 <span class="line-through text-charcoal-400 text-[10px]">$18.00</span></span>
+                  </div>
+                  <h4 class="font-bold text-xs text-charcoal-900 leading-tight">Organic Greens & Citrus Box (4kg)</h4>
+                  <p class="text-[11px] text-charcoal-500 mt-0.5">Direct from Urban Farm Hub Bay 4</p>
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-hairline flex items-center justify-between text-[11px]">
+                  <span class="text-charcoal-500 font-mono">1.2 km • Freshness 9.4/10</span>
+                  <button class="px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] transition-colors">
+                    Reserve
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bottom Split: "Sponsor a Meal Widget" & "Live Order Handover Tracker with QR" -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Sponsor a Meal Instant Widget -->
+            <div class="p-4 rounded-xl border border-hairline bg-gradient-to-br from-emerald-50/40 via-white to-orange-50/20">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-charcoal-900 uppercase font-mono flex items-center gap-1.5">
+                  <span class="material-symbols-outlined !text-[16px] text-primary">volunteer_activism</span>
+                  Sponsor a Meal Instant Widget
+                </span>
+                <span class="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded-full">Web3 Impact Proof</span>
+              </div>
+              <p class="text-xs text-charcoal-600 mb-3">
+                Fund surplus delivery direct to local shelter kitchens. $5 sponsors 2 warm meals with verified handover hash.
+              </p>
+              
+              <div class="grid grid-cols-3 gap-2 mb-3">
+                <button class="p-2 rounded-lg border border-hairline bg-white hover:border-emerald-500 text-center transition-all">
+                  <div class="font-mono font-bold text-xs text-charcoal-900">$5</div>
+                  <div class="text-[10px] text-charcoal-500">2 Meals</div>
+                </button>
+                <button class="p-2 rounded-lg border-2 border-primary bg-primary-50 text-center transition-all">
+                  <div class="font-mono font-bold text-xs text-primary">$15</div>
+                  <div class="text-[10px] text-primary-700 font-semibold">6 Meals (Popular)</div>
+                </button>
+                <button class="p-2 rounded-lg border border-hairline bg-white hover:border-emerald-500 text-center transition-all">
+                  <div class="font-mono font-bold text-xs text-charcoal-900">$25</div>
+                  <div class="text-[10px] text-charcoal-500">10 Meals</div>
+                </button>
+              </div>
+
+              <button class="w-full py-2 rounded-lg bg-charcoal-900 hover:bg-charcoal-800 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm">
+                <span>Contribute $15 via ApplePay</span>
+                <span class="material-symbols-outlined !text-[14px] text-lime-accent">verified</span>
+              </button>
+            </div>
+
+            <!-- Live Order Handover Tracking with QR -->
+            <div class="p-4 rounded-xl border border-hairline bg-canvas flex items-center gap-4">
+              <div class="w-24 h-24 bg-white p-2 rounded-xl border border-hairline flex flex-col items-center justify-center shrink-0 shadow-2xs">
+                <!-- Stylized QR Code Graphic -->
+                <div class="w-full h-full grid grid-cols-5 gap-0.5 bg-charcoal-900 p-1 rounded">
+                  <div class="bg-white rounded-xs"></div><div class="bg-white"></div><div class="bg-charcoal-900"></div><div class="bg-white"></div><div class="bg-white"></div>
+                  <div class="bg-white"></div><div class="bg-charcoal-900"></div><div class="bg-white"></div><div class="bg-charcoal-900"></div><div class="bg-white"></div>
+                  <div class="bg-charcoal-900"></div><div class="bg-white"></div><div class="bg-lime-accent"></div><div class="bg-white"></div><div class="bg-charcoal-900"></div>
+                  <div class="bg-white"></div><div class="bg-charcoal-900"></div><div class="bg-white"></div><div class="bg-charcoal-900"></div><div class="bg-white"></div>
+                  <div class="bg-white"></div><div class="bg-white"></div><div class="bg-charcoal-900"></div><div class="bg-white"></div><div class="bg-white"></div>
+                </div>
+                <span class="text-[8px] font-mono text-charcoal-500 mt-1">CODE: FL-8929</span>
+              </div>
+
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">Ready for Handover</span>
+                </div>
+                <div class="text-xs font-bold text-charcoal-900 mt-1">Boulangerie Pickup Locker #03</div>
+                <div class="text-[11px] text-charcoal-500 font-mono">Locker PIN: <strong class="text-charcoal-800">4912</strong></div>
+                <p class="text-[11px] text-charcoal-500 mt-1">Show QR code to locker scanner or cashier for contactless dignified collection.</p>
+                <div class="mt-2 flex items-center gap-2 text-[10px] font-mono text-emerald-700">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Valid until 19:00 today
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Footer Metric Stripe -->
+        <div class="px-6 py-2.5 bg-gray-50 border-t border-hairline flex items-center justify-between text-xs text-charcoal-500 font-mono">
+          <span>User Profile: <strong class="text-charcoal-800">Maya L. • Resident Tier</strong></span>
+          <span class="text-charcoal-700">Meals Rescued: <strong>23</strong> • Total Saved: <strong>$142.50</strong></span>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           ROLE 3: NGO & COMMUNITY ORGANIZATION PORTAL
+           ========================================== -->
+      <div id="role-panel-3" class="role-card bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden flex flex-col transition-all hover:border-hairline-dark">
+        <!-- Panel Header -->
+        <div class="p-5 border-b border-hairline bg-gradient-to-r from-blue-50/60 to-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined">volunteer_activism</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-blue-100 text-blue-800">Role Portal 03</span>
+                <span class="text-xs font-mono text-charcoal-400">Verified 501(c)(3)</span>
+              </div>
+              <h2 class="text-lg font-bold text-charcoal-900 leading-tight">NGO & Community Organization Portal</h2>
+              <p class="text-xs text-charcoal-500">Metropolitan Food Banks, Emergency Shelters, Youth Programs, Soup Kitchens</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">
+              ⚡ 4 Pending Incoming Batches
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel Body -->
+        <div class="p-6 space-y-6 flex-1 bg-white">
+          
+          <!-- Emergency Food Requests Board (Post Bulk Dietary Specs) -->
+          <div class="p-4 rounded-xl border border-blue-200 bg-blue-50/40">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+              <div>
+                <span class="text-xs font-bold text-charcoal-900 uppercase font-mono flex items-center gap-1.5">
+                  <span class="material-symbols-outlined !text-[16px] text-blue-600">campaign</span>
+                  Emergency Food Needs Dispatch Board
+                </span>
+                <p class="text-xs text-charcoal-500 mt-0.5">Broadcast priority dietary demand directly to donor kitchens and dispatch engine.</p>
+              </div>
+              <button class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors flex items-center gap-1 shrink-0 self-start sm:self-auto">
+                <span class="material-symbols-outlined !text-[15px]">post_add</span>
+                Post Urgent Demand
+              </button>
+            </div>
+
+            <!-- Live Active Broadcast Card -->
+            <div class="p-3 bg-white rounded-lg border border-blue-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center font-black text-xs shrink-0">
+                  REQ
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-xs text-charcoal-900">Need: 150 Vegan / Halal Prepared Meals</span>
+                    <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-red-100 text-red-700 font-bold">Needed by 19:00</span>
+                  </div>
+                  <div class="text-[11px] text-charcoal-500 font-mono">Location: Eastside Youth Shelter • Allergen Free • Safe Hot Hold</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-emerald-700 font-semibold">2 Donors Responding</span>
+                <span class="px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs font-bold font-mono">82% Covered</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Split: Available Matches Inbox + Incoming Delivery Cold-Chain Tracker -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            
+            <!-- Available Matches Inbox with 1-Click "Accept Allocation" -->
+            <div class="border border-hairline rounded-xl p-4 bg-white flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-emerald-600">inbox</span>
+                    Available Matches Inbox
+                  </h4>
+                  <span class="text-[10px] font-mono text-primary font-bold">Priority Queue</span>
+                </div>
+
+                <div class="space-y-2.5">
+                  <div class="p-3 rounded-lg border border-hairline bg-canvas hover:border-blue-300 transition-colors">
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <div class="text-xs font-bold text-charcoal-900">Grand Hyatt Banquet: 180kg Roast Entrées</div>
+                        <div class="text-[10px] font-mono text-charcoal-500">Chilled 3.2°C • Packed in GN 1/1 Food Pans</div>
+                      </div>
+                      <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">98% Match</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between pt-2 border-t border-hairline">
+                      <span class="text-[10px] text-charcoal-500 font-mono">Expires: 04h 20m</span>
+                      <div class="flex gap-1.5">
+                        <button class="px-2.5 py-1 rounded bg-gray-100 text-charcoal-700 text-[10px] font-bold">Pass</button>
+                        <button class="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold">Accept Allocation</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 rounded-lg border border-hairline bg-canvas hover:border-blue-300 transition-colors">
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <div class="text-xs font-bold text-charcoal-900">GreenGrocer Central: 220kg Fresh Milk & Yogurt</div>
+                        <div class="text-[10px] font-mono text-charcoal-500">Cold Chain Verified • Expiring in 48 hrs</div>
+                      </div>
+                      <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">95% Match</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between pt-2 border-t border-hairline">
+                      <span class="text-[10px] text-charcoal-500 font-mono">Expires: 48h</span>
+                      <div class="flex gap-1.5">
+                        <button class="px-2.5 py-1 rounded bg-gray-100 text-charcoal-700 text-[10px] font-bold">Pass</button>
+                        <button class="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold">Accept Allocation</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Incoming Delivery Cold-Chain Tracker -->
+            <div class="border border-hairline rounded-xl p-4 bg-canvas flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-sky-600">thermostat</span>
+                    Incoming Reefer Transit #FL-408
+                  </h4>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-lime-subtle text-charcoal-900">ETA 14 Mins</span>
+                </div>
+
+                <div class="p-3 bg-white rounded-lg border border-hairline mb-3">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono text-charcoal-500">Chamber Temperature</span>
+                    <span class="text-sm font-mono font-bold text-emerald-600 flex items-center gap-1">
+                      <span class="material-symbols-outlined !text-[14px]">check_circle</span> 2.8°C (Safe < 4.0°C)
+                    </span>
+                  </div>
+                  <!-- Temperature Timeline bar -->
+                  <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden flex">
+                    <div class="bg-emerald-500 w-full"></div>
+                  </div>
+                  <div class="flex justify-between text-[9px] font-mono text-charcoal-400 mt-1">
+                    <span>13:40 Departed</span>
+                    <span>13:55 In-Transit (Nominal)</span>
+                    <span>14:14 Target Dock</span>
+                  </div>
+                </div>
+
+                <!-- Distribution Metrics Quick Bar -->
+                <div class="grid grid-cols-3 gap-2 text-center">
+                  <div class="p-2 rounded bg-white border border-hairline">
+                    <div class="text-[9px] font-mono text-charcoal-400 uppercase">Meals Delivered</div>
+                    <div class="text-xs font-bold font-mono text-charcoal-900">1,240 Today</div>
+                  </div>
+                  <div class="p-2 rounded bg-white border border-hairline">
+                    <div class="text-[9px] font-mono text-charcoal-400 uppercase">Cold Chain SLA</div>
+                    <div class="text-xs font-bold font-mono text-emerald-600">100% Zero Spike</div>
+                  </div>
+                  <div class="p-2 rounded bg-white border border-hairline">
+                    <div class="text-[9px] font-mono text-charcoal-400 uppercase">Verified Log</div>
+                    <div class="text-xs font-bold font-mono text-blue-600">SOC2 Audit OK</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3 pt-2 border-t border-hairline flex items-center justify-between">
+                <span class="text-[11px] font-mono text-charcoal-500">Driver: M. Kowalski (IoT Pod C-4)</span>
+                <button class="px-2.5 py-1 rounded bg-charcoal-900 text-white text-[11px] font-semibold flex items-center gap-1">
+                  <span class="material-symbols-outlined !text-[13px]">call</span> Call Courier
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Footer Metric Stripe -->
+        <div class="px-6 py-2.5 bg-gray-50 border-t border-hairline flex items-center justify-between text-xs text-charcoal-500 font-mono">
+          <span>Organization: <strong class="text-charcoal-800">Hope Mission Community Dining</strong></span>
+          <span class="text-blue-700 font-semibold">Weekly Yield: 8,450 Meals Distributed to 640 Families</span>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           ROLE 4: INDUSTRIAL RECOVERY PARTNER PORTAL
+           ========================================== -->
+      <div id="role-panel-4" class="role-card bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden flex flex-col transition-all hover:border-hairline-dark">
+        <!-- Panel Header -->
+        <div class="p-5 border-b border-hairline bg-gradient-to-r from-purple-50/60 to-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined">recycling</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-purple-100 text-purple-800">Role Portal 04</span>
+                <span class="text-xs font-mono text-charcoal-400">Circular Valorization</span>
+              </div>
+              <h2 class="text-lg font-bold text-charcoal-900 leading-tight">Industrial Recovery Partner Portal</h2>
+              <p class="text-xs text-charcoal-500">Biogas Facilities, Anaerobic Digesters, Industrial Composting, Insect Protein Farms</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-purple-50 text-purple-800 border border-purple-200">
+              ⚡ 6.8 Tons Intake Pending
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel Body -->
+        <div class="p-6 space-y-6 flex-1 bg-white">
+          
+          <!-- Facility Capacity Gauge + Available Material Stream -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+            
+            <!-- Facility Capacity Gauge (5 cols) -->
+            <div class="md:col-span-5 p-4 rounded-xl border border-hairline bg-canvas flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono">Digester Tank 02 Capacity</h4>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-100 text-purple-800">Operational</span>
+                </div>
+                
+                <!-- Circular/Semi Gauge Representation -->
+                <div class="py-3 flex flex-col items-center justify-center">
+                  <div class="relative w-28 h-28 flex items-center justify-center">
+                    <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                      <path class="text-gray-200" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="text-purple-600" stroke-dasharray="64, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="absolute flex flex-col items-center">
+                      <span class="text-2xl font-black font-mono text-charcoal-900">64%</span>
+                      <span class="text-[9px] font-mono text-charcoal-500 uppercase">360m³ Free</span>
+                    </div>
+                  </div>
+                  <div class="text-xs font-semibold text-charcoal-700 mt-2">Methane Production Yield: 4,120 MWh</div>
+                  <div class="text-[10px] font-mono text-emerald-600">Feedstock Purity: 98.9% (Zero Plastic)</div>
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-hairline flex items-center justify-between text-[11px] font-mono">
+                <span class="text-charcoal-500">Tank Pressure: 2.1 bar</span>
+                <span class="text-purple-700 font-bold">Batch #B-408 In Flow</span>
+              </div>
+            </div>
+
+            <!-- Available Recovery Material Stream (7 cols) -->
+            <div class="md:col-span-7 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2.5">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-purple-700">water_drop</span>
+                    Available Non-Edible Waste Stream
+                  </h4>
+                  <span class="text-[10px] font-mono text-purple-700 font-bold">Filtered Specs</span>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="p-3 rounded-lg border border-hairline bg-white hover:border-purple-300 transition-colors flex items-center justify-between">
+                    <div>
+                      <div class="font-bold text-xs text-charcoal-900">4.2 Tons Spent Brewer's Mash & Grains</div>
+                      <div class="text-[10px] font-mono text-charcoal-500">Donor: Local Craft Brewery • Organic Purity: 99.4%</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-purple-50 text-purple-700 border border-purple-200">Moisture: 68%</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">Zero Packaging</span>
+                      </div>
+                    </div>
+                    <button class="px-3 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition-colors">
+                      Accept Stream
+                    </button>
+                  </div>
+
+                  <div class="p-3 rounded-lg border border-hairline bg-white hover:border-purple-300 transition-colors flex items-center justify-between">
+                    <div>
+                      <div class="font-bold text-xs text-charcoal-900">1.8 Tons Coffee Grounds & Citrus Rinds</div>
+                      <div class="text-[10px] font-mono text-charcoal-500">Commercial Cold-Press Chain • Purity: 97.2%</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-purple-50 text-purple-700 border border-purple-200">Moisture: 42%</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-50 text-amber-700 border border-amber-200">Compost Feedstock</span>
+                      </div>
+                    </div>
+                    <button class="px-3 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition-colors">
+                      Accept Stream
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bulk Collection Windows Coordinator -->
+              <div class="mt-3 p-2.5 rounded-lg bg-canvas border border-hairline flex items-center justify-between text-xs">
+                <span class="font-mono text-charcoal-600">Next 10-Ton Tipper Dispatch Window:</span>
+                <span class="font-mono font-bold text-charcoal-900">16:30 - 18:00 Dock 4</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Footer Metric Stripe -->
+        <div class="px-6 py-2.5 bg-gray-50 border-t border-hairline flex items-center justify-between text-xs text-charcoal-500 font-mono">
+          <span>Facility: <strong class="text-charcoal-800">BioTerra Energy Plant #2</strong></span>
+          <span class="text-purple-800 font-semibold">Zero Organic to Landfill Guarantee • EPA Scope 1 Offset</span>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           ROLE 5: LOGISTICS & COLD-CHAIN PARTNER PORTAL
+           ========================================== -->
+      <div id="role-panel-5" class="role-card bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden flex flex-col transition-all hover:border-hairline-dark">
+        <!-- Panel Header -->
+        <div class="p-5 border-b border-hairline bg-gradient-to-r from-sky-50/60 to-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined">local_shipping</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-sky-100 text-sky-800">Role Portal 05</span>
+                <span class="text-xs font-mono text-charcoal-400">IoT Telemetry v4.2</span>
+              </div>
+              <h2 class="text-lg font-bold text-charcoal-900 leading-tight">Logistics & Cold-Chain Partner Portal</h2>
+              <p class="text-xs text-charcoal-500">Reefer Van Operators, Fleet Dispatchers, Cargo Couriers, Dock Masters</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-lime-accent text-charcoal-900 border border-lime-300">
+              Active: 8 Reefer Vans
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel Body -->
+        <div class="p-6 space-y-6 flex-1 bg-white">
+          
+          <!-- Dynamic Route Map & Turn-by-Turn Multi-Stop Telemetry -->
+          <div class="rounded-xl border border-hairline bg-charcoal-900 text-white p-4 relative overflow-hidden">
+            <!-- Simulated GPS Radar Grid Background -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#B7F34A 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-3 border-b border-charcoal-700">
+              <div class="flex items-center gap-3">
+                <span class="w-3 h-3 rounded-full bg-lime-accent badge-pulse"></span>
+                <div>
+                  <div class="text-xs font-mono font-bold text-lime-accent">REEFER FL-04 (Mercedes Sprinter EV)</div>
+                  <div class="text-xs text-charcoal-400">Route: Grand Hyatt Hotel ➔ Eastside Shelter ➔ Central Hub</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 text-xs font-mono">
+                <div>Chamber: <strong class="text-lime-accent font-bold">3.1°C</strong></div>
+                <div>Payload: <strong class="text-white">82% (240kg)</strong></div>
+                <div>Battery: <strong class="text-white">78%</strong></div>
+              </div>
+            </div>
+
+            <!-- Visual Node Waypoint Timeline -->
+            <div class="relative z-10 pt-4 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-emerald-500 text-charcoal-900 font-bold flex items-center justify-center text-[10px]">✓</div>
+                <div>
+                  <div class="font-bold text-[11px]">Apex Kitchen</div>
+                  <div class="text-[9px] font-mono text-charcoal-400">Loaded 180kg @ 13:40</div>
+                </div>
+              </div>
+              <div class="flex-1 h-[2px] bg-lime-accent/40 mx-3 relative">
+                <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-lime-accent text-charcoal-900 flex items-center justify-center text-[9px] font-bold">🚚</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[10px]">2</div>
+                <div>
+                  <div class="font-bold text-[11px] text-primary-200">Eastside Shelter</div>
+                  <div class="text-[9px] font-mono text-lime-accent">ETA: 14 Mins (14:15)</div>
+                </div>
+              </div>
+              <div class="flex-1 h-[2px] bg-charcoal-700 mx-3"></div>
+              <div class="flex items-center gap-2 opacity-60">
+                <div class="w-6 h-6 rounded-full bg-charcoal-700 text-white font-bold flex items-center justify-center text-[10px]">3</div>
+                <div>
+                  <div class="font-bold text-[11px]">Central Hub-04</div>
+                  <div class="text-[9px] font-mono text-charcoal-400">Dock Bay 2 (15:00)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Split: Active Job Queue & Proof of Delivery Scanner Interface -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            
+            <!-- Active Pickup Job Queue with Urgency Scoring -->
+            <div class="border border-hairline rounded-xl p-4 bg-white">
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                  <span class="material-symbols-outlined !text-[16px] text-sky-600">format_list_bulleted</span>
+                  Active Pickup Job Queue
+                </h4>
+                <span class="text-[10px] font-mono text-primary font-bold">Auto-Ranked by Expiry</span>
+              </div>
+
+              <div class="space-y-2">
+                <div class="p-2.5 rounded-lg border border-orange-200 bg-orange-50/40 flex items-center justify-between">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-xs text-charcoal-900">Banquet Salads & Dairy (95kg)</span>
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-red-100 text-red-700 font-bold">Urgent: 1.2h</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-charcoal-500 mt-0.5">St. Vincent Mission • Route Re-sequenced +12m</div>
+                  </div>
+                  <button class="px-2.5 py-1 rounded bg-primary hover:bg-primary-600 text-white text-[11px] font-bold shadow-2xs">
+                    Dispatch
+                  </button>
+                </div>
+
+                <div class="p-2.5 rounded-lg border border-hairline bg-canvas flex items-center justify-between">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-xs text-charcoal-900">Bakery Morning Surplus (40kg)</span>
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-blue-100 text-blue-800 font-bold">Dry / Ambient</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-charcoal-500 mt-0.5">Hope Pantry • Scheduled pickup 15:30</div>
+                  </div>
+                  <button class="px-2.5 py-1 rounded bg-charcoal-900 text-white text-[11px] font-bold">
+                    Assign
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Proof of Delivery Handover Scanner Interface -->
+            <div class="border border-hairline rounded-xl p-4 bg-canvas flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-emerald-600">qr_code_scanner</span>
+                    Proof of Delivery (PoD) Scanner
+                  </h4>
+                  <span class="text-[10px] font-mono text-emerald-700 font-bold">Crypto-Receipt</span>
+                </div>
+
+                <div class="p-3 bg-white rounded-lg border border-hairline text-center">
+                  <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mb-2">
+                    <span class="material-symbols-outlined !text-[24px]">verified</span>
+                  </div>
+                  <div class="text-xs font-bold text-charcoal-900">Digital Handover Verification Ready</div>
+                  <p class="text-[11px] text-charcoal-500 mt-1">Recipient Shelter Staff: Scan receiver badge or trigger biometric / QR signoff.</p>
+                </div>
+              </div>
+
+              <div class="mt-3 flex items-center gap-2">
+                <button class="flex-1 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                  <span class="material-symbols-outlined !text-[16px]">qr_code_scanner</span> Scan QR
+                </button>
+                <button class="px-3 py-1.5 rounded-lg border border-hairline bg-white text-charcoal-700 text-xs font-bold">
+                  Manual Sign
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Footer Metric Stripe -->
+        <div class="px-6 py-2.5 bg-gray-50 border-t border-hairline flex items-center justify-between text-xs text-charcoal-500 font-mono">
+          <span>Fleet Unit: <strong class="text-charcoal-800">EcoReefer #FL-04 (BLE Synced)</strong></span>
+          <span class="text-sky-800 font-semibold">Today: 14 Dispatches • 0.00% Cold-Chain Temp Variance</span>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           ROLE 6: FOOD PROCESSING UNIT PORTAL
+           ========================================== -->
+      <div id="role-panel-6" class="role-card bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden flex flex-col transition-all hover:border-hairline-dark">
+        <!-- Panel Header -->
+        <div class="p-5 border-b border-hairline bg-gradient-to-r from-teal-50/60 to-white flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-teal-700 text-white flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined">precision_manufacturing</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-teal-100 text-teal-800">Role Portal 06</span>
+                <span class="text-xs font-mono text-charcoal-400">Value-Add Upcycling</span>
+              </div>
+              <h2 class="text-lg font-bold text-charcoal-900 leading-tight">Food Processing Unit Portal</h2>
+              <p class="text-xs text-charcoal-500">Commercial Canneries, Fruit Dehydrators, Puree Plants, Soup Bottlers</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-teal-50 text-teal-800 border border-teal-200">
+              ⚙️ Line 01 Active (94.2% Yield)
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel Body -->
+        <div class="p-6 space-y-6 flex-1 bg-white">
+          
+          <!-- Raw Material Batch Intake: Grade B Agricultural Surplus -->
+          <div class="p-4 rounded-xl border border-hairline bg-canvas">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                  <span class="material-symbols-outlined !text-[16px] text-teal-700">agriculture</span>
+                  Grade B Agricultural Surplus Intake
+                </h4>
+                <p class="text-xs text-charcoal-500">Cosmetically imperfect or size-rejected produce arriving for shelf-stable conversion.</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-teal-100 text-teal-800">3 Inbound Trucks</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="p-3 bg-white rounded-lg border border-hairline">
+                <div class="text-[10px] font-mono text-charcoal-400">BATCH #PU-901</div>
+                <div class="font-bold text-xs text-charcoal-900 mt-0.5">Surplus Roma Tomatoes (3.2 Tons)</div>
+                <div class="text-[11px] text-charcoal-500 font-mono mt-1">Brix Level: 5.4° • Minor blemishing</div>
+                <div class="mt-2 text-xs font-bold text-teal-700">➜ Converted to: Organic Pasta Sauce</div>
+              </div>
+
+              <div class="p-3 bg-white rounded-lg border border-hairline">
+                <div class="text-[10px] font-mono text-charcoal-400">BATCH #PU-902</div>
+                <div class="font-bold text-xs text-charcoal-900 mt-0.5">Overripe Golden Apples (2.1 Tons)</div>
+                <div class="text-[11px] text-charcoal-500 font-mono mt-1">Sugar Content: High • Size under spec</div>
+                <div class="mt-2 text-xs font-bold text-teal-700">➜ Converted to: Spiced Apple Butter</div>
+              </div>
+
+              <div class="p-3 bg-white rounded-lg border border-hairline">
+                <div class="text-[10px] font-mono text-charcoal-400">BATCH #PU-903</div>
+                <div class="font-bold text-xs text-charcoal-900 mt-0.5">Broken Baby Carrots & Parsnips (1.5T)</div>
+                <div class="text-[11px] text-charcoal-500 font-mono mt-1">Mechanical harvesting snap</div>
+                <div class="mt-2 text-xs font-bold text-teal-700">➜ Converted to: Freeze-Dried Soup Medley</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Production Run Yield Optimizer & Machine Operational Status Telemetry -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Yield Optimizer Calculation Widget -->
+            <div class="border border-hairline rounded-xl p-4 bg-white flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-teal-700">trending_up</span>
+                    Production Run Yield Optimizer
+                  </h4>
+                  <span class="text-[10px] font-mono text-emerald-600 font-bold">+18% Efficiency</span>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                  <div class="flex justify-between items-center py-1 border-b border-hairline">
+                    <span class="text-charcoal-600">Raw Input Volume</span>
+                    <span class="font-mono font-bold text-charcoal-900">3,200 kg Roma Tomatoes</span>
+                  </div>
+                  <div class="flex justify-between items-center py-1 border-b border-hairline">
+                    <span class="text-charcoal-600">Thermal Reduction Yield</span>
+                    <span class="font-mono font-bold text-teal-700">2,480 Jars Pasta Sauce (450g)</span>
+                  </div>
+                  <div class="flex justify-between items-center py-1 border-b border-hairline">
+                    <span class="text-charcoal-600">Shelf-Life Extended</span>
+                    <span class="font-mono font-bold text-charcoal-900">From 4 days ➔ 24 Months</span>
+                  </div>
+                  <div class="flex justify-between items-center py-1">
+                    <span class="text-charcoal-600">Secondary Value Generated</span>
+                    <span class="font-mono font-bold text-emerald-600">$7,440 Wholesale</span>
+                  </div>
+                </div>
+              </div>
+
+              <button class="mt-3 w-full py-2 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors">
+                Run Yield Simulation & Recipe Adjust
+              </button>
+            </div>
+
+            <!-- Machine Operational Status & Energy Monitor -->
+            <div class="border border-hairline rounded-xl p-4 bg-canvas flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold text-charcoal-800 uppercase font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined !text-[16px] text-charcoal-700">bolt</span>
+                    Machine Telemetry & Waste Audit
+                  </h4>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-lime-subtle text-charcoal-900">Eco Mode</span>
+                </div>
+
+                <div class="space-y-2.5">
+                  <div class="p-2.5 bg-white rounded-lg border border-hairline flex items-center justify-between">
+                    <div>
+                      <div class="font-bold text-xs text-charcoal-900">Industrial Steam Retort #01</div>
+                      <div class="text-[10px] font-mono text-charcoal-500">Operating at 121.5°C • Pressure 1.8 bar</div>
+                    </div>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  </div>
+
+                  <div class="p-2.5 bg-white rounded-lg border border-hairline flex items-center justify-between">
+                    <div>
+                      <div class="font-bold text-xs text-charcoal-900">Vacuum Dehydration Chamber B</div>
+                      <div class="text-[10px] font-mono text-charcoal-500">Energy Consumption: 42 kWh (Solar Matched)</div>
+                    </div>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  </div>
+
+                  <div class="p-2.5 bg-white rounded-lg border border-hairline flex items-center justify-between">
+                    <div>
+                      <div class="font-bold text-xs text-charcoal-900">Tomato Skin & Seed Byproduct Stream</div>
+                      <div class="text-[10px] font-mono text-purple-700 font-semibold">Diverted to BioTerra Anaerobic Digester #2</div>
+                    </div>
+                    <span class="text-[10px] font-mono text-purple-700 font-bold">100% Zero Landfill</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Footer Metric Stripe -->
+        <div class="px-6 py-2.5 bg-gray-50 border-t border-hairline flex items-center justify-between text-xs text-charcoal-500 font-mono">
+          <span>Processing Facility: <strong class="text-charcoal-800">Cascade Agro-Processing Plant #07</strong></span>
+          <span class="text-teal-800 font-semibold">Monthly Upcycled Output: 84 Tons Shelf-Stable Food</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Architectural Role Matrix Comparison Table (Cross-Cutting Governance) -->
+    <section class="mt-12 bg-white rounded-2xl border border-hairline p-6 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-charcoal-100 text-charcoal-700">Governance & Security</span>
+            <span class="text-xs font-mono text-charcoal-400">Zero Trust Role-Based Access</span>
+          </div>
+          <h3 class="text-lg font-bold text-charcoal-900 mt-1">Unified Stakeholder Capability & Telemetry Matrix</h3>
+          <p class="text-xs text-charcoal-500">Comparison of access layers, algorithmic privileges, hardware integrations, and ESG audit compliance.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 rounded-lg border border-hairline text-xs font-semibold text-charcoal-700 hover:bg-gray-50 flex items-center gap-1.5">
+            <span class="material-symbols-outlined !text-[15px]">file_download</span> Export RBAC Schema
+          </button>
+          <button class="px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-600 text-white text-xs font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined !text-[15px]">key</span> Generate Partner API Token
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto custom-scrollbar border border-hairline rounded-xl">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-gray-50 text-charcoal-500 font-mono text-[11px] uppercase border-b border-hairline">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Stakeholder Role</th>
+              <th class="px-4 py-3 font-semibold">Core Workflow Target</th>
+              <th class="px-4 py-3 font-semibold">Key IoT / Hardware Stream</th>
+              <th class="px-4 py-3 font-semibold">AI Clearing & SLA Model</th>
+              <th class="px-4 py-3 font-semibold">Compliance / Cryptographic Proof</th>
+              <th class="px-4 py-3 font-semibold text-right">Access Level</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-hairline">
+            <tr class="hover:bg-gray-50/50">
+              <td class="px-4 py-3.5 font-bold text-charcoal-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-primary"></span> Food Donor (Commercial)
+              </td>
+              <td class="px-4 py-3 text-charcoal-600">Surplus batch logging, shelf-life tagging, courier handover</td>
+              <td class="px-4 py-3 font-mono text-charcoal-700">Kitchen cold-room BLE sensor, smart scale API</td>
+              <td class="px-4 py-3 text-charcoal-600">Fast-Track Match (98% min SLA, 15m pickup trigger)</td>
+              <td class="px-4 py-3 font-mono text-emerald-600">SOC2 Type II + Scope 3 Tax Credit Proof</td>
+              <td class="px-4 py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-orange-100 text-primary-700">Enterprise Donor</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50/50">
+              <td class="px-4 py-3.5 font-bold text-charcoal-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> Individual User / Community
+              </td>
+              <td class="px-4 py-3 text-charcoal-600">Proximity discovery, discounted purchase, dignified free food</td>
+              <td class="px-4 py-3 font-mono text-charcoal-700">Mobile GPS geo-fencing, smart locker BLE</td>
+              <td class="px-4 py-3 text-charcoal-600">Proximity & dietary preference filter (&lt;1.5km)</td>
+              <td class="px-4 py-3 font-mono text-emerald-600">Single-use encrypted QR pickup token</td>
+              <td class="px-4 py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">Public Consumer</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50/50">
+              <td class="px-4 py-3.5 font-bold text-charcoal-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> NGO & Community Kitchen
+              </td>
+              <td class="px-4 py-3 text-charcoal-600">Bulk demand posting, intake triage, meal distribution logging</td>
+              <td class="px-4 py-3 font-mono text-charcoal-700">Reefer dock temperature probe, barcode scanner</td>
+              <td class="px-4 py-3 text-charcoal-600">Priority emergency routing with dietary match guarantee</td>
+              <td class="px-4 py-3 font-mono text-emerald-600">HACCP Chain of Custody + Beneficiary Privacy Shield</td>
+              <td class="px-4 py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-100 text-blue-800">Verified NGO 501(c)</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50/50">
+              <td class="px-4 py-3.5 font-bold text-charcoal-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-purple-700"></span> Industrial Recovery / Biogas
+              </td>
+              <td class="px-4 py-3 text-charcoal-600">Non-edible waste intake, anaerobic digestion, soil amendment</td>
+              <td class="px-4 py-3 font-mono text-charcoal-700">Digester tank level ultrasonic, methane gas telemetry</td>
+              <td class="px-4 py-3 text-charcoal-600">Organic purity & moisture-grade intake matching</td>
+              <td class="px-4 py-3 font-mono text-emerald-600">EPA Scope 1 Offset + Renewable Energy Credit (REC)</td>
+              <td class="px-4 py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-100 text-purple-800">Industrial Partner</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50/50">
+              <td class="px-4 py-3.5 font-bold text-charcoal-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-sky-600"></span> Logistics & Fleet Partner
+              </td>
+              <td class="px-4 py-3 text-charcoal-600">Dynamic multi-stop pickups, cold-chain monitoring, PoD scan</td>
+              <td class="px-4 py-3 font-mono text-charcoal-700">Reefer IoT sensor pod (Temp/RH), OBD-II GPS stream</td>
+              <td class="px-4 py-3 text-charcoal-600">Real-time Bayesian route re-ordering on traffic & expiry</td>
+              <td class="px-4 py-3 font-mono text-emerald-600">Continuous temp record with zero-tamper cryptographic seal</td>
+              <td class="px-4 py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-100 text-sky-800">Fleet Dispatcher</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50/50">
+              <td class="px-4 py-3.5 font-bold text-charcoal-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-teal-700"></span> Food Processing Unit
+              </td>
+              <td class="px-4 py-3 text-charcoal-600">Grade B produce conversion, dehydration, shelf-life extension</td>
+              <td class="px-4 py-3 font-mono text-charcoal-700">Production line SCADA / PLC, thermal retort telemetry</td>
+              <td class="px-4 py-3 text-charcoal-600">Recipe yield optimizer & surplus conversion simulator</td>
+              <td class="px-4 py-3 font-mono text-emerald-600">FDA Food Facility Registration + Upcycled Certified</td>
+              <td class="px-4 py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-teal-100 text-teal-800">Commercial Processor</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Script for Persona Switching and Display Filter -->
+  <script>
+    let activeRoleIndex = 1;
+    let currentView = 'matrix'; // 'matrix' or 'focus'
+
+    function selectPersona(roleIndex) {
+      activeRoleIndex = roleIndex;
+      
+      // Update tab button styles
+      document.querySelectorAll('.persona-tab').forEach((tab, idx) => {
+        if ((idx + 1) === roleIndex) {
+          tab.classList.add('bg-white', 'text-charcoal-900', 'shadow-sm', 'border', 'border-hairline', 'font-semibold');
+          tab.classList.remove('text-charcoal-500', 'hover:bg-white/60', 'font-medium');
+        } else {
+          tab.classList.remove('bg-white', 'text-charcoal-900', 'shadow-sm', 'border', 'border-hairline', 'font-semibold');
+          tab.classList.add('text-charcoal-500', 'hover:bg-white/60', 'font-medium');
+        }
+      });
+
+      if (currentView === 'focus') {
+        applyFocusFilter();
+      } else {
+        // In matrix view, scroll smoothly to the targeted panel and briefly highlight it
+        const targetPanel = document.getElementById(`role-panel-${roleIndex}`);
+        if (targetPanel) {
+          targetPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetPanel.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+          setTimeout(() => {
+            targetPanel.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+          }, 1800);
+        }
+      }
+    }
+
+    function setViewMode(mode) {
+      currentView = mode;
+      const matrixBtn = document.getElementById('view-matrix-btn');
+      const focusBtn = document.getElementById('view-focus-btn');
+      const grid = document.getElementById('portals-grid');
+
+      if (mode === 'focus') {
+        matrixBtn.classList.remove('bg-white', 'text-charcoal-900', 'shadow-sm', 'font-semibold');
+        matrixBtn.classList.add('text-charcoal-500');
+        focusBtn.classList.add('bg-white', 'text-charcoal-900', 'shadow-sm', 'font-semibold');
+        focusBtn.classList.remove('text-charcoal-500');
+
+        grid.classList.remove('xl:grid-cols-2');
+        grid.classList.add('grid-cols-1');
+        applyFocusFilter();
+      } else {
+        focusBtn.classList.remove('bg-white', 'text-charcoal-900', 'shadow-sm', 'font-semibold');
+        focusBtn.classList.add('text-charcoal-500');
+        matrixBtn.classList.add('bg-white', 'text-charcoal-900', 'shadow-sm', 'font-semibold');
+        matrixBtn.classList.remove('text-charcoal-500');
+
+        grid.classList.add('xl:grid-cols-2');
+        showAllRoles();
+      }
+    }
+
+    function applyFocusFilter() {
+      for (let i = 1; i <= 6; i++) {
+        const panel = document.getElementById(`role-panel-${i}`);
+        if (panel) {
+          if (i === activeRoleIndex) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        }
+      }
+    }
+
+    function showAllRoles() {
+      for (let i = 1; i <= 6; i++) {
+        const panel = document.getElementById(`role-panel-${i}`);
+        if (panel) {
+          panel.classList.remove('hidden');
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

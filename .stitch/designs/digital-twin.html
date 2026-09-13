@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodLoop Virtual Operations Center • Digital Twin Simulator v4.2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            twin: {
+              bg: '#0A0F0D',
+              surface: '#0D1412',
+              card: '#111A16',
+              border: '#1E2D25',
+              borderHover: '#2A3F34',
+              orange: '#F97316',
+              lime: '#B7F34A',
+              cyan: '#38BDF8',
+              emerald: '#10B981',
+              rose: '#F43F5E',
+              amber: '#F59E0B'
+            }
+          },
+          animation: {
+            'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'dash-flow': 'dash 20s linear infinite',
+            'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+          },
+          keyframes: {
+            dash: {
+              to: { strokeDashoffset: '-1000' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0D1412;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #1E2D25;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #2A3F34;
+    }
+    .glow-orange {
+      box-shadow: 0 0 16px -2px rgba(249, 115, 22, 0.25);
+    }
+    .glow-lime {
+      box-shadow: 0 0 16px -2px rgba(183, 243, 74, 0.22);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 16px -2px rgba(56, 189, 248, 0.22);
+    }
+    .grid-mesh {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(30, 45, 37, 0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 45, 37, 0.35) 1px, transparent 1px);
+    }
+    .radar-sweep {
+      background: conic-gradient(from 0deg at 50% 50%, rgba(183, 243, 74, 0.12) 0deg, transparent 60deg, transparent 360deg);
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-[#0A0F0D] text-slate-200 font-sans antialiased overflow-x-hidden min-h-screen selection:bg-twin-orange/30 selection:text-white">
+
+  <!-- TOP APP BAR / GLOBAL HUD -->
+  <header class="sticky top-0 z-50 bg-[#0D1412]/95 backdrop-blur-md border-b border-[#1E2D25] px-5 py-2.5 flex items-center justify-between shadow-2xl">
+    <!-- Brand & Simulator Info -->
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="relative w-8 h-8 rounded-lg bg-twin-card border border-twin-orange/50 flex items-center justify-center glow-orange">
+          <span class="material-symbols-outlined text-twin-orange text-xl">all_inclusive</span>
+          <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-twin-lime opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-twin-lime"></span>
+          </span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold tracking-tight text-white text-base">FoodLoop</span>
+            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold tracking-wider uppercase bg-twin-orange/15 text-twin-orange border border-twin-orange/30 rounded">Digital Twin Simulator</span>
+            <span class="text-[11px] font-mono text-slate-400">v4.2</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-twin-lime"></span>
+            STATUS: <span class="text-twin-lime font-semibold">ACTIVE RUNNING</span> • Virtual Time: <span class="text-slate-200 font-bold">18:42 EST</span> (T+06:42:15)
+          </p>
+        </div>
+      </div>
+
+      <div class="h-6 w-px bg-twin-border hidden md:block"></div>
+
+      <!-- Live Sync Nodes -->
+      <div class="hidden lg:flex items-center gap-3 text-xs font-mono text-slate-300">
+        <div class="flex items-center gap-1.5 px-2.5 py-1 bg-twin-card border border-twin-border rounded">
+          <span class="text-twin-cyan material-symbols-outlined text-[15px]">sensors</span>
+          <span>48 IoT Nodes Active</span>
+        </div>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 bg-twin-card border border-twin-border rounded">
+          <span class="text-twin-lime material-symbols-outlined text-[15px]">local_shipping</span>
+          <span>12 Reefer Vans Synced</span>
+        </div>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 bg-twin-card border border-twin-border rounded">
+          <span class="text-twin-orange material-symbols-outlined text-[15px]">bolt</span>
+          <span>Bayesian ML: 98.4% Confidence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions & Alerts -->
+    <div class="flex items-center gap-3">
+      <!-- Quick Stress Test Triggers -->
+      <div class="flex items-center gap-2 bg-twin-card/80 p-1 border border-twin-border rounded-lg">
+        <button onclick="injectAlert('Cold-Chain Failure', 'Reefer #FL-04 compressor spike to 8.4°C')" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono rounded bg-twin-rose/15 text-twin-rose border border-twin-rose/40 hover:bg-twin-rose/25 transition-all">
+          <span class="material-symbols-outlined text-[15px] animate-pulse">warning</span>
+          <span>Inject Cold-Chain Failure</span>
+        </button>
+        <button onclick="injectAlert('Weather Delay', 'I-95 North Gridlock +45m Transit Delay')" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono rounded bg-twin-amber/15 text-twin-amber border border-twin-amber/40 hover:bg-twin-amber/25 transition-all">
+          <span class="material-symbols-outlined text-[15px]">thunderstorm</span>
+          <span>Simulate Weather Delay</span>
+        </button>
+      </div>
+
+      <!-- Mode Selector -->
+      <div class="flex items-center bg-black/40 border border-twin-border rounded-lg p-0.5 text-xs font-mono">
+        <button class="px-2.5 py-1 rounded bg-twin-border text-white font-medium flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px] text-twin-lime">terminal</span>
+          Sim View
+        </button>
+        <button class="px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">map</span>
+          Spatial Map
+        </button>
+      </div>
+
+      <a href="#" class="px-3 py-1.5 rounded-lg bg-twin-orange text-black font-semibold text-xs flex items-center gap-1.5 hover:bg-orange-400 transition-all glow-orange">
+        <span class="material-symbols-outlined text-sm">download</span>
+        Export Sim Report
+      </a>
+    </div>
+  </header>
+
+  <!-- SCENARIO CONTROLLER & TIMELINE SCRUBBER BAR -->
+  <div class="bg-[#0D1412] border-b border-twin-border px-5 py-2.5 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4">
+    <!-- Active Scenario Selector -->
+    <div class="flex items-center gap-3 min-w-[340px]">
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <span class="text-twin-orange font-bold flex items-center gap-1">
+          <span class="material-symbols-outlined text-base">science</span>
+          SCENARIO:
+        </span>
+        <div class="relative">
+          <select id="scenarioSelect" class="bg-twin-card border border-twin-border text-slate-200 text-xs rounded-md pl-3 pr-8 py-1.5 font-mono focus:outline-none focus:border-twin-orange">
+            <option selected>Scenario Alpha-9: +35% Perishable Banquet Surplus Surge at 22:00</option>
+            <option>Scenario Beta-3: Cold-Chain Sensor Failure on I-95 Express Line</option>
+            <option>Scenario Gamma-1: Hurricane Shelter Emergency Bulk Ration Dispatch</option>
+            <option>Scenario Delta-7: Tomato Harvest Grade-B Processing Scaled 2x</option>
+          </select>
+        </div>
+      </div>
+      <span class="px-2 py-0.5 bg-twin-lime/10 text-twin-lime border border-twin-lime/30 text-[10px] font-mono rounded font-medium">STRESS TEST</span>
+    </div>
+
+    <!-- Timeline Scrubber & Speed Controls -->
+    <div class="flex-1 max-w-2xl flex items-center gap-3 px-3 py-1 bg-twin-card rounded-lg border border-twin-border">
+      <!-- Controls -->
+      <div class="flex items-center gap-1">
+        <button id="stepBackBtn" class="p-1 hover:bg-twin-border/50 text-slate-300 rounded transition" title="Step Back 10m">
+          <span class="material-symbols-outlined text-base">skip_previous</span>
+        </button>
+        <button id="playPauseBtn" onclick="togglePlayPause()" class="w-7 h-7 rounded bg-twin-orange text-black flex items-center justify-center hover:bg-orange-400 transition" title="Play / Pause">
+          <span id="playIcon" class="material-symbols-outlined text-base font-bold">pause</span>
+        </button>
+        <button id="stepFwdBtn" class="p-1 hover:bg-twin-border/50 text-slate-300 rounded transition" title="Step Forward 10m">
+          <span class="material-symbols-outlined text-base">skip_next</span>
+        </button>
+      </div>
+
+      <!-- Scrubber Bar -->
+      <div class="flex-1 flex flex-col gap-1">
+        <div class="flex justify-between text-[10px] font-mono text-slate-400">
+          <span>00:00 (Start)</span>
+          <span class="text-twin-lime font-bold">CURRENT: 18:42 EST</span>
+          <span>24:00 (Midnight)</span>
+        </div>
+        <div class="relative w-full h-2 bg-black/60 rounded-full overflow-hidden border border-twin-border cursor-pointer">
+          <!-- Buffer Progress -->
+          <div class="absolute top-0 left-0 h-full bg-twin-border/80 w-[88%]"></div>
+          <!-- Current Scrubber -->
+          <div id="scrubProgress" class="absolute top-0 left-0 h-full bg-gradient-to-r from-twin-orange via-twin-lime to-twin-cyan w-[78%]"></div>
+          <!-- Incident Markers -->
+          <div class="absolute top-0 left-[35%] w-1.5 h-full bg-twin-amber" title="Logged Event: Prep Shift Complete"></div>
+          <div class="absolute top-0 left-[55%] w-1.5 h-full bg-twin-cyan" title="Reefer Fleet FL-03 Dispatched"></div>
+          <div class="absolute top-0 left-[78%] w-2 h-full bg-white animate-pulse" title="Current Playhead"></div>
+          <div class="absolute top-0 left-[91%] w-1.5 h-full bg-twin-rose" title="Simulated Banquet Surge 22:00"></div>
+        </div>
+      </div>
+
+      <!-- Speed Multipliers -->
+      <div class="flex items-center gap-1 bg-black/40 p-0.5 rounded border border-twin-border text-[11px] font-mono">
+        <button class="px-1.5 py-0.5 rounded text-slate-400 hover:text-white transition">1x</button>
+        <button class="px-1.5 py-0.5 rounded text-slate-400 hover:text-white transition">5x</button>
+        <button class="px-1.5 py-0.5 rounded bg-twin-lime/20 text-twin-lime font-bold border border-twin-lime/40">10x</button>
+        <button class="px-1.5 py-0.5 rounded text-slate-400 hover:text-white transition">60x</button>
+      </div>
+    </div>
+
+    <!-- Telemetry Sync Indicator -->
+    <div class="flex items-center gap-2 text-xs font-mono text-slate-300">
+      <div class="flex items-center gap-1.5">
+        <span class="inline-block w-2 h-2 rounded-full bg-twin-lime animate-ping"></span>
+        <span class="text-slate-400">Deterministic Engine:</span>
+        <span class="text-twin-cyan font-bold">120 FPS</span>
+      </div>
+      <div class="h-4 w-px bg-twin-border"></div>
+      <div class="text-slate-400">Model Variance: <span class="text-twin-lime font-bold">±0.4%</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN SIMULATION 3-COLUMN WORKSPACE -->
+  <main class="grid grid-cols-1 xl:grid-cols-12 gap-3 p-3 min-h-[calc(100vh-170px)]">
+
+    <!-- ================= LEFT COLUMN: TELEMETRY & VIRTUAL ENTITIES (3 COLS) ================= -->
+    <aside class="xl:col-span-3 flex flex-col gap-3">
+      
+      <!-- ENTITY HEALTH STACK -->
+      <div class="bg-twin-card border border-twin-border rounded-xl p-4 flex flex-col gap-3.5 shadow-lg">
+        <div class="flex items-center justify-between border-b border-twin-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-twin-lime text-lg">deployed_code</span>
+            <h2 class="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider">Virtual Entity Health Stack</h2>
+          </div>
+          <span class="text-[10px] font-mono text-twin-lime bg-twin-lime/10 px-2 py-0.5 rounded border border-twin-lime/30">ALL NOMINAL</span>
+        </div>
+
+        <!-- Entity 1: Virtual Kitchen Alpha -->
+        <div class="bg-twin-surface border border-twin-border rounded-lg p-3 hover:border-twin-borderHover transition-all">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <div class="flex items-center gap-2 font-semibold text-white">
+              <span class="w-2 h-2 rounded-full bg-twin-lime"></span>
+              <span>Virtual Kitchen Alpha (Hotel Grand)</span>
+            </div>
+            <span class="text-[11px] font-mono text-twin-cyan">Portion AI Active</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-2 pt-2 border-t border-twin-border/50 text-[11px] font-mono">
+            <div>
+              <div class="text-slate-400 text-[10px]">Meal Yield</div>
+              <div class="text-twin-lime font-bold text-sm">2,400</div>
+            </div>
+            <div>
+              <div class="text-slate-400 text-[10px]">Efficiency</div>
+              <div class="text-white font-bold text-sm">98.2%</div>
+            </div>
+            <div>
+              <div class="text-slate-400 text-[10px]">Waste Delta</div>
+              <div class="text-twin-lime font-bold text-sm">-14.2%</div>
+            </div>
+          </div>
+          <div class="w-full bg-black/40 h-1.5 rounded-full mt-2.5 overflow-hidden border border-twin-border/60">
+            <div class="bg-twin-lime h-full rounded-full w-[94%]"></div>
+          </div>
+        </div>
+
+        <!-- Entity 2: Virtual Processing Unit Beta -->
+        <div class="bg-twin-surface border border-twin-border rounded-lg p-3 hover:border-twin-borderHover transition-all">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <div class="flex items-center gap-2 font-semibold text-white">
+              <span class="w-2 h-2 rounded-full bg-twin-cyan"></span>
+              <span>Processing Unit Beta (Upcycling)</span>
+            </div>
+            <span class="text-[11px] font-mono text-twin-lime">1.2 T/hr</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-2 pt-2 border-t border-twin-border/50 text-[11px] font-mono">
+            <div>
+              <div class="text-slate-400 text-[10px]">Raw Inflow</div>
+              <div class="text-white font-bold text-sm">3.2 Tons</div>
+            </div>
+            <div>
+              <div class="text-slate-400 text-[10px]">Conversion</div>
+              <div class="text-twin-cyan font-bold text-sm">Tomato Paste</div>
+            </div>
+            <div>
+              <div class="text-slate-400 text-[10px]">Hydration</div>
+              <div class="text-white font-bold text-sm">12.4%</div>
+            </div>
+          </div>
+          <div class="w-full bg-black/40 h-1.5 rounded-full mt-2.5 overflow-hidden border border-twin-border/60">
+            <div class="bg-twin-cyan h-full rounded-full w-[78%]"></div>
+          </div>
+        </div>
+
+        <!-- Entity 3: Virtual Cold Storage Hub -->
+        <div class="bg-twin-surface border border-twin-border rounded-lg p-3 hover:border-twin-borderHover transition-all">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <div class="flex items-center gap-2 font-semibold text-white">
+              <span class="w-2 h-2 rounded-full bg-twin-orange"></span>
+              <span>Central Cold Storage Hub #04</span>
+            </div>
+            <span class="text-[11px] font-mono text-twin-lime">2.9°C (Safe)</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-2 pt-2 border-t border-twin-border/50 text-[11px] font-mono">
+            <div>
+              <div class="text-slate-400 text-[10px]">Bay Capacity</div>
+              <div class="text-twin-orange font-bold text-sm">78.4%</div>
+            </div>
+            <div>
+              <div class="text-slate-400 text-[10px]">Chamber RH</div>
+              <div class="text-white font-bold text-sm">62% RH</div>
+            </div>
+            <div>
+              <div class="text-slate-400 text-[10px]">Audit Log</div>
+              <div class="text-twin-lime font-bold text-sm">Zero Spike</div>
+            </div>
+          </div>
+          <div class="w-full bg-black/40 h-1.5 rounded-full mt-2.5 overflow-hidden border border-twin-border/60">
+            <div class="bg-twin-orange h-full rounded-full w-[78%]"></div>
+          </div>
+        </div>
+
+        <!-- Entity 4: Virtual Recipient NGO Network -->
+        <div class="bg-twin-surface border border-twin-border rounded-lg p-3 hover:border-twin-borderHover transition-all">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <div class="flex items-center gap-2 font-semibold text-white">
+              <span class="w-2 h-2 rounded-full bg-twin-lime"></span>
+              <span>Virtual Recipient Network (14 NGOs)</span>
+            </div>
+            <span class="text-[11px] font-mono text-twin-lime font-bold">99.4% Fulfill</span>
+          </div>
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-300 mt-2">
+            <span>Demand Queue: 2,100 Meals</span>
+            <span class="text-twin-lime">1,820 Distributed</span>
+          </div>
+          <div class="w-full bg-black/40 h-1.5 rounded-full mt-2 overflow-hidden border border-twin-border/60">
+            <div class="bg-gradient-to-r from-twin-lime to-twin-cyan h-full rounded-full w-[99%]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IOT SENSOR MESH TELEMETRY -->
+      <div class="bg-twin-card border border-twin-border rounded-xl p-4 flex flex-col gap-3 shadow-lg">
+        <div class="flex items-center justify-between border-b border-twin-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-twin-cyan text-lg">radar</span>
+            <h2 class="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider">IoT Sensor Telemetry Grid</h2>
+          </div>
+          <span class="text-[10px] font-mono text-twin-cyan">48 BEACONS</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+          <div class="bg-twin-surface border border-twin-border p-2 rounded">
+            <div class="text-[10px] text-slate-400">Mean Temp</div>
+            <div class="text-twin-lime font-bold text-sm">3.1°C</div>
+            <div class="text-[9px] text-slate-500">Target: 2.0°C - 4.0°C</div>
+          </div>
+          <div class="bg-twin-surface border border-twin-border p-2 rounded">
+            <div class="text-[10px] text-slate-400">Freshness Index</div>
+            <div class="text-twin-cyan font-bold text-sm">97.8%</div>
+            <div class="text-[9px] text-slate-500">Spectral Cam Grade A</div>
+          </div>
+          <div class="bg-twin-surface border border-twin-border p-2 rounded">
+            <div class="text-[10px] text-slate-400">Network Latency</div>
+            <div class="text-white font-bold text-sm">18 ms</div>
+            <div class="text-[9px] text-slate-500">Edge Gateway BLE 5.3</div>
+          </div>
+          <div class="bg-twin-surface border border-twin-border p-2 rounded">
+            <div class="text-[10px] text-slate-400">Cryptographic Hash</div>
+            <div class="text-twin-lime font-bold text-[11px] truncate">0x7F4B..9D01</div>
+            <div class="text-[9px] text-slate-500">HACCP Certified</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARAMETER TUNING SLIDERS (SIMULATOR INPUTS) -->
+      <div class="bg-twin-card border border-twin-border rounded-xl p-4 flex flex-col gap-3 shadow-lg flex-1">
+        <div class="flex items-center justify-between border-b border-twin-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-twin-orange text-lg">tune</span>
+            <h2 class="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider">Dynamic Parameter Tuning</h2>
+          </div>
+          <button onclick="resetSliders()" class="text-[10px] font-mono text-slate-400 hover:text-white underline">RESET</button>
+        </div>
+
+        <div class="space-y-3.5 text-xs font-mono">
+          <!-- Slider 1 -->
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-300">Surplus Detection Sensitivity</span>
+              <span id="sensVal" class="text-twin-orange font-bold">92%</span>
+            </div>
+            <input type="range" min="50" max="100" value="92" oninput="document.getElementById('sensVal').innerText = this.value + '%'" class="w-full accent-twin-orange bg-black/40 h-1.5 rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[9px] text-slate-500 mt-0.5">
+              <span>Conservative</span>
+              <span>Ultra-Predictive</span>
+            </div>
+          </div>
+
+          <!-- Slider 2 -->
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-300">Dispatcher Algorithm Latency</span>
+              <span id="latVal" class="text-twin-lime font-bold">250 ms</span>
+            </div>
+            <input type="range" min="50" max="1000" step="50" value="250" oninput="document.getElementById('latVal').innerText = this.value + ' ms'" class="w-full accent-twin-lime bg-black/40 h-1.5 rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[9px] text-slate-500 mt-0.5">
+              <span>50ms Real-Time</span>
+              <span>1000ms Batch</span>
+            </div>
+          </div>
+
+          <!-- Slider 3 -->
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-300">Acceptable Decay Threshold</span>
+              <span id="decayVal" class="text-twin-cyan font-bold">2.5%</span>
+            </div>
+            <input type="range" min="0.5" max="8.0" step="0.5" value="2.5" oninput="document.getElementById('decayVal').innerText = this.value + '%'" class="w-full accent-twin-cyan bg-black/40 h-1.5 rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[9px] text-slate-500 mt-0.5">
+              <span>0.5% (Zero Waste)</span>
+              <span>8.0% (Relaxed)</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="mt-2 w-full py-2 rounded-lg bg-twin-card border border-twin-border hover:border-twin-orange text-xs font-mono text-white flex items-center justify-center gap-2 hover:bg-twin-surface transition">
+          <span class="material-symbols-outlined text-sm text-twin-orange">refresh</span>
+          Recalculate Deterministic Twin
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ================= CENTER COLUMN: TOPOLOGY & DIGITAL OPERATIONS CANVAS (6 COLS) ================= -->
+    <section class="xl:col-span-6 flex flex-col gap-3">
+      
+      <!-- MAIN TOPOLOGY CANVAS -->
+      <div class="relative bg-twin-card border border-twin-border rounded-xl p-4 flex flex-col flex-1 shadow-2xl overflow-hidden min-h-[500px]">
+        
+        <!-- HUD Canvas Header -->
+        <div class="relative z-10 flex items-center justify-between pb-3 border-b border-twin-border">
+          <div class="flex items-center gap-2.5">
+            <div class="relative flex items-center justify-center">
+              <span class="w-2.5 h-2.5 rounded-full bg-twin-lime animate-ping absolute"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-twin-lime relative"></span>
+            </div>
+            <div>
+              <h1 class="text-sm font-bold font-mono tracking-tight text-white flex items-center gap-2">
+                METROPOLITAN DIGITAL TWIN TOPOLOGY & FLOW MATRIX
+                <span class="px-1.5 py-0.5 rounded text-[10px] bg-twin-cyan/15 text-twin-cyan border border-twin-cyan/30 font-mono">ISOMETRIC SIM</span>
+              </h1>
+              <p class="text-[11px] font-mono text-slate-400">Live entity flows linking production nodes, cold logistics corridors, and NGO shelters.</p>
+            </div>
+          </div>
+
+          <!-- Topology Toolbar -->
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <button class="p-1 bg-twin-surface border border-twin-border rounded hover:text-white text-slate-400" title="Recenter Viewport">
+              <span class="material-symbols-outlined text-base">center_focus_strong</span>
+            </button>
+            <button class="p-1 bg-twin-surface border border-twin-border rounded hover:text-white text-slate-400" title="Toggle Grid Mesh">
+              <span class="material-symbols-outlined text-base">grid_on</span>
+            </button>
+            <div class="px-2 py-0.5 bg-black/40 border border-twin-border rounded text-[11px] text-slate-300">
+              Scale: <span class="text-twin-orange font-bold">1:1,000 Spatial</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CANVAS GRAPH AREA -->
+        <div class="relative flex-1 w-full h-full min-h-[460px] grid-mesh rounded-lg border border-twin-border/40 mt-3 overflow-hidden bg-[#0B110E]">
+          
+          <!-- Subtle Radar Sweep Effect in background -->
+          <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40">
+            <div class="w-[500px] h-[500px] rounded-full border border-twin-border/50 radar-sweep"></div>
+          </div>
+
+          <!-- SVG Flow Lines and Arteries -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#F97316" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#B7F34A" stop-opacity="0.8"/>
+              </linearGradient>
+              <linearGradient id="gradCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#B7F34A" stop-opacity="0.8"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Line: Kitchen Alpha -> Cold Storage Hub -->
+            <path d="M 120 110 C 220 110, 220 230, 310 230" fill="none" stroke="#F97316" stroke-width="2.5" stroke-dasharray="6,6" class="animate-dash-flow" filter="url(#glow)"/>
+
+            <!-- Line: Processing Unit Beta -> Cold Storage Hub -->
+            <path d="M 120 330 C 210 330, 220 240, 310 230" fill="none" stroke="#38BDF8" stroke-width="2" stroke-dasharray="5,5" class="animate-dash-flow"/>
+
+            <!-- Line: Cold Storage Hub -> Transit Hub / Fleet Dispatch -->
+            <path d="M 430 230 C 490 230, 490 150, 560 150" fill="none" stroke="#B7F34A" stroke-width="3" stroke-dasharray="8,6" class="animate-dash-flow" filter="url(#glow)"/>
+
+            <!-- Line: Cold Storage Hub -> Secondary Shelter Line -->
+            <path d="M 430 230 C 500 230, 500 320, 570 320" fill="none" stroke="#B7F34A" stroke-width="2.5" stroke-dasharray="6,6" class="animate-dash-flow"/>
+
+            <!-- Line: Transit -> Shelter #1 (City Mission) -->
+            <path d="M 670 150 C 720 150, 720 100, 780 100" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4" class="animate-dash-flow"/>
+
+            <!-- Line: Transit -> Shelter #2 (Hope Pantry) -->
+            <path d="M 670 150 C 720 150, 720 220, 780 220" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4" class="animate-dash-flow"/>
+
+            <!-- Line: Southern Transit -> Shelter #3 (Harbor Light) -->
+            <path d="M 670 320 C 720 320, 720 350, 780 350" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4" class="animate-dash-flow"/>
+          </svg>
+
+          <!-- INTERACTIVE TOPOLOGY NODES -->
+          
+          <!-- NODE 1: Virtual Kitchen Alpha (Grand Hotel) -->
+          <div class="absolute top-10 left-6 z-10 w-44 bg-[#111A16]/95 border border-twin-orange/70 rounded-xl p-3 shadow-xl backdrop-blur-sm glow-orange cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-twin-orange mb-1">
+              <span class="font-bold flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-twin-orange animate-ping"></span>
+                PRODUCER NODE 01
+              </span>
+              <span>LIVE</span>
+            </div>
+            <div class="text-xs font-bold text-white">Virtual Kitchen Alpha</div>
+            <div class="text-[11px] text-slate-300 font-mono mt-1">Apex Grand Hotel</div>
+            <div class="mt-2 pt-2 border-t border-twin-border flex items-center justify-between text-[10px] font-mono">
+              <span class="text-slate-400">Batch Yield:</span>
+              <span class="text-twin-lime font-bold">2,400 Meals</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mt-0.5">
+              <span>Portion Opt:</span>
+              <span class="text-twin-orange font-semibold">Active (-8%)</span>
+            </div>
+          </div>
+
+          <!-- NODE 2: Processing Unit Beta (Cascade Agro) -->
+          <div class="absolute bottom-16 left-6 z-10 w-44 bg-[#111A16]/95 border border-twin-cyan/70 rounded-xl p-3 shadow-xl backdrop-blur-sm glow-cyan cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-twin-cyan mb-1">
+              <span class="font-bold flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-twin-cyan"></span>
+                UPCYCLER NODE 02
+              </span>
+              <span>94.2%</span>
+            </div>
+            <div class="text-xs font-bold text-white">Processing Unit Beta</div>
+            <div class="text-[11px] text-slate-300 font-mono mt-1">Cascade Upcycling</div>
+            <div class="mt-2 pt-2 border-t border-twin-border flex items-center justify-between text-[10px] font-mono">
+              <span class="text-slate-400">Throughput:</span>
+              <span class="text-twin-cyan font-bold">1.2 T / hr</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mt-0.5">
+              <span>Conversion:</span>
+              <span class="text-white font-semibold">Tomato Paste</span>
+            </div>
+          </div>
+
+          <!-- NODE 3: CENTRAL COLD STORAGE HUB (CORE PIVOT) -->
+          <div class="absolute top-[170px] left-[270px] z-20 w-52 bg-[#0D1412] border-2 border-twin-lime rounded-xl p-3.5 shadow-2xl backdrop-blur-md glow-lime cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-twin-lime mb-1">
+              <span class="font-bold flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-twin-lime animate-pulse"></span>
+                CENTRAL LOGISTICS NEXUS
+              </span>
+              <span class="text-slate-300 font-bold">HUB-04</span>
+            </div>
+            <div class="text-sm font-extrabold text-white">Virtual Cold Storage Hub</div>
+            <div class="text-[11px] text-slate-400 font-mono">Metropolitan Primary Distribution</div>
+            
+            <div class="grid grid-cols-2 gap-2 mt-2.5 pt-2 border-t border-twin-border text-[11px] font-mono">
+              <div class="bg-black/50 p-1.5 rounded border border-twin-border">
+                <div class="text-[9px] text-slate-400">Capacity</div>
+                <div class="text-twin-orange font-bold">78.4%</div>
+              </div>
+              <div class="bg-black/50 p-1.5 rounded border border-twin-border">
+                <div class="text-[9px] text-slate-400">Core Temp</div>
+                <div class="text-twin-lime font-bold">2.9°C</div>
+              </div>
+            </div>
+
+            <div class="mt-2 flex items-center gap-1.5 text-[10px] font-mono text-slate-300">
+              <span class="material-symbols-outlined text-[13px] text-twin-lime">verified</span>
+              <span>100% Zero Cold-Chain Spike</span>
+            </div>
+          </div>
+
+          <!-- NODE 4: VIRTUAL REEFER FLEET IN TRANSIT -->
+          <div class="absolute top-[105px] left-[520px] z-10 w-44 bg-[#111A16]/95 border border-twin-lime/70 rounded-xl p-3 shadow-xl backdrop-blur-sm glow-lime cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-twin-lime mb-1">
+              <span class="font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">local_shipping</span>
+                FLEET CORRIDOR
+              </span>
+              <span class="animate-pulse font-bold text-twin-lime">EN ROUTE</span>
+            </div>
+            <div class="text-xs font-bold text-white">Reefer Vans FL-01 — FL-12</div>
+            <div class="text-[11px] text-slate-300 font-mono mt-0.5">Tracking on Route #4</div>
+            <div class="mt-2 pt-2 border-t border-twin-border flex items-center justify-between text-[10px] font-mono">
+              <span class="text-slate-400">Avg Fleet Temp:</span>
+              <span class="text-twin-lime font-bold">3.2°C</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mt-0.5">
+              <span class="text-slate-400">Next ETA:</span>
+              <span class="text-twin-cyan font-bold">14 Mins</span>
+            </div>
+          </div>
+
+          <!-- NODE 5: SOUTHERN FLEET CORRIDOR -->
+          <div class="absolute bottom-[90px] left-[520px] z-10 w-40 bg-[#111A16]/95 border border-twin-border rounded-xl p-2.5 shadow-xl backdrop-blur-sm cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span class="font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs text-twin-cyan">alt_route</span>
+                FL-08 EXPRESS
+              </span>
+              <span class="text-twin-lime">ACTIVE</span>
+            </div>
+            <div class="text-xs font-bold text-white">EcoReefer EV #08</div>
+            <div class="text-[10px] text-slate-400 font-mono">Payload: 340kg Bakery</div>
+            <div class="mt-1.5 pt-1.5 border-t border-twin-border flex justify-between text-[10px] font-mono">
+              <span class="text-slate-400">Battery:</span>
+              <span class="text-twin-lime font-bold">84%</span>
+            </div>
+          </div>
+
+          <!-- NODE 6: NGO SHELTER NETWORK (RECIPIENT NODES) -->
+          <div class="absolute top-10 right-4 z-10 w-44 bg-[#111A16]/95 border border-twin-emerald/70 rounded-xl p-3 shadow-xl backdrop-blur-sm cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-twin-emerald mb-1">
+              <span class="font-bold">RECIPIENT NODE #01</span>
+              <span>PRIORITY</span>
+            </div>
+            <div class="text-xs font-bold text-white">City Mission Downtown</div>
+            <div class="text-[10px] text-slate-400 font-mono">Capacity: 450 meals / day</div>
+            <div class="mt-2 pt-1.5 border-t border-twin-border flex items-center justify-between text-[10px] font-mono">
+              <span class="text-slate-400">Fulfillment:</span>
+              <span class="text-twin-lime font-bold">100% Filled</span>
+            </div>
+            <div class="w-full bg-black/40 h-1.5 rounded-full mt-1.5 overflow-hidden">
+              <div class="bg-twin-emerald h-full w-[100%]"></div>
+            </div>
+          </div>
+
+          <!-- NODE 7: RECIPIENT NODE #02 -->
+          <div class="absolute top-[190px] right-4 z-10 w-44 bg-[#111A16]/95 border border-twin-border rounded-xl p-3 shadow-xl backdrop-blur-sm cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span class="font-bold text-twin-lime">RECIPIENT NODE #02</span>
+              <span>ALLOCATED</span>
+            </div>
+            <div class="text-xs font-bold text-white">Hope Youth Shelter</div>
+            <div class="text-[10px] text-slate-400 font-mono">Demand: 180 hot meals</div>
+            <div class="mt-2 pt-1.5 border-t border-twin-border flex items-center justify-between text-[10px] font-mono">
+              <span class="text-slate-400">ETA Dispatch:</span>
+              <span class="text-twin-cyan font-bold">18:55 (13m)</span>
+            </div>
+            <div class="w-full bg-black/40 h-1.5 rounded-full mt-1.5 overflow-hidden">
+              <div class="bg-twin-lime h-full w-[82%]"></div>
+            </div>
+          </div>
+
+          <!-- NODE 8: RECIPIENT NODE #03 -->
+          <div class="absolute bottom-8 right-4 z-10 w-44 bg-[#111A16]/95 border border-twin-border rounded-xl p-3 shadow-xl backdrop-blur-sm cursor-pointer hover:scale-105 transition-transform">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span class="font-bold text-twin-orange">RECIPIENT NODE #03</span>
+              <span>BIO-VALORIZE</span>
+            </div>
+            <div class="text-xs font-bold text-white">BioTerra Clean Energy</div>
+            <div class="text-[10px] text-slate-400 font-mono">Anaerobic Digest #02</div>
+            <div class="mt-2 pt-1.5 border-t border-twin-border flex items-center justify-between text-[10px] font-mono">
+              <span class="text-slate-400">Waste Rerouted:</span>
+              <span class="text-twin-orange font-bold">4.2 Tons</span>
+            </div>
+            <div class="w-full bg-black/40 h-1.5 rounded-full mt-1.5 overflow-hidden">
+              <div class="bg-twin-orange h-full w-[98%]"></div>
+            </div>
+          </div>
+
+          <!-- Live Overlay Telemetry HUD Badge inside Canvas -->
+          <div class="absolute bottom-3 left-3 z-20 bg-black/80 border border-twin-border rounded-lg p-2 flex items-center gap-3 text-[11px] font-mono backdrop-blur-md">
+            <div class="flex items-center gap-1.5 text-slate-300">
+              <span class="inline-block w-2 h-2 rounded-full bg-twin-lime"></span>
+              <span>Cold-Chain Envelope: <strong class="text-twin-lime">3.05°C ± 0.3°</strong></span>
+            </div>
+            <div class="h-3 w-px bg-twin-border"></div>
+            <div class="text-slate-300">
+              Network Routing Efficiency: <strong class="text-twin-cyan">98.4%</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= RIGHT COLUMN: AI INTERVENTION ENGINE & EVENT STREAM (3 COLS) ================= -->
+    <aside class="xl:col-span-3 flex flex-col gap-3">
+      
+      <!-- AI AUTONOMOUS INTERVENTION ENGINE -->
+      <div class="bg-twin-card border border-twin-border rounded-xl p-4 flex flex-col gap-3 shadow-lg">
+        <div class="flex items-center justify-between border-b border-twin-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-twin-orange text-lg">psychology</span>
+            <h2 class="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider">AI Intervention Engine</h2>
+          </div>
+          <span class="text-[10px] font-mono text-twin-orange bg-twin-orange/15 px-2 py-0.5 rounded border border-twin-orange/30 font-bold">AUTONOMOUS</span>
+        </div>
+
+        <!-- Intervention Card 1 -->
+        <div class="bg-twin-surface border border-twin-orange/40 rounded-lg p-3 hover:border-twin-orange transition-all relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-1 h-full bg-twin-orange"></div>
+          <div class="flex items-center justify-between text-xs font-mono mb-1.5 pl-1">
+            <span class="text-twin-orange font-bold">INTERVENTION #891</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-twin-lime/15 text-twin-lime border border-twin-lime/30 font-bold">EXECUTED</span>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed pl-1 font-sans">
+            Auto-allocated <strong class="text-white">420kg surplus banquet stew</strong> to <span class="text-twin-lime font-medium">City Mission</span> before +4°C spoilage threshold. Averted <span class="text-twin-lime font-mono">1.2 MT CO2e</span> & <span class="text-white font-mono">$2,400</span> loss.
+          </p>
+          <div class="mt-2.5 pt-2 border-t border-twin-border/50 flex items-center justify-between text-[10px] font-mono text-slate-400 pl-1">
+            <span>Algorithm: Fast-Match ML</span>
+            <span class="text-twin-cyan">Latency: 14ms</span>
+          </div>
+        </div>
+
+        <!-- Intervention Card 2 -->
+        <div class="bg-twin-surface border border-twin-lime/40 rounded-lg p-3 hover:border-twin-lime transition-all relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-1 h-full bg-twin-lime"></div>
+          <div class="flex items-center justify-between text-xs font-mono mb-1.5 pl-1">
+            <span class="text-twin-lime font-bold">INTERVENTION #892</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-twin-cyan/15 text-twin-cyan border border-twin-cyan/30 font-bold">OPTIMIZED</span>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed pl-1 font-sans">
+            Rerouted <strong class="text-white">Vehicle FL-03</strong> to bypass I-95 traffic bottleneck; preserved <span class="text-twin-lime font-bold">18 min cold-chain freshness window</span> and eliminated temperature breach risk.
+          </p>
+          <div class="mt-2.5 pt-2 border-t border-twin-border/50 flex items-center justify-between text-[10px] font-mono text-slate-400 pl-1">
+            <span>Dynamic Telemetry API</span>
+            <span class="text-twin-lime">Zero Temp Spike</span>
+          </div>
+        </div>
+
+        <!-- Intervention Card 3: Pending Approval / Simulation Forecast -->
+        <div class="bg-twin-surface border border-twin-border rounded-lg p-3 hover:border-twin-borderHover transition-all relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-1 h-full bg-twin-cyan"></div>
+          <div class="flex items-center justify-between text-xs font-mono mb-1.5 pl-1">
+            <span class="text-twin-cyan font-bold">INTERVENTION #893</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-white/10 text-white font-mono">SIM_FORECAST</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed pl-1 font-sans">
+            Scale tomato paste vacuum dehydration cycle at <strong class="text-white">Line 01</strong> by +15% to absorb incoming 3.2T surplus harvest from organic co-op.
+          </p>
+          <div class="mt-2.5 flex items-center gap-2 pl-1">
+            <button class="flex-1 py-1 bg-twin-card border border-twin-border hover:border-twin-lime text-slate-200 rounded text-[11px] font-mono font-medium hover:bg-twin-lime/10 transition">
+              Commit Action
+            </button>
+            <button class="px-2 py-1 bg-black/40 border border-twin-border hover:border-twin-rose text-slate-400 hover:text-white rounded text-[11px] font-mono transition">
+              Dismiss
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIMULATION EVENT LOG (TERMINAL TELEMETRY FEED) -->
+      <div class="bg-twin-card border border-twin-border rounded-xl p-4 flex flex-col flex-1 shadow-lg overflow-hidden">
+        <div class="flex items-center justify-between border-b border-twin-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-twin-lime text-lg">terminal</span>
+            <h2 class="text-xs font-mono uppercase font-bold text-slate-200 tracking-wider">Simulation Event Log</h2>
+          </div>
+          <span class="text-[10px] font-mono text-twin-lime flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-twin-lime animate-pulse"></span>
+            STREAM LIVE
+          </span>
+        </div>
+
+        <!-- Terminal Stream Box -->
+        <div id="terminalFeed" class="mt-3 flex-1 bg-black/60 rounded-lg p-3 font-mono text-[11px] space-y-2.5 overflow-y-auto max-h-[310px] custom-scrollbar border border-twin-border/50 text-slate-300">
+          
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:40:12]</span>
+            <div><span class="text-twin-orange font-bold">SIM_EVENT:</span> Banquet kitchen logged 350kg surplus yield from lunch conference.</div>
+          </div>
+
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:40:14]</span>
+            <div><span class="text-twin-lime font-bold">AI_DISPATCH:</span> Matching algorithm evaluated 24 NGO requirements in 18ms.</div>
+          </div>
+
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:40:19]</span>
+            <div><span class="text-twin-cyan font-bold">ROUTE_OPT:</span> Reefer FL-04 assigned. Cold-chain continuous integrity verified 99.8%.</div>
+          </div>
+
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:41:02]</span>
+            <div><span class="text-white font-bold">IOT_SYNC:</span> Sensor BLE beacon #B-408 logged 2.8°C at Chamber 1.</div>
+          </div>
+
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:41:45]</span>
+            <div><span class="text-twin-orange font-bold">PRED_YIELD:</span> Dinner service preparation target adjusted -8% based on Bayesian diner count.</div>
+          </div>
+
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:42:01]</span>
+            <div><span class="text-twin-lime font-bold">ESCROW_STK:</span> Crypto proof of delivery token issued to Hope Mission (Batch #8928).</div>
+          </div>
+
+          <div class="flex items-start gap-2 text-slate-400">
+            <span class="text-twin-cyan shrink-0">[06:42:15]</span>
+            <div><span class="text-twin-cyan font-bold">TICK_SYNC:</span> Deterministic state validated across 14 simulated nodes. Zero divergence.</div>
+          </div>
+
+        </div>
+
+        <div class="mt-2.5 pt-2 border-t border-twin-border flex items-center justify-between text-[10px] font-mono text-slate-500">
+          <span>Buffer: 10,000 Lines</span>
+          <button onclick="clearTerminal()" class="text-slate-400 hover:text-white underline">Clear Feed</button>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ================= BOTTOM SIMULATION IMPACT & COMPARISON HUD ================= -->
+  <footer class="sticky bottom-0 z-40 bg-[#0D1412]/95 backdrop-blur-md border-t border-twin-border px-5 py-3 shadow-2xl">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+      
+      <!-- Headline & Scenario Context -->
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-lg bg-twin-card border border-twin-border text-twin-lime">
+          <span class="material-symbols-outlined text-2xl">insights</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-xs font-mono uppercase font-bold text-white tracking-wider">Scenario Outcomes vs. Unmitigated Linear Waste</h3>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-twin-lime/15 text-twin-lime border border-twin-lime/30 font-semibold">VALIDATED RUN</span>
+          </div>
+          <p class="text-[11px] font-mono text-slate-400">Deterministic comparison of FoodLoop AI Autonomous Loop versus industry-standard landfill baseline.</p>
+        </div>
+      </div>
+
+      <!-- 4 Core Metric Comparison Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full lg:w-auto">
+        
+        <!-- Metric 1: Food Diverted -->
+        <div class="bg-twin-card border border-twin-border rounded-xl px-4 py-2.5 flex flex-col justify-center min-w-[170px]">
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-0.5">
+            <span>Food Diverted</span>
+            <span class="text-twin-lime material-symbols-outlined text-[14px]">trending_up</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-extrabold font-mono text-white">98.8%</span>
+            <span class="text-[10px] font-mono text-slate-400">vs 22% base</span>
+          </div>
+          <div class="w-full bg-black/50 h-1 rounded-full mt-1.5 overflow-hidden">
+            <div class="bg-twin-lime h-full w-[98.8%]"></div>
+          </div>
+        </div>
+
+        <!-- Metric 2: Financial Loss Prevented -->
+        <div class="bg-twin-card border border-twin-border rounded-xl px-4 py-2.5 flex flex-col justify-center min-w-[170px]">
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-0.5">
+            <span>Loss Prevented</span>
+            <span class="text-twin-orange material-symbols-outlined text-[14px]">attach_money</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-extrabold font-mono text-twin-orange">$14,890</span>
+            <span class="text-[10px] font-mono text-slate-400">/ run</span>
+          </div>
+          <div class="w-full bg-black/50 h-1 rounded-full mt-1.5 overflow-hidden">
+            <div class="bg-twin-orange h-full w-[88%]"></div>
+          </div>
+        </div>
+
+        <!-- Metric 3: Carbon Footprint Reduced -->
+        <div class="bg-twin-card border border-twin-border rounded-xl px-4 py-2.5 flex flex-col justify-center min-w-[170px]">
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-0.5">
+            <span>Carbon Reduced</span>
+            <span class="text-twin-cyan material-symbols-outlined text-[14px]">eco</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-extrabold font-mono text-twin-cyan">12.4 MT</span>
+            <span class="text-[10px] font-mono text-slate-400">CO2e avoided</span>
+          </div>
+          <div class="w-full bg-black/50 h-1 rounded-full mt-1.5 overflow-hidden">
+            <div class="bg-twin-cyan h-full w-[94%]"></div>
+          </div>
+        </div>
+
+        <!-- Metric 4: NGO Fulfillment -->
+        <div class="bg-twin-card border border-twin-border rounded-xl px-4 py-2.5 flex flex-col justify-center min-w-[170px]">
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-0.5">
+            <span>NGO Meals Served</span>
+            <span class="text-twin-lime material-symbols-outlined text-[14px]">volunteer_activism</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-extrabold font-mono text-white">2,100</span>
+            <span class="text-[10px] font-mono text-twin-lime font-bold">100% fulfill</span>
+          </div>
+          <div class="w-full bg-black/50 h-1 rounded-full mt-1.5 overflow-hidden">
+            <div class="bg-gradient-to-r from-twin-lime to-twin-cyan h-full w-[100%]"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Action: Export / Run Batch -->
+      <div class="hidden xl:flex items-center gap-2">
+        <button class="px-3 py-2 rounded-lg bg-twin-surface border border-twin-border hover:border-twin-lime text-xs font-mono text-slate-200 hover:text-white flex items-center gap-1.5 transition">
+          <span class="material-symbols-outlined text-sm text-twin-lime">restart_alt</span>
+          Re-Run Scenario
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE CLIENT SCRIPTS -->
+  <script>
+    let isPlaying = true;
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      const icon = document.getElementById('playIcon');
+      if (isPlaying) {
+        icon.innerText = 'pause';
+      } else {
+        icon.innerText = 'play_arrow';
+      }
+    }
+
+    function injectAlert(title, detail) {
+      const feed = document.getElementById('terminalFeed');
+      const time = new Date().toTimeString().split(' ')[0];
+      const entry = document.createElement('div');
+      entry.className = 'flex items-start gap-2 text-slate-400 bg-twin-rose/10 p-1.5 rounded border border-twin-rose/30 animate-pulse';
+      entry.innerHTML = `
+        <span class="text-twin-rose shrink-0">[${time}]</span>
+        <div><strong class="text-twin-rose">STRESS_INJECT:</strong> ${title} — ${detail}</div>
+      `;
+      feed.prepend(entry);
+    }
+
+    function clearTerminal() {
+      document.getElementById('terminalFeed').innerHTML = `
+        <div class="text-slate-500 italic">[Terminal log cleared. Awaiting telemetry stream...]</div>
+      `;
+    }
+
+    function resetSliders() {
+      document.getElementById('sensVal').innerText = '92%';
+      document.getElementById('latVal').innerText = '250 ms';
+      document.getElementById('decayVal').innerText = '2.5%';
+    }
+  </script>
+
+</body>
+</html>

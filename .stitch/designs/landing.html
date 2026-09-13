@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FoodLoop — The AI-Powered Food Lifecycle Platform</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error-container": "#ffdad6",
+            "on-surface": "#151e18",
+            "surface": "#f2fcf2",
+            "surface-dim": "#d2ddd3",
+            "surface-container-high": "#e1ebe1",
+            "on-primary": "#ffffff",
+            "primary-container": "#f97316",
+            "tertiary": "#006398",
+            "secondary-fixed-dim": "#9ed830",
+            "inverse-primary": "#ffb690",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-container": "#00a2f4",
+            "primary": "#9d4300",
+            "on-secondary-fixed": "#131f00",
+            "surface-variant": "#dbe5db",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed": "#001d32",
+            "surface-container": "#e6f1e7",
+            "outline": "#8c7164",
+            "surface-bright": "#f2fcf2",
+            "inverse-on-surface": "#e9f3e9",
+            "on-error": "#ffffff",
+            "on-primary-fixed-variant": "#783200",
+            "on-tertiary-container": "#003554",
+            "on-error-container": "#93000a",
+            "error": "#ba1a1a",
+            "on-secondary-fixed-variant": "#354e00",
+            "on-secondary-container": "#4b6d00",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#29332c",
+            "surface-container-low": "#ecf6ec",
+            "surface-container-highest": "#dbe5db",
+            "on-primary-container": "#582200",
+            "on-primary-fixed": "#341100",
+            "tertiary-fixed": "#cde5ff",
+            "outline-variant": "#e0c0b1",
+            "on-surface-variant": "#584237",
+            "secondary-container": "#b6f249",
+            "primary-fixed-dim": "#ffb690",
+            "on-background": "#151e18",
+            "background": "#f2fcf2",
+            "tertiary-fixed-dim": "#93ccff",
+            "secondary-fixed": "#b9f54c",
+            "secondary": "#476800",
+            "on-tertiary-fixed-variant": "#004b74",
+            "surface-tint": "#9d4300",
+            "primary-fixed": "#ffdbca"
+          },
+          fontFamily: {
+            headline: ["Plus Jakarta Sans", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            "2xl": "1rem",
+            full: "9999px"
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.08); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
+<!-- 1. TopNavBar (Shared Component Anchor) -->
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-200">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="font-headline text-xl font-extrabold tracking-tight text-on-surface flex items-center gap-2 group" href="#">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center border border-outline-variant/40 shadow-sm relative group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6 text-primary-container" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M12 2a10 10 0 0 0-7.5 16.5L3 20l1.5-1.5A10 10 0 1 0 12 2z"></path>
+<path d="M8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
+</svg>
+<span class="absolute -top-1 -right-1 w-3 h-3 bg-secondary-container rounded-full ring-2 ring-surface-container-lowest animate-pulse-subtle"></span>
+</div>
+<span class="font-headline tracking-tight text-xl text-on-surface font-extrabold">FoodLoop</span>
+</a>
+<!-- Desktop Navigation Links -->
+<nav class="hidden md:flex items-center gap-8 text-sm font-semibold font-label">
+<a class="text-primary-container font-semibold transition-colors flex items-center gap-1.5" href="#pipeline">
+          Lifecycle Pipeline
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface font-medium transition-colors" href="#ai-engine">
+          AI Engine
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface font-medium transition-colors" href="#ecosystem">
+          Ecosystem
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface font-medium transition-colors" href="#telemetry">
+          Cold-Chain Telemetry
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface font-medium transition-colors" href="#impact">
+          ESG Impact
+        </a>
+</nav>
+<!-- Trailing CTAs -->
+<div class="flex items-center gap-3">
+<a class="hidden sm:inline-flex text-sm font-semibold text-on-surface hover:text-primary-container px-4 py-2 transition-colors duration-150" href="#login">
+          Platform Login
+        </a>
+<a class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-headline text-sm font-bold px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98]" href="#enterprise-demo">
+<span>Request Enterprise Demo</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</header>
+<!-- 2. Hero Section -->
+<section class="pt-36 pb-20 relative overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-4xl mx-auto text-center">
+<!-- Pill Badge -->
+<div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/50 shadow-sm mb-6">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container ring-4 ring-secondary-container/20 animate-pulse-subtle"></span>
+<span class="font-label text-xs font-bold text-on-surface tracking-wide uppercase">AI Food Intelligence &amp; Redistribution Ecosystem</span>
+</div>
+<!-- Headline -->
+<h1 class="font-headline text-4xl sm:text-5xl lg:text-6xl font-extrabold text-on-surface tracking-tight leading-[1.1] mb-6">
+          The AI-Powered Food Lifecycle Platform
+        </h1>
+<!-- Subheadline -->
+<p class="font-body text-lg sm:text-xl text-on-surface-variant max-w-3xl mx-auto leading-relaxed mb-10">
+          Predict demand. Prevent overproduction. Recover surplus. Optimize logistics. Measure impact. Close the loop.
+        </p>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+<a class="inline-flex items-center gap-2.5 bg-primary-container hover:bg-primary text-on-primary font-headline font-bold text-base px-7 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 active:scale-95" href="#enterprise-demo">
+<span>Transform Your Food Operations</span>
+<span class="material-symbols-outlined">east</span>
+</a>
+<a class="inline-flex items-center gap-2 bg-surface-container-lowest hover:bg-surface-container-high border border-outline-variant/60 text-on-surface font-headline font-bold text-base px-6 py-3.5 rounded-lg shadow-sm transition-all duration-150" href="#digital-twin">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>Explore Digital Twin</span>
+<span class="material-symbols-outlined text-lg">view_in_ar</span>
+</a>
+</div>
+</div>
+<!-- Live Telemetry Preview Card -->
+<div class="max-w-5xl mx-auto bg-surface-container-lowest rounded-2xl border border-outline-variant/50 shadow-md p-6 sm:p-8 relative">
+<div class="flex flex-wrap items-center justify-between pb-6 border-b border-outline-variant/30 gap-4">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container px-3 py-1 rounded-full border border-outline-variant/40">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+<span class="font-mono text-xs font-semibold text-on-surface">TELEMETRY_ENGINE // V4.8</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Real-time predictive cold-chain telemetry active</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary-container">sync</span>
+<span>Latency: 42ms • Sync interval: 1s</span>
+</div>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between text-on-surface-variant text-xs font-medium mb-1">
+<span>Demand Prediction Accuracy</span>
+<span class="material-symbols-outlined text-sm text-secondary">psychology</span>
+</div>
+<div class="font-headline text-3xl font-extrabold text-on-surface tracking-tight">94.2%</div>
+<div class="text-[11px] text-secondary font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +3.8% vs static ERP
+            </div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between text-on-surface-variant text-xs font-medium mb-1">
+<span>Surplus Routed Today</span>
+<span class="material-symbols-outlined text-sm text-primary-container">local_shipping</span>
+</div>
+<div class="font-headline text-3xl font-extrabold text-on-surface tracking-tight">1,420 <span class="text-lg font-bold text-on-surface-variant">kg</span></div>
+<div class="text-[11px] text-primary-container font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">bolt</span> 100% divert from landfill
+            </div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between text-on-surface-variant text-xs font-medium mb-1">
+<span>Avg Pickup Dispatch</span>
+<span class="material-symbols-outlined text-sm text-tertiary">timer</span>
+</div>
+<div class="font-headline text-3xl font-extrabold text-on-surface tracking-tight">18 <span class="text-lg font-bold text-on-surface-variant">min</span></div>
+<div class="text-[11px] text-secondary font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check_circle</span> 3.4x faster than legacy NGO logs
+            </div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between text-on-surface-variant text-xs font-medium mb-1">
+<span>Spoiled In Transit</span>
+<span class="material-symbols-outlined text-sm text-outline">ac_unit</span>
+</div>
+<div class="font-headline text-3xl font-extrabold text-on-surface tracking-tight">0.04%</div>
+<div class="text-[11px] text-secondary font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">format_image_left</span> IoT dynamic temp lock
+            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Systemic Problem Section -->
+<section class="py-24 bg-surface-container-lowest border-y border-outline-variant/30">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label text-xs font-bold text-primary tracking-widest uppercase mb-2 block">Systemic Fragility</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight mb-4">
+          Systemic Inefficiency Across the Global Food Supply Chain
+        </h2>
+<p class="font-body text-base text-on-surface-variant">
+          Conventional food management relies on backward-looking batch schedules, disconnected spreadsheets, and passive cold-storage that fails to protect perishable goods.
+        </p>
+</div>
+<!-- 3 Impact Statistics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+<div class="p-8 rounded-2xl bg-surface-container border border-outline-variant/40 relative overflow-hidden">
+<div class="font-headline text-5xl font-extrabold text-primary mb-3">1/3</div>
+<h3 class="font-headline text-lg font-bold text-on-surface mb-2">Global Food Lost Annually</h3>
+<p class="font-body text-sm text-on-surface-variant">
+            Over 1.3 billion metric tons of edible food is lost or incinerated, representing an annual $1.3 Trillion economic deadweight loss.
+          </p>
+<div class="mt-4 inline-flex items-center gap-1.5 text-xs font-mono text-outline">
+<span class="material-symbols-outlined text-sm">query_stats</span> UN FAO &amp; World Bank Index
+          </div>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container border border-outline-variant/40 relative overflow-hidden">
+<div class="font-headline text-5xl font-extrabold text-primary-container mb-3">40%</div>
+<h3 class="font-headline text-lg font-bold text-on-surface mb-2">Upstream Preventable Surplus</h3>
+<p class="font-body text-sm text-on-surface-variant">
+            Commercial buffets, hotel catering, and supermarkets overproduce by double-digit margins due to zero predictive demand correlation.
+          </p>
+<div class="mt-4 inline-flex items-center gap-1.5 text-xs font-mono text-outline">
+<span class="material-symbols-outlined text-sm">model_training</span> ReFED Enterprise Analysis
+          </div>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container border border-outline-variant/40 relative overflow-hidden">
+<div class="font-headline text-5xl font-extrabold text-error mb-3">8–10%</div>
+<h3 class="font-headline text-lg font-bold text-on-surface mb-2">Of Global GHG Emissions</h3>
+<p class="font-body text-sm text-on-surface-variant">
+            Food waste rotting in landfills produces highly potent methane (CH4), driving more emissions than the entire global commercial aviation sector.
+          </p>
+<div class="mt-4 inline-flex items-center gap-1.5 text-xs font-mono text-outline">
+<span class="material-symbols-outlined text-sm">co2</span> IPCC Climate Assessment
+          </div>
+</div>
+</div>
+<!-- Architectural Comparison: Linear vs FoodLoop Closed-Loop -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Traditional Linear Waste Chain -->
+<div class="p-8 rounded-2xl bg-error-container/20 border border-error/20">
+<div class="flex items-center justify-between mb-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container text-on-error-container text-xs font-bold font-mono uppercase">
+<span class="material-symbols-outlined text-sm">close</span> Traditional Linear Waste Chain
+            </span>
+<span class="text-xs font-mono text-error font-medium">Net Negative ROI</span>
+</div>
+<ol class="space-y-4 font-body text-sm">
+<li class="p-3.5 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-error-container text-error flex items-center justify-center font-mono font-bold text-xs shrink-0">1</span>
+<div>
+<p class="font-semibold text-on-surface">Broken Static Forecasting</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Managers guess batch sizes from week-old historical spreadsheets ignoring weather and live RSVPs.</p>
+</div>
+</li>
+<li class="p-3.5 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-error-container text-error flex items-center justify-center font-mono font-bold text-xs shrink-0">2</span>
+<div>
+<p class="font-semibold text-on-surface">Chronic Overproduction</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Kitchens prep buffer stock (15–30%) to avoid stockouts, locking in inevitable perishable waste.</p>
+</div>
+</li>
+<li class="p-3.5 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-error-container text-error flex items-center justify-center font-mono font-bold text-xs shrink-0">3</span>
+<div>
+<p class="font-semibold text-on-surface">Blind Cold Storage &amp; Late Discovery</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Manual FIFO sticker checks fail; expired inventory discovered hours before dumpsters arrive.</p>
+</div>
+</li>
+<li class="p-3.5 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-error-container text-error flex items-center justify-center font-mono font-bold text-xs shrink-0">4</span>
+<div>
+<p class="font-semibold text-on-surface">Incineration &amp; Landfill Dump</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Surplus dumped into haulers. High landfill tipping fees incurred, triggering Scope 3 liability.</p>
+</div>
+</li>
+</ol>
+</div>
+<!-- FoodLoop Closed-Loop Lifecycle -->
+<div class="p-8 rounded-2xl bg-surface-container-low border-2 border-secondary-container">
+<div class="flex items-center justify-between mb-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-fixed text-xs font-bold font-mono uppercase">
+<span class="material-symbols-outlined text-sm">autorenew</span> FoodLoop Closed-Loop Lifecycle
+            </span>
+<span class="text-xs font-mono text-secondary font-bold">100% Diversion + ESG Credits</span>
+</div>
+<ol class="space-y-4 font-body text-sm">
+<li class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-start gap-3 shadow-sm">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-mono font-bold text-xs shrink-0">1</span>
+<div>
+<p class="font-semibold text-on-surface flex items-center gap-2">
+<span>AI Ingest &amp; 72h Predictive Modeling</span>
+<span class="text-[10px] bg-secondary-container/30 text-secondary font-mono px-1.5 py-0.5 rounded">94.2% Acc</span>
+</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Correlates reservations, transit events, historical consumption, and micro-climate patterns.</p>
+</div>
+</li>
+<li class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-start gap-3 shadow-sm">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-mono font-bold text-xs shrink-0">2</span>
+<div>
+<p class="font-semibold text-on-surface">Dynamic Batch Sizing &amp; Kitchen Yield</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Automated prep tickets sent directly to cook displays; eliminates 35% of prep overage.</p>
+</div>
+</li>
+<li class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-start gap-3 shadow-sm">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-mono font-bold text-xs shrink-0">3</span>
+<div>
+<p class="font-semibold text-on-surface">Optical &amp; Thermal IoT Freshness Decay Tracking</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Shelf-life calculated hourly via sensor mesh; triggers automatic redistribution match 4h in advance.</p>
+</div>
+</li>
+<li class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-start gap-3 shadow-sm">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-mono font-bold text-xs shrink-0">4</span>
+<div>
+<p class="font-semibold text-on-surface flex items-center gap-2">
+<span>Multi-Tier Algorithmic Dispatch &amp; Upcycling</span>
+<span class="text-[10px] bg-primary-container text-on-primary font-mono px-1.5 py-0.5 rounded">Zero Edible Waste</span>
+</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Auto-matches Food Banks first, discount marketplace second, certified biogas digester last.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. The FoodLoop Lifecycle Pipeline (Horizontal 9-Node Connected Flow) -->
+<section class="py-24 bg-surface relative overflow-hidden" id="pipeline">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="font-label text-xs font-bold text-primary-container tracking-widest uppercase mb-2 block">Autonomous Architecture</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+            The FoodLoop Lifecycle Pipeline
+          </h2>
+<p class="font-body text-base text-on-surface-variant mt-2 max-w-2xl">
+            Nine synchronized operational phases continuously orchestrated by FoodLoop ML agents to eradicate loss from farm-gate to valorization.
+          </p>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/40 text-xs font-mono text-on-surface">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse-subtle"></span> 9 NODES SYNCHRONIZED
+          </span>
+</div>
+</div>
+<!-- Horizontal Scrollable Node Canvas -->
+<div class="overflow-x-auto pb-6 -mx-6 px-6">
+<div class="min-w-[1100px] flex items-stretch gap-3">
+<!-- Node 1 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">01</span>
+<span class="material-symbols-outlined text-primary-container text-lg">insights</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">PREDICT</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                AI Demand Forecasting &amp; weather/event correlator with 72-hour rolling horizon.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Accuracy: 94.2%
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 2 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">02</span>
+<span class="material-symbols-outlined text-primary-container text-lg">tune</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">PREVENT</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Smart Dynamic Production Planning aligning purchasing orders to expected covers.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Waste Cut: -28%
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 3 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">03</span>
+<span class="material-symbols-outlined text-primary-container text-lg">soup_kitchen</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">PRODUCE</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Dynamic Batch Sizing &amp; digital kitchen station yield telemetry to prevent overcook.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Yield: 99.1%
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 4 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">04</span>
+<span class="material-symbols-outlined text-primary-container text-lg">sensors</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">TRACK</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                IoT Temperature, Humidity, and shelf-life decay indices logged every 60 seconds.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Sensor: ±0.1°C
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 5 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">05</span>
+<span class="material-symbols-outlined text-primary-container text-lg">radar</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">DETECT</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Autonomous Expiry &amp; Surplus Detection flags potential excess 4 hours in advance.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Lead: 240 min
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 6 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">06</span>
+<span class="material-symbols-outlined text-primary-container text-lg">hub</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">MATCH</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Multi-Tier Algorithmic Dispatch Engine pairs surplus with verified NGOs instantly.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Match: &lt;2 sec
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 7 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">07</span>
+<span class="material-symbols-outlined text-primary-container text-lg">local_shipping</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">REDISTRIBUTE</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Dynamic Cold-Chain Route Optimization to ensure 100% food hygiene upon delivery.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              Transit: 18 min
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 8 -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover:border-primary-container transition-colors">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-primary">08</span>
+<span class="material-symbols-outlined text-primary-container text-lg">assessment</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">MEASURE</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Automated Scope 3 Category 5 &amp; ESG Audit Telemetry with cryptographic proofs.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/20 font-mono text-[11px] text-secondary">
+              GHG Protocol
+            </div>
+</div>
+<!-- Arrow -->
+<div class="flex items-center text-outline-variant/60 font-bold shrink-0">→</div>
+<!-- Node 9 -->
+<div class="flex-1 bg-secondary-container/20 rounded-xl p-5 border border-secondary-container shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-secondary">09</span>
+<span class="material-symbols-outlined text-secondary text-lg">all_inclusive</span>
+</div>
+<h4 class="font-headline text-sm font-bold text-on-surface uppercase tracking-wide">IMPROVE</h4>
+<p class="font-body text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Self-Tuning AI Feedback Loop retrains neural weights nightly for tomorrow's shift.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-secondary-container/40 font-mono text-[11px] text-secondary font-bold">
+              Continuous Loop
+            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. AI Intelligence Suite (Interactive Grid of 8 Deep Intelligence Modules) -->
+<section class="py-24 bg-surface-container-lowest border-t border-outline-variant/30" id="ai-engine">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label text-xs font-bold text-primary tracking-widest uppercase mb-2 block">Algorithmic Subsystems</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight mb-4">
+          Enterprise AI Intelligence Suite
+        </h2>
+<p class="font-body text-base text-on-surface-variant">
+          Eight integrated micro-models purpose-built for commercial kitchens, grocers, and cold-chain logistics to automate high-stakes decisions in milliseconds.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Module 01 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">01 // DEMAND</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Demand Forecasting</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Bayesian neural nets analyzing 40+ external variables (weather, local events, daypart) to predict ingredient usage 72h ahead.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Model: BayeNet-v3</span>
+<span class="font-bold">±2.1% dev</span>
+</div>
+</div>
+<!-- Module 02 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">02 // PLANNING</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Dynamic Production Planning</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Portion-level kitchen prep sizing that dynamically throttles back prep stations when walk-in traffic slows down.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Yield: 98.4%</span>
+<span class="font-bold">Zero Runout</span>
+</div>
+</div>
+<!-- Module 03 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">03 // PREDICT</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Surplus Prediction</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Pre-event anomaly detection alerting operations managers to planned banquet surplus 6 hours before buffet closing.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Lead: 360m early</span>
+<span class="font-bold">99.2% recall</span>
+</div>
+</div>
+<!-- Module 04 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">04 // EXPIRY</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Expiry Intelligence</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Dynamic shelf-life modeling adjusting standard expiry dates based on cumulative ambient thermal exposures.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Kinetic Arrhenius</span>
+<span class="font-bold">IoT sync</span>
+</div>
+</div>
+<!-- Module 05 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">05 // QUALITY</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Quality Scoring</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Computer vision freshness grading classifying produce and cooked meals on a standardized A+ to B- nutritional scale.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Vision: ResNet50</span>
+<span class="font-bold">Grade A: 96%</span>
+</div>
+</div>
+<!-- Module 06 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">06 // MATCHING</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Recipient Matching</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Priority routing algorithm: Humanitarian Food Banks first, community pantries second, discounted consumer bundles third.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Latency: 1.4s</span>
+<span class="font-bold">100% legal safe</span>
+</div>
+</div>
+<!-- Module 07 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">07 // LOGISTICS</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Route Optimization</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Multi-stop refrigerated fleet micro-routing ensuring temperature-controlled batches arrive within strict food safety windows.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>TSP Engine</span>
+<span class="font-bold">-32% Fuel</span>
+</div>
+</div>
+<!-- Module 08 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 hover:border-primary-container/60 hover:shadow-md transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold text-primary bg-surface-container px-2.5 py-1 rounded">08 // AUTONOMY</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">Autonomous Actions</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Self-executing inventory transfers, dynamic price discounts in secondary markets, and certified donation tax receipt logging.
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono pt-3 border-t border-outline-variant/30 text-secondary">
+<span>Automated: 89%</span>
+<span class="font-bold">Human-in-loop</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Multi-Stakeholder Recovery Ecosystem -->
+<section class="py-24 bg-surface border-t border-outline-variant/30" id="ecosystem">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label text-xs font-bold text-primary-container tracking-widest uppercase mb-2 block">Synchronized Network</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight mb-4">
+          Multi-Stakeholder Recovery Ecosystem
+        </h2>
+<p class="font-body text-base text-on-surface-variant">
+          FoodLoop connects disparate food operations into an interconnected, transparent grid where no edible calorie goes unallocated.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Ingestion Layer -->
+<div class="p-7 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container mb-6 border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl">storefront</span>
+</div>
+<span class="font-mono text-xs font-bold text-primary uppercase">Ingestion Layer</span>
+<h3 class="font-headline text-lg font-bold text-on-surface mt-1 mb-3">Food Donors &amp; Producers</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Commercial enterprise hotel chains, supermarket networks, corporate cafeterias, and institutional dining halls automated via POS and inventory APIs.
+          </p>
+<div class="space-y-2 pt-2 border-t border-outline-variant/20 font-label text-xs text-on-surface font-medium">
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Hilton &amp; Marriott Hospitality</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Regional Wholesale Grocers</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> University Campus Dining</div>
+</div>
+</div>
+<!-- Central Core -->
+<div class="p-7 rounded-2xl bg-surface-container-low border-2 border-secondary-container shadow-md">
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-fixed mb-6 font-bold shadow-sm">
+<span class="material-symbols-outlined text-2xl">smart_toy</span>
+</div>
+<span class="font-mono text-xs font-bold text-secondary uppercase">Central Processing Core</span>
+<h3 class="font-headline text-lg font-bold text-on-surface mt-1 mb-3">FoodLoop AI Engine</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Centralized telemetry ingestion, cryptographic traceability hash generation, temperature validation, and automated tax documentation generation.
+          </p>
+<div class="space-y-2 pt-2 border-t border-secondary-container/40 font-label text-xs text-on-surface font-medium">
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> 42ms Matching Execution</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Bill Emerson Act Compliance</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Real-Time Weight Telemetry</div>
+</div>
+</div>
+<!-- Primary Tier -->
+<div class="p-7 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container mb-6 border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl">volunteer_activism</span>
+</div>
+<span class="font-mono text-xs font-bold text-primary uppercase">Primary Tier</span>
+<h3 class="font-headline text-lg font-bold text-on-surface mt-1 mb-3">NGOs &amp; Food Banks</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Certified humanitarian relief centers, soup kitchens, and unhoused shelters receive warm, nutritious meals prioritized based on live client count.
+          </p>
+<div class="space-y-2 pt-2 border-t border-outline-variant/20 font-label text-xs text-on-surface font-medium">
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Zero-cost verified delivery</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Allergen &amp; dietary auto-filter</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> 1-click proof of handover</div>
+</div>
+</div>
+<!-- Secondary Tier -->
+<div class="p-7 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container mb-6 border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl">percent</span>
+</div>
+<span class="font-mono text-xs font-bold text-primary uppercase">Secondary Tier</span>
+<h3 class="font-headline text-lg font-bold text-on-surface mt-1 mb-3">Discount Marketplaces</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Packaged retail goods approaching 'best-by' windows routed to dynamic clearance apps, rescuing asset value for retailers at 60–75% discounts.
+          </p>
+<div class="space-y-2 pt-2 border-t border-outline-variant/20 font-label text-xs text-on-surface font-medium">
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> B2B wholesale redistribution</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Direct-to-consumer flash boxes</div>
+</div>
+</div>
+<!-- Enterprise Layer -->
+<div class="p-7 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container mb-6 border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl">corporate_fare</span>
+</div>
+<span class="font-mono text-xs font-bold text-primary uppercase">Enterprise Layer</span>
+<h3 class="font-headline text-lg font-bold text-on-surface mt-1 mb-3">Corporate ESG Sponsors</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Enterprises fund the cold-chain logistics fee per meal, unlocking verified Scope 3 GHG avoidance credits and CSR compliance reports.
+          </p>
+<div class="space-y-2 pt-2 border-t border-outline-variant/20 font-label text-xs text-on-surface font-medium">
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Cryptographic audit trails</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> SEC climate disclosure ready</div>
+</div>
+</div>
+<!-- Circular Valorization -->
+<div class="p-7 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container mb-6 border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl">compost</span>
+</div>
+<span class="font-mono text-xs font-bold text-primary uppercase">Circular Valorization</span>
+<h3 class="font-headline text-lg font-bold text-on-surface mt-1 mb-3">Industrial Biorecovery</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-4">
+            Non-edible prep trims and plate residues routed to certified Anaerobic Digesters for renewable biogas electricity or organic compost soil regeneration.
+          </p>
+<div class="space-y-2 pt-2 border-t border-outline-variant/20 font-label text-xs text-on-surface font-medium">
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> EPA Tier 5 Upcycling compliance</div>
+<div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> Zero mass to municipal landfill</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Sponsor a Meal & Community Food Requests (Dual-Panel Interface) -->
+<section class="py-24 bg-surface-container-lowest border-t border-outline-variant/30">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label text-xs font-bold text-primary tracking-widest uppercase mb-2 block">Social Impact Operations</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight mb-4">
+          Direct Community Sponsorship &amp; NGO Requests
+        </h2>
+<p class="font-body text-base text-on-surface-variant">
+          Transparent capital deployment matched directly against real-time hunger relief requests in local metropolitan hubs.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Left Panel: Corporate & Individual Sponsorship Pool -->
+<div class="p-8 rounded-2xl bg-surface border border-outline-variant/50 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-6 border-b border-outline-variant/30 mb-6">
+<div>
+<span class="text-xs font-mono font-bold text-primary uppercase block mb-1">Impact Capital Pool</span>
+<h3 class="font-headline text-xl font-bold text-on-surface">Meal Sponsorship &amp; Handover Ledger</h3>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-fixed text-xs font-bold font-mono">
+                LIVE AUDIT
+              </span>
+</div>
+<!-- Pool Counter -->
+<div class="grid grid-cols-2 gap-4 p-5 rounded-xl bg-surface-container-low border border-outline-variant/20 mb-6">
+<div>
+<span class="text-xs font-medium text-on-surface-variant">Funded This Month</span>
+<div class="font-headline text-2xl sm:text-3xl font-extrabold text-on-surface mt-1">$184,290</div>
+<div class="text-[11px] text-secondary font-semibold mt-1">92,145 meals sponsored</div>
+</div>
+<div>
+<span class="text-xs font-medium text-on-surface-variant">Logistics Cost / Meal</span>
+<div class="font-headline text-2xl sm:text-3xl font-extrabold text-primary mt-1">$2.00</div>
+<div class="text-[11px] text-on-surface-variant mt-1">100% cold-chain assured</div>
+</div>
+</div>
+<!-- Handover Ledger Snippet -->
+<div class="space-y-3">
+<span class="text-xs font-mono font-bold text-on-surface-variant uppercase">Recent Cryptographic Handovers:</span>
+<div class="p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-between text-xs">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<div>
+<span class="font-bold text-on-surface block">Westside Hope Kitchen</span>
+<span class="text-on-surface-variant text-[11px]">Tx: 0x8f...4e1 • 140 Portions Chilled Stew</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-mono text-secondary font-bold block">TEMP: 3.2°C</span>
+<span class="text-[10px] text-on-surface-variant">14 mins ago</span>
+</div>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-between text-xs">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<div>
+<span class="font-bold text-on-surface block">St. Jude Community Center</span>
+<span class="text-on-surface-variant text-[11px]">Tx: 0x3a...90b • 95 Organic Bakery Packs</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-mono text-secondary font-bold block">TEMP: 4.0°C</span>
+<span class="text-[10px] text-on-surface-variant">38 mins ago</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 mt-6 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Sponsorship tiers start at $500 for enterprise matching.</span>
+<button class="px-4 py-2 rounded-lg bg-primary-container hover:bg-primary text-on-primary text-xs font-bold font-headline transition-colors">
+              Sponsor Meals
+            </button>
+</div>
+</div>
+<!-- Right Panel: NGO Verified Food Request Board -->
+<div class="p-8 rounded-2xl bg-surface border border-outline-variant/50 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-6 border-b border-outline-variant/30 mb-6">
+<div>
+<span class="text-xs font-mono font-bold text-primary uppercase block mb-1">Live Telemetry Feed</span>
+<h3 class="font-headline text-xl font-bold text-on-surface">NGO Verified Food Request Board</h3>
+</div>
+<div class="flex items-center gap-1 text-xs font-mono text-secondary font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse-subtle"></span> 8 ACTIVE
+              </div>
+</div>
+<!-- Feed List -->
+<div class="space-y-3">
+<!-- Item 1 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline font-bold text-sm text-on-surface">Metropolitan Food Bank</span>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed text-[10px] font-mono font-bold">MATCHED &amp; DISPATCHED</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant mt-1">
+                      Urgent requirement: 250 hot proteins &amp; vegetables for evening shelter service.
+                    </p>
+<div class="flex items-center gap-4 mt-2 font-mono text-[11px] text-on-surface-variant">
+<span>Needed: 18:30 EST</span>
+<span class="text-secondary font-bold">Driver FL-04 En Route</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm text-secondary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline font-bold text-sm text-on-surface">City Harvest Pantry North</span>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed text-[10px] font-mono font-bold">MATCHED &amp; DISPATCHED</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant mt-1">
+                      Surplus matched: 180kg chilled dairy, eggs, and farm produce from Grand Hyatt Kitchen.
+                    </p>
+<div class="flex items-center gap-4 mt-2 font-mono text-[11px] text-on-surface-variant">
+<span>Delivery Window: 17:45</span>
+<span class="text-secondary font-bold">ETA: 12 mins</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm text-secondary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline font-bold text-sm text-on-surface">Harbor Light Shelter</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px] font-mono font-bold">MATCHING IN PROGRESS</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant mt-1">
+                      Seeking: 80 prepared dry meal boxes for outreach team night rotation.
+                    </p>
+<div class="flex items-center gap-4 mt-2 font-mono text-[11px] text-on-surface-variant">
+<span>Lead remaining: 45 min</span>
+<span class="text-primary-container font-bold">2 Bakeries Evaluating</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm text-primary-container animate-spin">refresh</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 mt-6 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Verified 501(c)(3) relief organizations qualify for API dispatch.</span>
+<a class="text-xs font-bold font-headline text-primary-container hover:text-primary flex items-center gap-1" href="#register">
+<span>Register Pantry</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Industrial Recovery & Byproduct Upcycling -->
+<section class="py-24 bg-surface border-t border-outline-variant/30">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label text-xs font-bold text-secondary tracking-widest uppercase mb-2 block">Circular Valorization</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight mb-4">
+          Industrial Recovery &amp; Byproduct Upcycling
+        </h2>
+<p class="font-body text-base text-on-surface-variant">
+          When food is unsuited for human consumption, FoodLoop routes every organic scrap into certified industrial valorization infrastructure.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+<!-- Pathway A: Certified Anaerobic Digestion -->
+<div class="p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm relative">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">bolt</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-xs font-mono font-bold">
+              PATHWAY A: BIOENERGY
+            </span>
+</div>
+<h3 class="font-headline text-xl font-bold text-on-surface mb-3">Certified Anaerobic Digestion</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+            Commercial organic slurry, grease, and expired prep trims converted in closed bioreactors. Captures raw methane to generate green electricity fed back into the regional grid.
+          </p>
+<div class="grid grid-cols-2 gap-4 p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 font-mono">
+<div>
+<span class="text-[11px] text-on-surface-variant block">Energy Generated</span>
+<span class="font-headline text-xl font-extrabold text-on-surface">4,120 MWh</span>
+</div>
+<div>
+<span class="text-[11px] text-on-surface-variant block">Methane Abated</span>
+<span class="font-headline text-xl font-extrabold text-secondary">98.9% Eff.</span>
+</div>
+</div>
+</div>
+<!-- Pathway B: Micro-Composting & Soil Amenders -->
+<div class="p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm relative">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-2xl">eco</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-xs font-mono font-bold">
+              PATHWAY B: REGENERATION
+            </span>
+</div>
+<h3 class="font-headline text-xl font-bold text-on-surface mb-3">Micro-Compost &amp; Regenerative Soil</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+            High-nitrogen kitchen trims mixed with aerated woodchips, curing into nutrient-rich humus distributed to local urban agriculture and commercial agroforestry farms.
+          </p>
+<div class="grid grid-cols-2 gap-4 p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 font-mono">
+<div>
+<span class="text-[11px] text-on-surface-variant block">Soil Humus Diverted</span>
+<span class="font-headline text-xl font-extrabold text-on-surface">1,890 Tons</span>
+</div>
+<div>
+<span class="text-[11px] text-on-surface-variant block">Phosphorus Reclaimed</span>
+<span class="font-headline text-xl font-extrabold text-secondary">48,200 kg</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Regulatory Compliance Seals -->
+<div class="p-6 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex flex-wrap items-center justify-around gap-6 text-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-2xl">verified_user</span>
+<div class="text-left">
+<div class="font-headline text-xs font-bold text-on-surface">EPA Food Recovery Hierarchy</div>
+<div class="text-[11px] text-on-surface-variant">Tier 5 Certified Industrial Recycling</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-2xl">policy</span>
+<div class="text-left">
+<div class="font-headline text-xs font-bold text-on-surface">EU Waste Framework Directive</div>
+<div class="text-[11px] text-on-surface-variant">Directive 2008/98/EC Article 4 Conformance</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-2xl">energy_savings_leaf</span>
+<div class="text-left">
+<div class="font-headline text-xs font-bold text-on-surface">California SB 1383 Standard</div>
+<div class="text-[11px] text-on-surface-variant">100% Commercial Organics Diversion Compliant</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 9. Smart Logistics & IoT Freshness Telemetry -->
+<section class="py-24 bg-surface-container-lowest border-t border-outline-variant/30" id="telemetry">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="font-label text-xs font-bold text-primary-container tracking-widest uppercase mb-2 block">IoT Fleet Mesh</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+            Smart Logistics &amp; IoT Freshness Telemetry
+          </h2>
+<p class="font-body text-base text-on-surface-variant mt-2 max-w-2xl">
+            Real-time cold-chain surveillance ensuring regulatory temperature windows are never breached during transit.
+          </p>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-surface-container border border-outline-variant/40 font-mono text-xs font-semibold text-on-surface">
+            Active Fleet: 42 Refrigerated Vans
+          </span>
+</div>
+</div>
+<!-- Route Dispatch Dashboard Preview -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Live Vehicle Card -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/30 mb-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary-container animate-pulse-subtle"></span>
+<span class="font-mono text-sm font-bold text-on-surface">VEHICLE FL-08</span>
+</div>
+<span class="font-mono text-xs text-secondary font-bold">IN TRANSIT</span>
+</div>
+<!-- Gauge Metrics -->
+<div class="space-y-4 mb-6">
+<div>
+<div class="flex justify-between text-xs font-medium text-on-surface-variant mb-1">
+<span>Cargo Capacity Utilized</span>
+<span class="font-mono font-bold text-on-surface">78% (390/500kg)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-medium text-on-surface-variant mb-1">
+<span>Reefer Cargo Temperature</span>
+<span class="font-mono font-bold text-secondary">3.4°C [OPTIMAL]</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-medium text-on-surface-variant mb-1">
+<span>Batch Freshness Decay Index</span>
+<span class="font-mono font-bold text-on-surface">98.6%</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 98.6%"></div>
+</div>
+</div>
+</div>
+<!-- Route Stop Details -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 font-mono text-xs space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Assigned Driver:</span>
+<span class="font-bold text-on-surface">Carlos M. (Cert ID 892)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Last HACCP Ping:</span>
+<span class="text-secondary font-bold">14 sec ago (Pass)</span>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between text-xs">
+<span class="text-on-surface-variant font-mono">Next Stop: St. Jude Center</span>
+<span class="font-bold text-primary-container">ETA 18:14</span>
+</div>
+</div>
+<!-- Dynamic Multi-Drop Re-Sequencing Engine -->
+<div class="lg:col-span-2 p-6 rounded-2xl bg-surface border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/30 mb-6">
+<div>
+<h3 class="font-headline text-base font-bold text-on-surface">Dynamic Multi-Drop Re-Sequencing</h3>
+<span class="text-xs text-on-surface-variant">AI dynamically re-orders drops based on traffic delays and perishable decay curves</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-surface-container text-xs font-mono text-on-surface font-semibold">
+                Autonomous Reroute
+              </span>
+</div>
+<!-- Visual Stops Sequence -->
+<div class="space-y-4">
+<!-- Stop 1 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-mono font-bold text-xs">1</span>
+<div>
+<h4 class="font-headline text-sm font-bold text-on-surface">Pick-up: Metro Convention Center</h4>
+<p class="text-xs text-on-surface-variant">Surplus Banquet Trays • 140kg • Completed 17:52</p>
+</div>
+</div>
+<span class="text-xs font-mono text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">check</span> VERIFIED
+                </span>
+</div>
+<!-- Stop 2 -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-primary-container/40 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-mono font-bold text-xs">2</span>
+<div>
+<h4 class="font-headline text-sm font-bold text-on-surface">Drop-off: St. Jude Community Kitchen</h4>
+<p class="text-xs text-on-surface-variant">100kg Prepared Meals • Priority Tier 1 • In Transit</p>
+</div>
+</div>
+<div class="text-right font-mono">
+<span class="text-xs font-bold text-primary-container block">ETA: 6 MINS</span>
+<span class="text-[10px] text-on-surface-variant">Re-ordered +8 min earlier</span>
+</div>
+</div>
+<!-- Stop 3 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="w-7 h-7 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-mono font-bold text-xs">3</span>
+<div>
+<h4 class="font-headline text-sm font-bold text-on-surface">Drop-off: Northside Shelter</h4>
+<p class="text-xs text-on-surface-variant">40kg Bakery &amp; Dry Goods • Scheduled 18:40</p>
+</div>
+</div>
+<div class="text-right font-mono">
+<span class="text-xs font-bold text-on-surface-variant block">SCHEDULED</span>
+<span class="text-[10px] text-on-surface-variant">On time</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-6 border-t border-outline-variant/30 flex items-center justify-between font-mono text-xs">
+<span class="text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">savings</span> 14.8 kg CO2 saved via optimized routing
+            </span>
+<span class="text-on-surface-variant">Telemetry protocol: MQTT / TLS 1.3</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. Virtual Operations Center & Digital Twin Simulator -->
+<section class="py-24 bg-inverse-surface text-inverse-on-surface relative overflow-hidden" id="digital-twin">
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="font-label text-xs font-bold text-secondary-fixed tracking-widest uppercase mb-2 block">Enterprise Command</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-inverse-on-surface tracking-tight">
+            Virtual Operations Center &amp; Digital Twin Simulator
+          </h2>
+<p class="font-body text-base text-surface-variant mt-2 max-w-2xl">
+            Simulate operational shifts, inject unexpected banquet cancellations, and stress-test redistribution protocols before physical execution.
+          </p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-inverse-surface/80 border border-outline/30 px-3 py-1.5 rounded-full">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-fixed animate-pulse-subtle"></span>
+<span class="font-mono text-xs text-secondary-fixed font-bold">DIGITAL_TWIN // ONLINE</span>
+</div>
+</div>
+</div>
+<!-- Cockpit Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Module A: Simulation Scenario Sandbox -->
+<div class="p-6 rounded-2xl bg-inverse-surface border border-outline/30 shadow-2xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-outline/20 mb-6">
+<span class="font-mono text-xs text-secondary-fixed uppercase font-bold">Scenario Injector</span>
+<span class="font-mono text-xs text-surface-variant">Sim_Run #842</span>
+</div>
+<div class="p-4 rounded-xl bg-inverse-surface/90 border border-outline/30 mb-6">
+<span class="text-xs font-mono text-surface-variant block mb-1">Active Test Case:</span>
+<p class="font-headline text-sm font-bold text-inverse-on-surface">
+                "Simulate 25% banquet surplus at 22:00 during downtown traffic bottleneck"
+              </p>
+</div>
+<!-- Simulation Parameters -->
+<div class="space-y-4 font-mono text-xs">
+<div class="flex justify-between pb-2 border-b border-outline/20">
+<span class="text-surface-variant">Projected Surplus Volume:</span>
+<span class="font-bold text-inverse-primary">+340 kg hot proteins</span>
+</div>
+<div class="flex justify-between pb-2 border-b border-outline/20">
+<span class="text-surface-variant">Fleet Readiness:</span>
+<span class="font-bold text-secondary-fixed">3 Reefer vans within 12m</span>
+</div>
+<div class="flex justify-between pb-2 border-b border-outline/20">
+<span class="text-surface-variant">Matched Receiving Shelter:</span>
+<span class="font-bold text-inverse-on-surface">City Rescue Mission</span>
+</div>
+<div class="flex justify-between pb-2 border-b border-outline/20">
+<span class="text-surface-variant">Decay Risk Under Sim:</span>
+<span class="font-bold text-secondary-fixed">0.00% (Safety margin 4h)</span>
+</div>
+</div>
+</div>
+<div class="pt-6 mt-6 border-t border-outline/20">
+<button class="w-full py-2.5 rounded-lg bg-secondary-fixed hover:bg-secondary-fixed-dim text-on-secondary-fixed font-headline text-xs font-bold transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">play_arrow</span>
+<span>Execute Real-Time Test Simulation</span>
+</button>
+</div>
+</div>
+<!-- Module B: Autonomous Intervention Timeline (Cockpit Center) -->
+<div class="lg:col-span-2 p-6 rounded-2xl bg-inverse-surface border border-outline/30 shadow-2xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-outline/20 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed text-lg">terminal</span>
+<h3 class="font-headline text-sm font-bold text-inverse-on-surface">AI Autonomous Intervention Log</h3>
+</div>
+<span class="font-mono text-xs text-surface-variant">Live response stream</span>
+</div>
+<!-- Terminal Entries -->
+<div class="space-y-3 font-mono text-xs">
+<div class="p-3 rounded-lg bg-inverse-surface/90 border border-outline/20 flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-secondary-fixed font-bold">[21:58:02]</span>
+<span class="text-inverse-primary font-semibold">PREP_ALERT:</span>
+<span class="text-inverse-on-surface">Kitchen Station 4 throttled batch -18%</span>
+</div>
+<p class="text-[11px] text-surface-variant mt-1">
+                    Event attendance logged 120 guests vs 150 expected. Batch cut avoided 28kg overproduction.
+                  </p>
+</div>
+<span class="text-secondary-fixed font-bold text-[10px] bg-secondary-container/20 px-2 py-0.5 rounded">AUTO</span>
+</div>
+<div class="p-3 rounded-lg bg-inverse-surface/90 border border-outline/20 flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-secondary-fixed font-bold">[22:04:14]</span>
+<span class="text-secondary-fixed font-semibold">MATCH_ENGINE:</span>
+<span class="text-inverse-on-surface">Recipient auto-allocated to SafeHouse Hope</span>
+</div>
+<p class="text-[11px] text-surface-variant mt-1">
+                    Capacity confirmed: 150 hungry individuals pending meal serving. Route dispatched to Driver FL-02.
+                  </p>
+</div>
+<span class="text-secondary-fixed font-bold text-[10px] bg-secondary-container/20 px-2 py-0.5 rounded">AUTO</span>
+</div>
+<div class="p-3 rounded-lg bg-inverse-surface/90 border border-outline/20 flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-secondary-fixed font-bold">[22:18:40]</span>
+<span class="text-inverse-primary font-semibold">COLD_CHAIN:</span>
+<span class="text-inverse-on-surface">Driver FL-02 cargo locked at 3.1°C</span>
+</div>
+<p class="text-[11px] text-surface-variant mt-1">
+                    HACCP safety compliance signature written to immutable audit database.
+                  </p>
+</div>
+<span class="text-secondary-fixed font-bold text-[10px] bg-secondary-container/20 px-2 py-0.5 rounded">VERIFIED</span>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-6 border-t border-outline/20 flex items-center justify-between text-xs font-mono text-surface-variant">
+<span>Model precision rate: 99.8%</span>
+<span class="flex items-center gap-1 text-secondary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span> Operational confidence: High
+            </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 11. Sustainability & ESG Impact Engine -->
+<section class="py-24 bg-surface border-t border-outline-variant/30" id="impact">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label text-xs font-bold text-primary tracking-widest uppercase mb-2 block">Verifiable Climate Metrics</span>
+<h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight mb-4">
+          Sustainability &amp; ESG Impact Engine
+        </h2>
+<p class="font-body text-base text-on-surface-variant">
+          Real-time, third-party auditable sustainability metrics that satisfy the rigorous reporting requirements of CSRD, ISSB, and SEC climate disclosure rules.
+        </p>
+</div>
+<!-- 4 High Impact Counters -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+<div class="p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm text-center">
+<div class="w-12 h-12 rounded-xl bg-surface-container text-primary mx-auto mb-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">co2</span>
+</div>
+<div class="font-headline text-4xl font-extrabold text-on-surface tracking-tight">14,820 <span class="text-lg font-bold text-on-surface-variant">MT</span></div>
+<h3 class="font-headline text-sm font-bold text-on-surface mt-2 mb-1">CO2e Averted</h3>
+<p class="font-body text-xs text-on-surface-variant">Landfill methane avoidance calculated using IPCC GWP-28 metrics.</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm text-center">
+<div class="w-12 h-12 rounded-xl bg-surface-container text-tertiary mx-auto mb-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">water_drop</span>
+</div>
+<div class="font-headline text-4xl font-extrabold text-on-surface tracking-tight">245M <span class="text-lg font-bold text-on-surface-variant">L</span></div>
+<h3 class="font-headline text-sm font-bold text-on-surface mt-2 mb-1">Clean Water Saved</h3>
+<p class="font-body text-xs text-on-surface-variant">Embedded agricultural irrigation water safeguarded from waste.</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm text-center">
+<div class="w-12 h-12 rounded-xl bg-surface-container text-secondary mx-auto mb-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">scale</span>
+</div>
+<div class="font-headline text-4xl font-extrabold text-on-surface tracking-tight">9.84M <span class="text-lg font-bold text-on-surface-variant">kg</span></div>
+<h3 class="font-headline text-sm font-bold text-on-surface mt-2 mb-1">Edible Food Rescued</h3>
+<p class="font-body text-xs text-on-surface-variant">100% verified diversion from incinerators &amp; municipal dumps.</p>
+</div>
+<div class="p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-sm text-center">
+<div class="w-12 h-12 rounded-xl bg-surface-container text-primary-container mx-auto mb-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">favorite</span>
+</div>
+<div class="font-headline text-4xl font-extrabold text-on-surface tracking-tight">1.24M</div>
+<h3 class="font-headline text-sm font-bold text-on-surface mt-2 mb-1">Nutritious Meals Served</h3>
+<p class="font-body text-xs text-on-surface-variant">Delivered directly to underserved communities via certified pantries.</p>
+</div>
+</div>
+<!-- Verifiable Standards Badges -->
+<div class="p-8 rounded-2xl bg-surface-container border border-outline-variant/40 flex flex-col md:flex-row items-center justify-between gap-8">
+<div>
+<span class="font-mono text-xs font-bold text-primary uppercase block mb-1">Reporting Frameworks</span>
+<h4 class="font-headline text-lg font-bold text-on-surface">Enterprise Compliance &amp; Regulatory Alignment</h4>
+<p class="font-body text-xs text-on-surface-variant mt-1">Our telemetry logs export straight into Workiva, Salesforce Net Zero, and SAP Sustainability Control Tower.</p>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<div class="px-4 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant/30 text-xs font-bold text-on-surface flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span>UN SDG 2 (Zero Hunger)</span>
+</div>
+<div class="px-4 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant/30 text-xs font-bold text-on-surface flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
+<span>UN SDG 12 (Responsible Consumption)</span>
+</div>
+<div class="px-4 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant/30 text-xs font-bold text-on-surface flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span>GHG Protocol Scope 3 Cat. 5</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 12. High-Impact Final CTA & Onboarding Cards -->
+<section class="py-24 bg-surface-container-lowest border-t border-outline-variant/30 relative" id="enterprise-demo">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-3xl mx-auto text-center mb-16">
+<span class="font-label text-xs font-bold text-primary tracking-widest uppercase mb-2 block">Take Operational Command</span>
+<h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-on-surface tracking-tight mb-4">
+          Ready to Close the Loop on Food Waste?
+        </h2>
+<p class="font-body text-base sm:text-lg text-on-surface-variant">
+          Deploy FoodLoop across your enterprise properties, municipal distribution, or NGO fleet in under 14 days with zero hardware disruption.
+        </p>
+</div>
+<!-- 4 Role-Specific Onboarding Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 flex flex-col justify-between hover:shadow-md hover:border-primary-container transition-all">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">For Food Producers &amp; Retail</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-6">
+              Automate kitchen prep yields, cut disposal hauling fees, and unlock automated tax deductions for donation surplus.
+            </p>
+</div>
+<button class="w-full py-2.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-headline text-xs font-bold transition-colors">
+            Request Operational Audit
+          </button>
+</div>
+<!-- Card 2 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 flex flex-col justify-between hover:shadow-md hover:border-primary-container transition-all">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-4">
+<span class="material-symbols-outlined">diversity_1</span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">For NGOs &amp; Pantries</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-6">
+              Receive steady, verified chilled and hot food supplies dispatched to your kitchen doors at zero platform charge.
+            </p>
+</div>
+<button class="w-full py-2.5 rounded-lg bg-surface-container-highest hover:bg-surface-container-high text-on-surface font-headline text-xs font-bold border border-outline-variant/40 transition-colors">
+            Register Your Organization
+          </button>
+</div>
+<!-- Card 3 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 flex flex-col justify-between hover:shadow-md hover:border-primary-container transition-all">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-tertiary mb-4">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">For Logistics &amp; Fleets</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-6">
+              Monetize empty backhauls and reefer capacity by picking up verified food redistribution batches on your regular lanes.
+            </p>
+</div>
+<button class="w-full py-2.5 rounded-lg bg-surface-container-highest hover:bg-surface-container-high text-on-surface font-headline text-xs font-bold border border-outline-variant/40 transition-colors">
+            Join Logistics Network
+          </button>
+</div>
+<!-- Card 4 -->
+<div class="p-6 rounded-2xl bg-surface border border-outline-variant/40 flex flex-col justify-between hover:shadow-md hover:border-primary-container transition-all">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container mb-4">
+<span class="material-symbols-outlined">token</span>
+</div>
+<h3 class="font-headline text-base font-bold text-on-surface mb-2">For Corporate Sponsors</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed mb-6">
+              Sponsor municipal food recovery pools and earn certified, third-party auditable Scope 3 and social impact ROI certificates.
+            </p>
+</div>
+<button class="w-full py-2.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-headline text-xs font-bold transition-colors">
+            Launch ESG Impact Program
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer (Shared Component Anchor) -->
+<footer class="w-full bg-surface-container border-t border-outline-variant/40 flat no shadows">
+<div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+<!-- Brand & Compliance -->
+<div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+<a class="font-headline text-lg font-bold text-on-surface flex items-center gap-2" href="#">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest flex items-center justify-center border border-outline-variant/40">
+<svg class="w-4 h-4 text-primary-container" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M12 2a10 10 0 0 0-7.5 16.5L3 20l1.5-1.5A10 10 0 1 0 12 2z"></path>
+</svg>
+</div>
+<span>FoodLoop</span>
+</a>
+<div class="h-4 w-px bg-outline-variant/50 hidden sm:block"></div>
+<p class="font-body text-xs text-on-surface-variant">
+          © 2025 FoodLoop Technologies Inc. Enterprise AI Food Lifecycle Infrastructure. All rights reserved.
+        </p>
+</div>
+<!-- Links Hierarchy from Shared JSON -->
+<div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-body">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Platform Architecture</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Digital Twin Telemetry</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Cold-Chain IoT</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Redistribution Protocol</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">ESG &amp; Scope 3 Compliance</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Security &amp; SOC2</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">API Docs</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

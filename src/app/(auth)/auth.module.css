@@ -1,0 +1,51 @@
+.page {
+  min-height: 100vh;
+  background-color: var(--sb-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3em 1.5em;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brandHeader {
+  text-align: center;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+  margin-bottom: 0.5em;
+}
+
+.logoStar {
+  font-size: 2em;
+  color: var(--sb-wine);
+}
+
+.logoText {
+  font-family: var(--font-heading);
+  font-size: 1.75em;
+  font-weight: 900;
+  color: var(--sb-black);
+}
+
+.clerkWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

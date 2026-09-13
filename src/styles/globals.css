@@ -1,0 +1,196 @@
+/* ==============================================
+   SaveByte Global Styles
+   Inspired by Aardvark Book Club visual system
+   ============================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import './design-tokens.css';
+@import './components.css';
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--size-font, 16px);
+  line-height: 1.35;
+  color: var(--sb-black);
+  background-color: var(--sb-ivory);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: var(--sb-pale-yellow);
+  color: var(--sb-black);
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--sb-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Links ── */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Images ── */
+img, video, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Lists ── */
+ul, ol {
+  list-style: none;
+}
+
+/* ── Buttons ── */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ── Inputs ── */
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ── Typography Utilities (Aardvark-Inspired) ── */
+.u-heading-xxl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size-heading-xxl);
+  font-weight: 800;
+  line-height: 86%;
+  letter-spacing: -0.025em;
+  color: var(--sb-black);
+}
+
+.u-heading-l {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size-heading-l);
+  font-weight: 800;
+  line-height: 88%;
+  letter-spacing: -0.02em;
+  color: var(--sb-black);
+}
+
+.u-heading-m {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size-heading-m);
+  font-weight: 800;
+  line-height: 94%;
+  letter-spacing: -0.015em;
+  color: var(--sb-black);
+}
+
+.u-heading-s {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size-heading-s);
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: var(--sb-black);
+}
+
+.u-heading-xs {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size-heading-xs);
+  font-weight: 700;
+  line-height: 110%;
+  color: var(--sb-black);
+}
+
+.u-handwritten-regular {
+  font-family: 'Caveat', cursive;
+  font-size: var(--font-size-handwritten-regular);
+  font-weight: 700;
+  color: var(--sb-violet);
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  display: inline-block;
+}
+
+.u-handwritten-big {
+  font-family: 'Caveat', cursive;
+  font-size: var(--font-size-handwritten-big);
+  font-weight: 700;
+  color: var(--sb-violet);
+  line-height: 100%;
+  display: inline-block;
+}
+
+.u-paragraph-large {
+  font-size: var(--font-size-paragraph-large);
+  line-height: 125%;
+  letter-spacing: -0.01em;
+}
+
+.u-paragraph-regular {
+  font-size: var(--font-size-paragraph-regular);
+  line-height: 130%;
+  letter-spacing: -0.01em;
+}
+
+.u-paragraph-small {
+  font-size: var(--font-size-paragraph-small);
+  line-height: 135%;
+}
+
+.u-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: var(--grid-margin, 1.5em);
+  padding-right: var(--grid-margin, 1.5em);
+}
+
+/* ── Section Background Themes (Aardvark Blocks) ── */
+.is--bg-yellow { background-color: var(--sb-yellow); }
+.is--bg-pale-yellow { background-color: var(--sb-pale-yellow); }
+.is--bg-soft-pink { background-color: var(--sb-soft-pink); }
+.is--bg-pale-blue { background-color: var(--sb-pale-blue); }
+.is--bg-soft-orange { background-color: var(--sb-soft-orange); }
+.is--bg-periwinkle { background-color: var(--sb-periwinkle); }
+.is--bg-white { background-color: var(--sb-white); }
+.is--bg-ivory { background-color: var(--sb-ivory); }
+
+/* ── Arch/Capsule Cutouts ── */
+.is--inner-clip {
+  clip-path: inset(var(--grid-margin, 1.5em) round 3em);
+}
+
+.is--outer-clip {
+  clip-path: inset(0 round 4em);
+}
+
+@media screen and (max-width: 768px) {
+  .is--inner-clip {
+    clip-path: inset(0.5em round 1.5em);
+  }
+}

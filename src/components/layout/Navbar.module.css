@@ -1,0 +1,255 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height, 5.5em);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: transform 0.4s var(--ease-smooth), background-color 0.3s;
+  padding: 0 var(--grid-margin, 1.5em);
+}
+
+.inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  transition: transform 0.35s var(--ease-smooth);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  text-decoration: none;
+  color: var(--sb-black);
+}
+
+.logoStar {
+  font-size: 1.5em;
+  color: var(--sb-orange);
+  animation: starSpin 8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes starSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.logoText {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.6em;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--sb-black);
+}
+
+/* Central pill navbar capsule */
+.navCapsule {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  background-color: var(--sb-white);
+  padding: 0.35em 0.5em;
+  border-radius: 9999px;
+  border: 2px solid var(--sb-black);
+  box-shadow: 0 4px 0 var(--sb-black);
+}
+
+.navPill {
+  font-size: 0.95em;
+  font-weight: 700;
+  padding: 0.5em 1.15em;
+  border-radius: 9999px;
+  color: var(--sb-black);
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.2s var(--ease-bounce);
+}
+
+.navPill:hover {
+  background-color: var(--sb-pale-yellow);
+  transform: translateY(-2px);
+}
+
+.navPillActive {
+  background-color: var(--sb-yellow);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.signedInWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.userButtonWrap {
+  background-color: var(--sb-white);
+  padding: 4px;
+  border-radius: 50%;
+  border: 2px solid var(--sb-black);
+  box-shadow: 0 3px 0 var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.authRow {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.signInTextBtn {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--sb-black);
+  padding: 0.5em 1em;
+  border-radius: 2em;
+  transition: background-color 0.2s;
+}
+
+.signInTextBtn:hover {
+  background-color: var(--sb-pale-pink);
+}
+
+/* Mobile trigger */
+.mobileTriggerWrap {
+  display: none;
+}
+
+.mobileMenuBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1.25em;
+  background-color: var(--sb-white);
+  border: 2px solid var(--sb-black);
+  border-radius: 2em;
+  font-weight: 700;
+  box-shadow: 0 3px 0 var(--sb-black);
+}
+
+.mobileBtnIcon {
+  font-size: 1.1em;
+}
+
+/* Fullscreen Mobile Drawer */
+.mobileDrawer {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease-smooth), visibility 0.3s;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobileDrawer.isOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawerInner {
+  width: 100%;
+  max-width: 380px;
+  height: 100%;
+  background-color: var(--sb-pale-yellow);
+  border-left: 3px solid var(--sb-black);
+  padding: 2em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-bounce);
+}
+
+.mobileDrawer.isOpen .drawerInner {
+  transform: translateX(0);
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.closeBtn {
+  width: 2.75em;
+  height: 2.75em;
+  border-radius: 50%;
+  background-color: var(--sb-white);
+  border: 2px solid var(--sb-black);
+  font-size: 1.1em;
+  font-weight: 800;
+  box-shadow: 0 3px 0 var(--sb-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin: 2em 0;
+}
+
+.drawerNavLink {
+  font-size: 1.5em;
+  font-weight: 800;
+  color: var(--sb-black);
+  text-decoration: none;
+  background-color: var(--sb-white);
+  padding: 0.6em 1em;
+  border-radius: 1.5em;
+  border: 2px solid var(--sb-black);
+  box-shadow: 0 4px 0 var(--sb-black);
+  transition: transform 0.2s var(--ease-bounce);
+}
+
+.drawerNavLink:hover {
+  transform: scale(1.02);
+  background-color: var(--sb-soft-pink);
+}
+
+.drawerFooter {
+  margin-top: auto;
+}
+
+.drawerAuthCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+@media screen and (max-width: 991px) {
+  .navCapsule,
+  .actions {
+    display: none;
+  }
+
+  .mobileTriggerWrap {
+    display: block;
+  }
+}
