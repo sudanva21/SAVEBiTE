@@ -4,9 +4,6 @@ import path from "path";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const nextConfig: any = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
