@@ -3,7 +3,7 @@
 // ==============================================
 
 import { prisma } from '@/lib/db';
-import { Organization } from '@/generated/prisma';
+import { Organization, Facility } from '@/generated/prisma';
 import { CreateOrganizationInput } from '@/types';
 import { assertPermission, CheckableMembership } from '@/lib/permissions';
 
@@ -90,9 +90,9 @@ export const organizationService = {
   /**
    * Retrieves organization by ID with its facilities.
    */
-  async getById(orgId: string): Promise<Organization | null> {
+  async getById(id: string): Promise<(Organization & { facilities: Facility[] }) | null> {
     return prisma.organization.findUnique({
-      where: { id: orgId },
+      where: { id },
       include: {
         facilities: true,
       },
@@ -114,7 +114,7 @@ export const organizationService = {
   /**
    * Lists all active organizations for a user.
    */
-  async listForUser(userId: string): Promise<Organization[]> {
+  async listForUser(userId: string): Promise<(Organization & { facilities: Facility[] })[]> {
     const memberships = await prisma.membership.findMany({
       where: {
         userId,
@@ -131,7 +131,7 @@ export const organizationService = {
 
     return memberships
       .map((m) => m.organization)
-      .filter((o): o is Organization => o !== null);
+      .filter((o): o is Organization & { facilities: Facility[] } => o !== null);
   },
 
   /**

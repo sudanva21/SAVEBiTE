@@ -37,7 +37,6 @@ export async function GET(request: Request) {
         displayName: name,
         avatarUrl: clerkUser?.imageUrl || null,
         role: 'PLATFORM_ADMIN',
-        status: 'ACTIVE',
         isOnboarded: true,
       },
       include: { memberships: true },
@@ -51,6 +50,10 @@ export async function GET(request: Request) {
       },
       include: { memberships: true },
     });
+  }
+
+  if (!user) {
+    return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
   // Ensure active PLATFORM_ADMIN membership exists

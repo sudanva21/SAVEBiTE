@@ -49,7 +49,7 @@ export const matchingService = {
     let ineligibilityReason: string | null = null;
 
     // Resolve food category
-    let foodCategory = surplus.foodItem?.category;
+    let foodCategory = (surplus as any).foodItem?.category;
     if (!foodCategory && surplus.foodItemId) {
       const fi = await prisma.foodItem.findUnique({ where: { id: surplus.foodItemId } });
       foodCategory = fi?.category;
@@ -112,7 +112,7 @@ export const matchingService = {
 
     // A. Food Compatibility (Max 25 pts)
     let foodScore = 5;
-    const surplusCategory = surplus.foodItem?.category || 'PREPARED_MEALS';
+    const surplusCategory = foodCategory || 'PREPARED_MEALS';
     if (
       surplusCategory.toUpperCase() === request.foodCategory.toUpperCase() ||
       request.foodCategory === 'PREPARED_MEALS' ||

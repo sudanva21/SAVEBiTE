@@ -40,10 +40,10 @@ export const auditService = {
         action: entry.action,
         entity: entry.entity,
         entityId: entry.entityId,
-        previousState: entry.previousState ?? null,
-        newState: entry.newState ?? null,
+        previousState: entry.previousState ? (entry.previousState as any) : undefined,
+        newState: entry.newState ? (entry.newState as any) : undefined,
         reason: entry.reason || null,
-        context: entry.context ?? null,
+        context: entry.context ? (entry.context as any) : undefined,
       },
     });
   },

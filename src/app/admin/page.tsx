@@ -238,8 +238,8 @@ export default async function AdminDashboardPage() {
                       {new Date(log.createdAt).toLocaleString()}
                     </td>
                     <td>
-                      <strong>{log.actor?.displayName || log.actorId}</strong>
-                      <div style={{ fontSize: '0.75rem', color: '#777' }}>{log.actor?.email}</div>
+                      <strong>{(log as any).actor?.displayName || log.actorId}</strong>
+                      <div style={{ fontSize: '0.75rem', color: '#777' }}>{(log as any).actor?.email}</div>
                     </td>
                     <td>
                       <code>{log.action}</code>
@@ -250,7 +250,7 @@ export default async function AdminDashboardPage() {
                     <td>
                       {log.previousState && log.newState ? (
                         <span style={{ fontSize: '0.8rem' }}>
-                          <code>{log.previousState}</code> → <code>{log.newState}</code>
+                          <code>{JSON.stringify(log.previousState)}</code> → <code>{JSON.stringify(log.newState)}</code>
                         </span>
                       ) : (
                         <span style={{ fontSize: '0.8rem', color: '#888' }}>—</span>

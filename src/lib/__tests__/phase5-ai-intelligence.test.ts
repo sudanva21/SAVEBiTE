@@ -542,7 +542,7 @@ export async function runPhase5Tests() {
       where: { organizationId: orgB.id },
     });
 
-    const leakedOrgA = insightsForB.some(ins => ins.organizationId === orgTajId);
+    const leakedOrgA = insightsForB.some((ins: any) => ins.organizationId === orgTajId);
     if (leakedOrgA) {
       throw new Error('Tenant data breach: Org B retrieved Org A\'s AI insights');
     }

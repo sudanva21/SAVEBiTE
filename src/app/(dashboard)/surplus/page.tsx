@@ -62,7 +62,7 @@ export default function SurplusManagementPage() {
         if (activeBatches.length > 0 && !selectedBatchId) {
           setSelectedBatchId(activeBatches[0].id);
           setUnit(activeBatches[0].unit);
-          setTitle(`${activeBatches[0].foodItem?.name || 'Surplus Food'} Allocation`);
+          setTitle(`${(activeBatches[0] as any).foodItem?.name || 'Surplus Food'} Allocation`);
         }
       }
     } catch (err: unknown) {

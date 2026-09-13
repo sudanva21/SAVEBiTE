@@ -282,7 +282,7 @@ export async function seedFinalDemoScenario() {
     aiInsight = await prisma.aiInsight.create({
       data: {
         organizationId: donorOrg.id,
-        facilityId: donorOrg.facilities?.[0]?.id,
+        facilityId: (await prisma.facility.findFirst({ where: { organizationId: donorOrg.id } }))?.id || null,
         type: 'DEMAND_FORECAST',
         inputHash: 'hash_canonical_demo_taj',
         confidence: 88,

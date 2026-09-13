@@ -32,7 +32,6 @@ export async function grantPlatformAdminAction() {
         displayName: name,
         avatarUrl: clerkUser?.imageUrl || null,
         role: 'PLATFORM_ADMIN',
-        status: 'ACTIVE',
         isOnboarded: true,
       },
       include: { memberships: true },
@@ -46,6 +45,10 @@ export async function grantPlatformAdminAction() {
       },
       include: { memberships: true },
     });
+  }
+
+  if (!user) {
+    throw new Error('User creation failed');
   }
 
   const existingMembership = user.memberships?.find(

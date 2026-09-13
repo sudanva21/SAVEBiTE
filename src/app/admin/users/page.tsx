@@ -68,7 +68,7 @@ export default async function AdminUsersPage() {
                       </Badge>
                     </td>
                     <td>
-                      <Badge variant="black">{u.status}</Badge>
+                      <Badge variant="black">{u.memberships[0]?.status || 'ACTIVE'}</Badge>
                     </td>
                     <td>
                       {u.memberships && u.memberships.length > 0 ? (

@@ -487,7 +487,7 @@ export async function runPhase2Tests() {
       'Please supply valid food safety license details.'
     );
     if (changesApp.status !== 'CHANGES_REQUESTED') throw new Error('Expected status CHANGES_REQUESTED');
-    if (!changesApp.reviewNotes?.includes('food safety license')) throw new Error('Review notes not updated');
+    if (!changesApp.reviewFeedback?.includes('food safety license')) throw new Error('Review notes not updated');
   });
 
   // Test 19: Applicant Resubmission & Cross-User IDOR Protection
@@ -630,7 +630,7 @@ export async function runPhase2Tests() {
     );
 
     if (rejectedApp.status !== 'REJECTED') throw new Error('Application must be marked REJECTED');
-    if (!rejectedApp.reviewNotes?.includes('Invalid non-profit registration')) throw new Error('Rejection reason not stored');
+    if (!rejectedApp.reviewFeedback?.includes('Invalid non-profit registration')) throw new Error('Rejection reason not stored');
 
     // Verify application is not deleted
     const checkApp = await applicationService.getApplicationById(app.id);
